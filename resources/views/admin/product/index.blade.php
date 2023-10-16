@@ -14,12 +14,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="" class="btn btn-success float-right m-2">Add</a>
+                    <a href="{{route('product.create')}}" class="btn btn-sm btn-primary float-right m-2"><i class="fas fa-plus fa-fw fa-xs"></i>Add</a>
                 </div>
                 <div class="col-md-12">
                     <table class="table">
                         <thead>
-                            <tr>
                                 <th scope="col">Thứ tự</th>
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Giá</th>
@@ -39,8 +38,8 @@
                                 </td>
                                 <td>Điện thoại</td>
                                 <td>
-                                    <a href="" class="btn btn-default">Edit</a>
-                                    <a href="" class="btn btn-danger">Delete</a>
+                                    <a href="" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                    <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a>
                                 </td>
                             </tr>
                             

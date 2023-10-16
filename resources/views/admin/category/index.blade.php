@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('categories.create') }}" class="btn btn-success float-right m-2">Add</a>
+                    <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary float-right m-2"><i class="fas fa-plus fa-fw fa-xs"></i>Add</a>
                 </div>
                 <div class="col-md-12">
                     <table class="table">
@@ -31,8 +31,8 @@
                                 <th scope="row">{{ $category->id }}</th>
                                 <td>{{ $category->name }}</td>
                                 <td>
-                                    <a href="{{route('categories.edit', ['id' => $category ->id])}}" class="btn btn-default">Edit</a>
-                                    <a href="{{route('categories.delete', ['id' => $category ->id])}}" class="btn btn-danger">Delete</a>
+                                    <a href="{{route('categories.edit', ['id' => $category ->id])}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                    <a href="{{route('categories.delete', ['id' => $category ->id])}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>Delete</a>
                                 </td>
                             </tr>
                             @endforeach

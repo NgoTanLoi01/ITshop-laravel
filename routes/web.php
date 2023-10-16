@@ -95,7 +95,14 @@ Route::prefix('admin')->group(function () {
             'as' => 'product.index', 
             'uses' => 'App\Http\Controllers\AdminProductController@index'
         ]);
-        
+        Route::get('/create', [
+            'as' => 'product.create', 
+            'uses' => 'App\Http\Controllers\AdminProductController@create'
+        ]);
+        Route::post('/store', [
+            'as' => 'product.store', 
+            'uses' => 'App\Http\Controllers\AdminProductController@store'
+        ]);
     });
 });
 
