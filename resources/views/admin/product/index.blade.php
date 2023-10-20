@@ -40,16 +40,14 @@
                                     <tr>
                                         <th scope="row">{{ $productItem->id }}</th>
                                         <td>{{ $productItem->name }}</td>
-                                        <td>{{ $productItem->price }}</td>
+                                        <td>{{ number_format($productItem->price) }}</td>
                                         <td>
                                             <img class="product_image_150_100" src="{{ $productItem->feature_image_path }}" alt="">
                                         </td>
-                                        <td>{{ $productItem->category->name }}</td>
+                                        <td>{{ optional($productItem->category)->name }}</td>
                                         <td>
-                                            <a href="" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>
-                                                Edit</a>
-                                            <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>
-                                                Delete</a>
+                                            <a href="{{ route('product.edit', ['id' =>$productItem->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                            <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

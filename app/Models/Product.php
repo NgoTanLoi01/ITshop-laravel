@@ -21,4 +21,7 @@ class Product extends Model
     public function category(){
         return $this ->belongsTo(related: Category::class, foreignKey:'category_id');
     }
+    public function productImage(){
+        return $this->hasMany(ProductImage::class, foreignKey: 'product_id');
+    }
 }
