@@ -107,7 +107,7 @@
                     <form action="" method="POST">
                         @csrf
                             <div class="input-group mb-3">
-                                <h4>Login</h4><br>
+                                <h4>Đăng nhập tài khoản Quản lý</h4><br>
                                 @if ($message = Session::get('error'))
                                     <div class="alert alert-danger alert-block">
                                         <button type="button" class="close" data-dismiss="alert">×</button>

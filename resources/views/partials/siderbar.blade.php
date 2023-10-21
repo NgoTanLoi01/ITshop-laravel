@@ -63,7 +63,7 @@
 
                   <li class="nav-item">
                       <a href="{{ route('menus.index') }}" class="nav-link">
-                          <i class="nav-icon fas fa-th"></i>
+                          <i class="nav-icon fas fa-bars"></i>
                           <p>
                               Menus
                               <span class="right badge badge-danger"></span>
@@ -73,7 +73,7 @@
 
                   <li class="nav-item">
                       <a href="{{ route('product.index') }}" class="nav-link">
-                          <i class="nav-icon fas fa-th"></i>
+                          <i class="nav-icon fas fa-shopping-cart"></i>
                           <p>
                               Sản phẩm
                               <span class="right badge badge-danger"></span>

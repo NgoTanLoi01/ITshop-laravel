@@ -21,9 +21,9 @@
         @include('partials.header')
 
         @include('partials.siderbar')
-
+        
         @yield('content')
-
+        
         @include('partials.footer')
     </div>
     <!-- jQuery -->

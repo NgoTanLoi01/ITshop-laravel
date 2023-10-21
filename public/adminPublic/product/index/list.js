@@ -6,15 +6,15 @@ function actionDelete(event) {
     Swal.fire({
         title: 'Bạn chắc không?',
         text: "Bạn sẽ không thể hoàn tác sản phẩm này!",
-        icon: 'Cảnh báo',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Vâng, xóa sản phẩm này!'
       }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.value) {
             $.ajax({
-                type: 'Get',
+                type: 'GET',
                 url: urlRequest,
                 success: function(data){
                     if(data.code == 200){
@@ -29,7 +29,7 @@ function actionDelete(event) {
           Swal.fire(
             'Đã xóa!',
             'Sản phẩm đã được xóa.',
-            'Thành công'
+            'success'
           )
         }
       })
