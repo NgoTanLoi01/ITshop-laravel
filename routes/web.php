@@ -116,6 +116,33 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\AdminProductController@delete'
         ]);
     });
+
+    //slider
+    Route::prefix('slider')->group(function () {
+        Route::get('/', [
+            'as' => 'slider.index',
+            'uses' => 'App\Http\Controllers\SliderAdminController@index'
+        ]);
+        Route::get('/create', [
+            'as' => 'slider.create',
+            'uses' => 'App\Http\Controllers\SliderAdminController@create'
+        ]);
+        Route::post('/store', [
+            'as' => 'slider.store',
+            'uses' => 'App\Http\Controllers\SliderAdminController@store'
+        ]);
+        
+        
+    });
+
+    //setting
+    Route::prefix('settings')->group(function () {
+        Route::get('/', [
+            'as' => 'settings.index',
+            'uses' => 'App\Http\Controllers\AdminSettingController@index'
+        ]);
+        
+    });
 });
 
 

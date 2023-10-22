@@ -80,6 +80,26 @@
                           </p>
                       </a>
                   </li>
+
+                  <li class="nav-item">
+                    <a href="{{route('slider.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-sliders-h"></i>
+                        <p>
+                            Slider
+                            <span class="right badge badge-danger"></span>
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('settings.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            Setting
+                            <span class="right badge badge-danger"></span>
+                        </p>
+                    </a>
+                </li>
               </ul>
           </nav>
 

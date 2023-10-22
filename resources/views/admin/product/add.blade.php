@@ -33,7 +33,8 @@
                                 <label>Tên sản phẩm</label>
                                 <input name="name" type="text"
                                     class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="Nhập tên sản phẩm">
+                                    placeholder="Nhập tên sản phẩm"
+                                    value="{{old('name')}}">
                             </div>
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -43,7 +44,7 @@
                                 <label>Giá sản phẩm</label>
                                 <input name="price" type="text"
                                     class="form-control @error('price') is-invalid @enderror"
-                                    placeholder="Nhập giá sản phẩm">
+                                    placeholder="Nhập giá sản phẩm" value="{{old('price')}}">
                             </div>
                             @error('price')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -62,7 +63,7 @@
                             <div class="form-group">
                                 <label>Danh mục sản phẩm</label><br>
                                 <select class="form-control select2_init @error('category_id') is-invalid @enderror"
-                                    name="category_id">
+                                    name="category_id" >
                                     <option value="">Chọn danh mục</option>
                                     {!! $htmlOption !!}
                                 </select>
@@ -79,9 +80,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Miêu tả sản phẩm</label>
-                                <textarea name="contents" class="form-control @error('content') is-invalid @enderror" id="content"></textarea>
+                                <textarea name="contents" 
+                                class="form-control @error('content') is-invalid @enderror" 
+                                id="content">{{old('contents')}}</textarea>
                             </div>
-                            @error('content')
+                            @error('contents')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
 
