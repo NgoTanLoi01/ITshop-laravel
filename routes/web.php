@@ -131,7 +131,18 @@ Route::prefix('admin')->group(function () {
             'as' => 'slider.store',
             'uses' => 'App\Http\Controllers\SliderAdminController@store'
         ]);
-        
+        Route::get('/edit/{id}', [
+            'as' => 'slider.edit',
+            'uses' => 'App\Http\Controllers\SliderAdminController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'slider.update',
+            'uses' => 'App\Http\Controllers\SliderAdminController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'slider.delete',
+            'uses' => 'App\Http\Controllers\SliderAdminController@delete'
+        ]);
         
     });
 
