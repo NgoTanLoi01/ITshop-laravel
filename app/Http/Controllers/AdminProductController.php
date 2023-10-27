@@ -87,7 +87,6 @@ class AdminProductController extends Controller
                     ]);
                 }
             }
-
             //Insert tags for product
             if (!empty($request->tags)) {
                 foreach ($request->tags as $tagItem) {

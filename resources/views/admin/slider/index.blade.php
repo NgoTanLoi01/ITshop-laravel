@@ -9,8 +9,8 @@
 @endsection
 
 @section('js')
-<script src="{{asset('vendors/sweetAlert2/sweetalert2@11.js')}}"></script>
-<script src="{{asset('adminPublic/slider/index/index.js')}}"></script>
+    <script src="{{ asset('vendors/sweetAlert2/sweetalert2@11.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('adminPublic/main.js') }}"></script>
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
                                         <td>
                                             <a href="{{ route('slider.edit', ['id' => $slider->id]) }}"
                                                 class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href="" data-url="{{route('slider.delete', ['id' => $slider->id])}}"
+                                            <a href="" data-url="{{ route('slider.delete', ['id' => $slider->id]) }}"
                                                 class="btn btn-sm btn-danger action_delete">
                                                 <i class="fas fa-trash"></i>Delete</a>
                                         </td>

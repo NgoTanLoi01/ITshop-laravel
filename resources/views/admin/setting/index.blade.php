@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{ asset('adminPublic/setting/index/index.css') }}">
 @endsection
 
+@section('js')
+    <script src="{{ asset('vendors/sweetAlert2/sweetalert2@11.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('adminPublic/main.js') }}"></script>
+@endsection
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -48,8 +52,11 @@
                                         <td>{{ $setting->config_key }}</td>
                                         <td>{{ $setting->config_value }}</td>
                                         <td>
-                                            <a href="{{ route('settings.edit', ['id' => $setting->id]) . '?type=' . $setting->type }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>Delete</a>
+                                            <a href="{{ route('settings.edit', ['id' => $setting->id]) . '?type=' . $setting->type }}"
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                            <a href="" class="btn btn-sm btn-danger action_delete"><i
+                                                    data-url="{{ route('settings.delete', ['id' => $setting->id]) }}"
+                                                    class="fas fa-trash"></i>Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

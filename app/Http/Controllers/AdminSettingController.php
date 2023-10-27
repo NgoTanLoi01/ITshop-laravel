@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddSettingRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class AdminSettingController extends Controller
 {
@@ -46,5 +48,22 @@ class AdminSettingController extends Controller
             'config_value' => $request->config_value
         ]);
         return redirect()->route('settings.index');
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->setting->find($id)->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], status: 200);
+        } catch (\Exception $exception) {
+            Log::error('Message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], status: 500);
+        }
     }
 }

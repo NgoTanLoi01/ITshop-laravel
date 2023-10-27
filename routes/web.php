@@ -168,6 +168,10 @@ Route::prefix('admin')->group(function () {
             'as' => 'settings.update',
             'uses' => 'App\Http\Controllers\AdminSettingController@update'
         ]);
+        Route::get('/delete/{id}', [
+            'as' => 'settings.delete',
+            'uses' => 'App\Http\Controllers\AdminSettingController@delete'
+        ]);
     });
 });
 
