@@ -5,19 +5,19 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="{{asset('adminPublic/product/index/list.css')}}">
+    <link rel="stylesheet" href="{{ asset('adminPublic/product/index/list.css') }}">
 @endsection
 
 @section('js')
-<script src="{{asset('vendors/sweetAlert2/sweetalert2@11.js')}}"></script>
-<script src="{{asset('adminPublic/product/index/list.js')}}"></script>
+    <script src="{{ asset('vendors/sweetAlert2/sweetalert2@11.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('adminPublic/main.js') }}"></script>
 @endsection
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'product', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Product', 'key' => 'List'])
 
         <div class="content">
             <div class="container-fluid">
@@ -44,14 +44,16 @@
                                         <td>{{ $productItem->name }}</td>
                                         <td>{{ number_format($productItem->price) }}</td>
                                         <td>
-                                            <img class="product_image_150_100" src="{{ $productItem->feature_image_path }}" alt="">
+                                            <img class="product_image_150_100" src="{{ $productItem->feature_image_path }}"
+                                                alt="">
                                         </td>
                                         <td>{{ optional($productItem->category)->name }}</td>
                                         <td>
-                                            <a href="{{ route('product.edit', ['id' =>$productItem->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                            <a href="{{ route('product.edit', ['id' => $productItem->id]) }}"
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
                                             <a href="" class="btn btn-sm btn-danger action_delete"
-                                            data-url="{{route('product.delete', ['id' =>$productItem->id])}}"
-                                            ><i class="fas fa-trash"></i>Delete</a>
+                                                data-url="{{ route('product.delete', ['id' => $productItem->id]) }}"><i
+                                                    class="fas fa-trash"></i>Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

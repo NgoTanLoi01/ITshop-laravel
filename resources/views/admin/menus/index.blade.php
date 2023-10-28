@@ -8,7 +8,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 
-    @include('partials.content-header', ['name' => 'menu', 'key' => 'List'])
+    @include('partials.content-header', ['name' => 'Menu', 'key' => 'List'])
 
     <div class="content">
         <div class="container-fluid">

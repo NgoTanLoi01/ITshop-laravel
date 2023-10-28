@@ -107,7 +107,7 @@
                     <form action="" method="POST">
                         @csrf
                             <div class="input-group mb-3">
-                                <h4>Đăng nhập tài khoản Quản lý</h4><br>
+                                <h4>Đăng nhập tài khoản Quản trị</h4><br>
                                 @if ($message = Session::get('error'))
                                     <div class="alert alert-danger alert-block">
                                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -139,15 +139,6 @@
                             <button type="submit" name="button" class="btn login_btn">Đăng nhập</button>
                         </div>
                     </form>
-                </div>
-
-                <div class="mt-6">
-                    <div class="d-flex justify-content-center links">
-                        Bạn chưa có tài khoản? <a href="{{ route('register') }}" class="ml-2">Đăng ký</a>
-                    </div>
-                    <div class="d-flex justify-content-center links">
-                        <a href="">Quên mật khẩu?</a>
-                    </div>
                 </div>
             </div>
         </div>

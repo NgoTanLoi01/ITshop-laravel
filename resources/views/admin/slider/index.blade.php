@@ -6,6 +6,8 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('adminPublic/slider/index/index.css') }}">
+    <script type="text/javascript" src="{{ asset('adminPublic/main.js') }}"></script>
+
 @endsection
 
 @section('js')

@@ -17,7 +17,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'settings', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Settings', 'key' => 'List'])
 
         <div class="content">
             <div class="container-fluid">
@@ -39,7 +39,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">TT</th>
+                                    <th scope="col">Thứ tự</th>
                                     <th scope="col">Config key</th>
                                     <th scope="col">Config value</th>
                                     <th scope="col">Action</th>
@@ -54,9 +54,10 @@
                                         <td>
                                             <a href="{{ route('settings.edit', ['id' => $setting->id]) . '?type=' . $setting->type }}"
                                                 class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href="" class="btn btn-sm btn-danger action_delete"><i
-                                                    data-url="{{ route('settings.delete', ['id' => $setting->id]) }}"
+                                            <a href="" class="btn btn-sm btn-danger action_delete"
+                                                data-url="{{ route('settings.delete', ['id' => $setting->id]) }}"><i
                                                     class="fas fa-trash"></i>Delete</a>
+
                                         </td>
                                     </tr>
                                 @endforeach
