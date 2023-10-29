@@ -35,8 +35,8 @@
           <!-- SidebarSearch Form -->
           <div class="form-inline">
               <div class="input-group" data-widget="sidebar-search">
-                  <input style="background-color: #1f2234" class="form-control form-control-sidebar" type="search" placeholder="Search"
-                      aria-label="Search">
+                  <input style="background-color: #1f2234" class="form-control form-control-sidebar" type="search"
+                      placeholder="Search" aria-label="Search">
                   <div class="input-group-append">
                       <button style="background-color: #1f2234" class="btn btn-sidebar">
                           <i class="fas fa-search fa-fw"></i>
@@ -82,24 +82,34 @@
                   </li>
 
                   <li class="nav-item">
-                    <a href="{{route('slider.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-sliders-h"></i>
-                        <p>
-                            Slider
-                            <span class="right badge badge-danger"></span>
-                        </p>
-                    </a>
-                </li>
+                      <a href="{{ route('slider.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-sliders-h"></i>
+                          <p>
+                              Slider
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
 
-                <li class="nav-item">
-                    <a href="{{route('settings.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-cog"></i>
-                        <p>
-                            Setting
-                            <span class="right badge badge-danger"></span>
-                        </p>
-                    </a>
-                </li>
+                  <li class="nav-item">
+                      <a href="{{ route('settings.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-cog"></i>
+                          <p>
+                              Setting
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a href="{{ route('users.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                          <p>
+                              Danh sách nhân viên
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
               </ul>
           </nav>
 
