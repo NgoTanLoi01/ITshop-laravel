@@ -180,6 +180,14 @@ Route::prefix('admin')->group(function () {
             'as' => 'users.index',
             'uses' => 'App\Http\Controllers\AdminUserController@index'
         ]);
+        Route::get('/create', [
+            'as' => 'users.create',
+            'uses' => 'App\Http\Controllers\AdminUserController@create'
+        ]);
+        Route::post('/store', [
+            'as' => 'users.store',
+            'uses' => 'App\Http\Controllers\AdminUserController@store'
+        ]);
     });
 
 });
