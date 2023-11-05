@@ -188,6 +188,28 @@ Route::prefix('admin')->group(function () {
             'as' => 'users.store',
             'uses' => 'App\Http\Controllers\AdminUserController@store'
         ]);
+        Route::get('/edit/{id}', [
+            'as' => 'users.edit',
+            'uses' => 'App\Http\Controllers\AdminUserController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'users.update',
+            'uses' => 'App\Http\Controllers\AdminUserController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'users.delete',
+            'uses' => 'App\Http\Controllers\AdminUserController@delete'
+        ]);
+    });
+
+    //roles
+    //users
+    Route::prefix('roles')->group(function () {
+        Route::get('/', [
+            'as' => 'roles.index',
+            'uses' => 'App\Http\Controllers\AdminRoleController@index'
+        ]);
+
     });
 
 });
