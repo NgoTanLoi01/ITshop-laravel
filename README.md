@@ -31,7 +31,7 @@
            php artisan storage:link
     - Chạy lệnh sau để tạo các bảng cơ sở dữ liệu
    
-          php artisan migrate
+          php artisan migrate:fresh --seed
     - Chạy dự án laravel
 
           php artisan serve
