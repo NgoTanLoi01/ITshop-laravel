@@ -24,7 +24,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="" class="btn btn-sm btn-primary float-right m-2"><i
+                        <a href="{{ route('roles.create') }}" class="btn btn-sm btn-primary float-right m-2"><i
                                 class="fas fa-plus fa-fw fa-xs"></i>Add</a>
                     </div>
                     <div class="col-md-12">
