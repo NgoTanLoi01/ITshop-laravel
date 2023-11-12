@@ -39,7 +39,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles(){
-        return $this->belongsToMany(Role::class, 'role_user', 'user_id','role_id');
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
+
+    public function checkPermissionAccess($permissionCheck)
+    {
+        //user login co quyen them, sua danh muc va xem menu
+        //B1 lay duoc tat ca cac quyen cua user dang login vao he thong
+        //B2 so sang gia tri dua vao cua router hien tai xem co tong tai trong cac quyen minh la duoc hay khong
+
+        $roles = auth()->user()->roles;
+        foreach ($roles as $role) {
+            $permissions = $role->permissions;
+            if( $permissions->contains('key_code', $permissionCheck)){
+                return true;
+            }
+        }
+        return false;
     }
 }

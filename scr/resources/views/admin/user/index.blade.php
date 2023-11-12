@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
         @include('partials.content-header', ['name' => 'User', 'key' => 'List'])
@@ -47,8 +46,8 @@
                                         <td>
                                             <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-edit"></i>Edit</a>
-                                            <a href="" data-url="{{ route('users.delete' ,['id' => $user->id]) }}" class="btn btn-sm btn-danger action_delete">
-                                                <i class="fas fa-trash"></i>Delete</a>
+                                            <a href="" data-url="{{ route('users.delete', ['id' => $user->id]) }}" 
+                                                class="btn btn-sm btn-danger action_delete"><i class="fas fa-trash"></i>Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

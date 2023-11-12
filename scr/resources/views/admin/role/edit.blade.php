@@ -9,28 +9,27 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('adminPublic/role/add/add.js') }}">
-
-    </script>
+    <script src="{{ asset('adminPublic/role/add/add.js') }}"></script>
 @endsection
 
 @section('content')
     <div class="content-wrapper">
-        @include('partials.content-header', ['name' => 'Roles', 'key' => 'Add'])
+        @include('partials.content-header', ['name' => 'Roles', 'key' => 'Edit'])
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <form action="{{ route('roles.store') }}" method="post" enctype="multipart/form-data" style="width: 100%">
+                    <form action="{{ route('roles.update', ['id' => $role->id]) }}" method="post" enctype="multipart/form-data" style="width: 100%">
                         <div class="col-md-12">
                             @csrf
                             <div class="form-group">
                                 <label>Tên vai trò</label>
                                 <input name="name" type="text" class="form-control" placeholder="Nhập tên vai trò"
-                                    value="{{ old('name') }}">
+                                    value="{{ $role->name }}">
                             </div>
                             <div class="form-group">
                                 <label>Mô tả vai trò</label>
-                                <textarea name="display_name" id="content" class="form-control" placeholder="Nhập mô tả">{{ old('display_name') }}</textarea>
+                                <textarea name="display_name" id="content" 
+                                    class="form-control">{{ $role->display_name }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -55,6 +54,7 @@
                                                     <h5 class="card-title">
                                                         <label>
                                                             <input type="checkbox" name="permission_id[]"
+                                                                {{ $permissionsChecked->contains('id',  $permissionsChildrentItem->id) ? 'checked' : ''}}
                                                                 class="checkbox_childrent"
                                                                 value="{{ $permissionsChildrentItem->id }}">
                                                         </label>

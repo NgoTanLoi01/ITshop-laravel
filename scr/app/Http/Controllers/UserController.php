@@ -29,13 +29,13 @@ class UserController extends Controller
         // Kiểm tra xác nhận mật khẩu
         if ($request->password !== $request->password_confirmation) {
             // Mật khẩu và xác nhận mật khẩu không khớp, bạn có thể xử lý lỗi ở đây
-            return redirect()->back()->with('password', 'Xác nhận mật khẩu sai cmnr!');
+            return redirect()->back()->with('password', 'Xác nhận mật khẩu không trùng khớp!');
         }
 
         // Kiểm tra xem địa chỉ email đã tồn tại trong cơ sở dữ liệu hay chưa
         if (ModelsUser::where('email', $request->email)->exists()) {
             // Địa chỉ email đã tồn tại, xử lý lỗi và thông báo người dùng
-            return redirect()->back()->with('email', 'Địa chỉ email đã tồn tại cmnr!');
+            return redirect()->back()->with('email', 'Địa chỉ email đã tồn tại!');
         }
 
         // Mã hóa mật khẩu và cập nhật giá trị trong request
@@ -52,9 +52,6 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-
-
-
     // public function postLogin(Request $request)
     // {
     //     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -68,7 +65,7 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('home');
         } else {
-            return redirect()->back()->with('error', 'Tên đăng nhập hoặc mật khẩu sai cmnr');
+            return redirect()->back()->with('error', 'Tên đăng nhập hoặc mật khẩu không đúng!');
         }
     }
     public function logout(Request $request)

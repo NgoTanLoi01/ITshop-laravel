@@ -44,12 +44,10 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->display_name }}</td>
                                         <td>
-                                            <a href=""
+                                            <a href="{{ route('roles.edit', ['id' => $role->id]) }}"
                                                 class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href=""
-                                                data-url=""
-                                                class="btn btn-sm btn-danger action_delete">
-                                                <i class="fas fa-trash"></i>Delete</a>
+                                            <a href="" data-url="{{ route('roles.delete', ['id' => $role->id]) }}" 
+                                                class="btn btn-sm btn-danger action_delete"> <i class="fas fa-trash"></i>Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

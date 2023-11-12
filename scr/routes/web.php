@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', [AdminController::class, 'loginAdmin'])->name('loginAdmin');
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'postLogin']);
-Route::get('/register', [UserController::class, 'register'])->name('register');
-Route::post('/register', [UserController::class, 'postRegister']);
+// Route::get('/register', [UserController::class, 'register'])->name('register');
+// Route::post('/register', [UserController::class, 'postRegister']);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 // Route::get('/home', function () {
@@ -36,7 +36,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('categories')->group(function () {
         Route::get('/', [
             'as' => 'categories.index',
-            'uses' => 'App\Http\Controllers\CategoryController@index'
+            'uses' => 'App\Http\Controllers\CategoryController@index',
+            'middleware'=>'can:category-list'
         ]);
         Route::get('/create', [
             'as' => 'categories.create',
@@ -65,7 +66,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('menus')->group(function () {
         Route::get('/', [
             'as' => 'menus.index',
-            'uses' => 'App\Http\Controllers\MenusController@index'
+            'uses' => 'App\Http\Controllers\MenusController@index',
+            'middleware'=>'can:menu-list'
         ]);
         Route::get('/create', [
             'as' => 'menus.create',
@@ -93,7 +95,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('product')->group(function () {
         Route::get('/', [
             'as' => 'product.index', 
-            'uses' => 'App\Http\Controllers\AdminProductController@index'
+            'uses' => 'App\Http\Controllers\AdminProductController@index',
+            'middleware'=>'can:product-list'
         ]);
         Route::get('/create', [
             'as' => 'product.create', 
@@ -121,7 +124,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('slider')->group(function () {
         Route::get('/', [
             'as' => 'slider.index',
-            'uses' => 'App\Http\Controllers\SliderAdminController@index'
+            'uses' => 'App\Http\Controllers\SliderAdminController@index',
+            'middleware'=>'can:slider-list'
         ]);
         Route::get('/create', [
             'as' => 'slider.create',
@@ -150,7 +154,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('settings')->group(function () {
         Route::get('/', [
             'as' => 'settings.index',
-            'uses' => 'App\Http\Controllers\AdminSettingController@index'
+            'uses' => 'App\Http\Controllers\AdminSettingController@index',
+            'middleware'=>'can:setting-list'
         ]);
         Route::get('/create', [
             'as' => 'settings.create',
@@ -174,11 +179,12 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 
-    //users
+    //user
     Route::prefix('users')->group(function () {
         Route::get('/', [
             'as' => 'users.index',
-            'uses' => 'App\Http\Controllers\AdminUserController@index'
+            'uses' => 'App\Http\Controllers\AdminUserController@index',
+            'middleware'=>'can:user-list'
         ]);
         Route::get('/create', [
             'as' => 'users.create',
@@ -202,19 +208,36 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 
-    //roles
-    //users
+    //role
     Route::prefix('roles')->group(function () {
         Route::get('/', [
             'as' => 'roles.index',
-            'uses' => 'App\Http\Controllers\AdminRoleController@index'
+            'uses' => 'App\Http\Controllers\AdminRoleController@index',
+            'middleware'=>'can:role-list'
         ]);
         Route::get('/create', [
             'as' => 'roles.create',
             'uses' => 'App\Http\Controllers\AdminRoleController@create'
         ]);
-
+        Route::post('/store', [
+            'as' => 'roles.store',
+            'uses' => 'App\Http\Controllers\AdminRoleController@store'
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'roles.edit',
+            'uses' => 'App\Http\Controllers\AdminRoleController@edit'
+        ]);
+        Route::post('/update/{id}', [
+            'as' => 'roles.update',
+            'uses' => 'App\Http\Controllers\AdminRoleController@update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as' => 'roles.delete',
+            'uses' => 'App\Http\Controllers\AdminRoleController@delete'
+        ]);
     });
+
+
 
 });
 
