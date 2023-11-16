@@ -11,7 +11,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="clo-md-16">
+                <div class="col-md-12">
                     <form action="{{route('categories.store')}}" method="post">
                         @csrf
                         <div class="form-group">

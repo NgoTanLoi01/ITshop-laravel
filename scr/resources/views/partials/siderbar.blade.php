@@ -13,7 +13,8 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
               @if (Auth::check())
                   <div class="info">
-                      <a href="" class="fas fa-user">
+                      <a href="">
+                        <i class="fas fa-user-tie"></i>
                           {{ Auth::user()->name }}
                       </a>
                   </div>
@@ -25,7 +26,7 @@
               @else
                   <div class="info">
                       <a href="">
-                          Guest
+                          Vui lòng đăng nhập vào hệ thống!
                       </a>
                   </div>
               @endif
@@ -120,6 +121,17 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('permissions.create') }}" class="nav-link">
+                      <i class="nav-icon fas fa-user-check"></i>
+                        <p>
+                            Data Permissions
+                            <span class="right badge badge-danger"></span>
+                        </p>
+                    </a>
+                </li>
+
               </ul>
           </nav>
 

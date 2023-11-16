@@ -16,7 +16,7 @@
           <!-- Navbar login -->
           <li class="nav-item">
               <a class="nav-link" data-widget="login" href="{{ route('login') }}" role="button">
-                  <i class="fas fa-user"> Đăng nhập</i>
+                <i class="fas fa-user-tie"> Đăng nhập</i>
               </a>
           </li>
 

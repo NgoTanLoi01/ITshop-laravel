@@ -48,11 +48,12 @@ class User extends Authenticatable
     {
         //user login co quyen them, sua danh muc va xem menu
         //B1 lay duoc tat ca cac quyen cua user dang login vao he thong
-        //B2 so sang gia tri dua vao cua router hien tai xem co tong tai trong cac quyen minh la duoc hay khong
-
+        //B2 so sanh gia tri dua vao cua router hien tai xem co tong tai trong cac quyen minh lay duoc hay khong
+        //dd($permissionCheck);
         $roles = auth()->user()->roles;
         foreach ($roles as $role) {
             $permissions = $role->permissions;
+            //dd($permissions);
             if( $permissions->contains('key_code', $permissionCheck)){
                 return true;
             }
