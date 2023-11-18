@@ -6,6 +6,7 @@ use App\Http\Controllers\MenusController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeAdminController;
 use Illuminate\Support\Facades\Route; 
 
 
@@ -19,18 +20,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Route::get('/home', function () {
+//     return view('home');
+// });
+//man hinh admin
 Route::get('/admin', [AdminController::class, 'loginAdmin'])->name('loginAdmin');
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'postLogin']);
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/register', [UserController::class, 'postRegister']);
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/homeAdmin', [HomeController::class, 'indexAdmin'])->name('homeAdmin');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
-// Route::get('/home', function () {
-//     return view('home');
-// });
 
+//man hinh user
+Route::get('/', [HomeAdminController::class, 'index'])->name('home');
+Route::get('/test', [HomeAdminController::class, 'test'])->name('test');
+
+//xu ly admin
 Route::prefix('admin')->group(function () {
     //categories
     Route::prefix('categories')->group(function () {
@@ -198,11 +204,13 @@ Route::prefix('admin')->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [
             'as' => 'users.index',
-            'uses' => 'App\Http\Controllers\AdminUserController@index'
+            'uses' => 'App\Http\Controllers\AdminUserController@index',
+            'middleware'=>'can:role-list'
         ]);
         Route::get('/create', [
             'as' => 'users.create',
-            'uses' => 'App\Http\Controllers\AdminUserController@create'
+            'uses' => 'App\Http\Controllers\AdminUserController@create',
+            'middleware'=>'can:user-add'
         ]);
         Route::post('/store', [
             'as' => 'users.store',
@@ -210,7 +218,8 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::get('/edit/{id}', [
             'as' => 'users.edit',
-            'uses' => 'App\Http\Controllers\AdminUserController@edit'
+            'uses' => 'App\Http\Controllers\AdminUserController@edit',
+            'middleware'=>'can:user-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'users.update',
@@ -218,7 +227,8 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::get('/delete/{id}', [
             'as' => 'users.delete',
-            'uses' => 'App\Http\Controllers\AdminUserController@delete'
+            'uses' => 'App\Http\Controllers\AdminUserController@delete',
+            'middleware'=>'can:user-delete'
         ]);
     });
 
@@ -226,11 +236,13 @@ Route::prefix('admin')->group(function () {
     Route::prefix('roles')->group(function () {
         Route::get('/', [
             'as' => 'roles.index',
-            'uses' => 'App\Http\Controllers\AdminRoleController@index'
+            'uses' => 'App\Http\Controllers\AdminRoleController@index',
+            'middleware'=>'can:role-list'
         ]);
         Route::get('/create', [
             'as' => 'roles.create',
-            'uses' => 'App\Http\Controllers\AdminRoleController@create'
+            'uses' => 'App\Http\Controllers\AdminRoleController@create',
+            'middleware'=>'can:role-add'
         ]);
         Route::post('/store', [
             'as' => 'roles.store',
@@ -238,7 +250,8 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::get('/edit/{id}', [
             'as' => 'roles.edit',
-            'uses' => 'App\Http\Controllers\AdminRoleController@edit'
+            'uses' => 'App\Http\Controllers\AdminRoleController@edit',
+            'middleware'=>'can:role-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'roles.update',
@@ -246,7 +259,8 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::get('/delete/{id}', [
             'as' => 'roles.delete',
-            'uses' => 'App\Http\Controllers\AdminRoleController@delete'
+            'uses' => 'App\Http\Controllers\AdminRoleController@delete',
+            'middleware'=>'can:role-delete'
         ]);
     });
 

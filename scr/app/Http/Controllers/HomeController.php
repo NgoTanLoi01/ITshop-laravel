@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function indexAdmin()
     {
-        return view('home');
+        return view('homeAdmin');
     }
     public function postloginAdmin(Request $request)
     {
