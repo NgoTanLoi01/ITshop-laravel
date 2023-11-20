@@ -18,79 +18,9 @@
     <div class="intro-section pt-3 pb-3 mb-2">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="intro-slider-container slider-container-ratio mb-2 mb-lg-0">
-                        <div class="intro-slider owl-carousel owl-simple owl-dark owl-nav-inside" data-toggle="owl" data-owl-options='{
-                                "nav": false, 
-                                "dots": true,
-                                "responsive": {
-                                    "768": {
-                                        "nav": true,
-                                        "dots": false
-                                    }
-                                }
-                            }'>
-                            <div class="intro-slide">
-                                <figure class="slide-image">
-                                    <picture>
-                                        <source media="(max-width: 480px)" srcset="UserLTE/assets/images/demos/demo-3/slider/slide-1-480w.jpg">
-                                        <img src="UserLTE/assets/images/demos/demo-3/slider/slide-1.jpg" alt="Image Desc">
-                                    </picture>
-                                </figure><!-- End .slide-image -->
-
-                                <div class="intro-content">
-                                    <h3 class="intro-subtitle text-primary">Daily Deals</h3><!-- End .h3 intro-subtitle -->
-                                    <h1 class="intro-title">
-                                        AirPods <br>Earphones
-                                    </h1><!-- End .intro-title -->
-
-                                    <div class="intro-price">
-                                        <sup>Today:</sup>
-                                        <span class="text-primary">
-                                            $247<sup>.99</sup>
-                                        </span>
-                                    </div><!-- End .intro-price -->
-
-                                    <a href="category.html" class="btn btn-primary btn-round">
-                                        <span>Click Here</span>
-                                        <i class="icon-long-arrow-right"></i>
-                                    </a>
-                                </div><!-- End .intro-content -->
-                            </div><!-- End .intro-slide -->
-
-                            <div class="intro-slide">
-                                <figure class="slide-image">
-                                    <picture>
-                                        <source media="(max-width: 480px)" srcset="UserLTE/assets/images/demos/demo-3/slider/slide-2-480w.jpg">
-                                        <img src="UserLTE/assets/images/demos/demo-3/slider/slide-2.jpg" alt="Image Desc">
-                                    </picture>
-                                </figure><!-- End .slide-image -->
-
-                                <div class="intro-content">
-                                    <h3 class="intro-subtitle text-primary">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
-                                    <h1 class="intro-title">
-                                        Echo Dot <br>3rd Gen
-                                    </h1><!-- End .intro-title -->
-
-                                    <div class="intro-price">
-                                        <sup class="intro-old-price">$49,99</sup>
-                                        <span class="text-primary">
-                                            $29<sup>.99</sup>
-                                        </span>
-                                    </div><!-- End .intro-price -->
-
-                                    <a href="category.html" class="btn btn-primary btn-round">
-                                        <span>Click Here</span>
-                                        <i class="icon-long-arrow-right"></i>
-                                    </a>
-                                </div><!-- End .intro-content -->
-                            </div><!-- End .intro-slide -->
-                        </div><!-- End .intro-slider owl-carousel owl-simple -->
-                        
-                        <span class="slider-loader"></span><!-- End .slider-loader -->
-                    </div><!-- End .intro-slider-container -->
-                </div><!-- End .col-lg-8 -->
-
+                {{-- Slider --}}
+                @include('home.components.slider')
+                {{-- Slider --}}
                 <div class="col-lg-4">
                     <div class="intro-banners">
                         <div class="banner mb-lg-1 mb-xl-2">
@@ -137,13 +67,13 @@
     <div class="container featured">
         <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">Featured</a>
+                <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">Nổi bậc</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="products-sale-link" data-toggle="tab" href="#products-sale-tab" role="tab" aria-controls="products-sale-tab" aria-selected="false">On Sale</a>
+                <a class="nav-link" id="products-sale-link" data-toggle="tab" href="#products-sale-tab" role="tab" aria-controls="products-sale-tab" aria-selected="false">Giảm giá</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="products-top-link" data-toggle="tab" href="#products-top-tab" role="tab" aria-controls="products-top-tab" aria-selected="false">Top Rated</a>
+                <a class="nav-link" id="products-top-link" data-toggle="tab" href="#products-top-tab" role="tab" aria-controls="products-top-tab" aria-selected="false">Đánh giá cao</a>
             </li>
         </ul>
 
@@ -170,19 +100,21 @@
                             }
                         }
                     }'>
+
+                    @foreach ($products as $product)
                     <div class="product product-2">
                         <figure class="product-media">
                             <a href="product.html">
-                                <img src="UserLTE/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                                <img src="{{ config('app.base_url') .  $product->feature_image_path}}" alt="Product image" class="product-image">
                             </a>
 
-                            <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div><!-- End .product-action -->
+                            {{-- <div class="product-action-vertical">
+                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm Danh sách yêu thích</span></a>
+                            </div><!-- End .product-action --> --}}
 
                             <div class="product-action product-action-dark">
-                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>Thêm vào giỏ hàng</span></a>
+                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>Xem nhanh</span></a>
                             </div><!-- End .product-action -->
                         </figure><!-- End .product-media -->
 
@@ -190,9 +122,9 @@
                             <div class="product-cat">
                                 <a href="#">Cameras & Camcorders</a>
                             </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
+                            <h3 class="product-title"><a href="product.html">{{ $product->name }}</a></h3><!-- End .product-title -->
                             <div class="product-price">
-                                $349.99
+                                {{ number_format($product->price) }} VNĐ
                             </div><!-- End .product-price -->
                             <div class="ratings-container">
                                 <div class="ratings">
@@ -202,147 +134,8 @@
                             </div><!-- End .rating-container -->
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->
+                    @endforeach
 
-                    <div class="product product-2">
-                        <figure class="product-media">
-                            <span class="product-label label-circle label-new">New</span>
-                            <a href="product.html">
-                                <img src="UserLTE/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                <img src="UserLTE/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
-                            </a>
-
-                            <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div><!-- End .product-action -->
-
-                            <div class="product-action product-action-dark">
-                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                            </div><!-- End .product-action -->
-                        </figure><!-- End .product-media -->
-
-                        <div class="product-body">
-                            <div class="product-cat">
-                                <a href="#">Smartwatches</a>
-                            </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">Apple - Apple Watch Series 3 with White Sport Band</a></h3><!-- End .product-title -->
-                            <div class="product-price">
-                                $214.99
-                            </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 0 Reviews )</span>
-                            </div><!-- End .rating-container -->
-
-                            <div class="product-nav product-nav-dots">
-                                <a href="#" class="active" style="background: #e2e2e2;"><span class="sr-only">Color name</span></a>
-                                <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                <a href="#" style="background: #f2bc9e;"><span class="sr-only">Color name</span></a>
-                            </div><!-- End .product-nav -->
-                        </div><!-- End .product-body -->
-                    </div><!-- End .product -->
-
-                    <div class="product product-2">
-                        <figure class="product-media">
-                            <a href="product.html">
-                                <img src="UserLTE/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
-                            </a>
-
-                            <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div><!-- End .product-action -->
-
-                            <div class="product-action product-action-dark">
-                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                            </div><!-- End .product-action -->
-                        </figure><!-- End .product-media -->
-
-                        <div class="product-body">
-                            <div class="product-cat">
-                                <a href="#">Laptops</a>
-                            </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">Lenovo - 330-15IKBR 15.6"</a></h3><!-- End .product-title -->
-                            <div class="product-price">
-                                <span class="out-price">$339.99</span>
-                                <span class="out-text">Out of Stock</span>
-                            </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 3 Reviews )</span>
-                            </div><!-- End .rating-container -->
-                        </div><!-- End .product-body -->
-                    </div><!-- End .product -->
-
-                    <div class="product product-2">
-                        <figure class="product-media">
-                            <a href="product.html">
-                                <img src="UserLTE/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
-                            </a>
-
-                            <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div><!-- End .product-action -->
-
-                            <div class="product-action product-action-dark">
-                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                            </div><!-- End .product-action -->
-                        </figure><!-- End .product-media -->
-
-                        <div class="product-body">
-                            <div class="product-cat">
-                                <a href="#">Digital Cameras</a>
-                            </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">Sony - Alpha a5100 Mirrorless Camera</a></h3><!-- End .product-title -->
-                            <div class="product-price">
-                                $499.99
-                            </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 70%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 11 Reviews )</span>
-                            </div><!-- End .rating-container -->
-                        </div><!-- End .product-body -->
-                    </div><!-- End .product -->
-
-                    <div class="product product-2">
-                        <figure class="product-media">
-                            <a href="product.html">
-                                <img src="UserLTE/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
-                            </a>
-
-                            <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div><!-- End .product-action -->
-
-                            <div class="product-action product-action-dark">
-                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                            </div><!-- End .product-action -->
-                        </figure><!-- End .product-media -->
-
-                        <div class="product-body">
-                            <div class="product-cat">
-                                <a href="#">Cameras & Camcorders</a>
-                            </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="product.html">GoPro - HERO7 Black HD Waterproof Action</a></h3><!-- End .product-title -->
-                            <div class="product-price">
-                                $349.99
-                            </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 2 Reviews )</span>
-                            </div><!-- End .rating-container -->
-                        </div><!-- End .product-body -->
-                    </div><!-- End .product -->
                 </div><!-- End .owl-carousel -->
             </div><!-- .End .tab-pane -->
             <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
@@ -3524,8 +3317,8 @@
                             <i class="icon-rocket"></i>
                         </span>
                         <div class="icon-box-content">
-                            <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
-                            <p>Orders $50 or more</p>
+                            <h3 class="icon-box-title">Miễn phí vận chuyển</h3><!-- End .icon-box-title -->
+                            <p>Từ 1,000,000 VNĐ</p>
                         </div><!-- End .icon-box-content -->
                     </div><!-- End .icon-box -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -3537,8 +3330,8 @@
                         </span>
 
                         <div class="icon-box-content">
-                            <h3 class="icon-box-title">Free Returns</h3><!-- End .icon-box-title -->
-                            <p>Within 30 days</p>
+                            <h3 class="icon-box-title">1 đổi 1</h3><!-- End .icon-box-title -->
+                            <p>Trong vòng 7 - 30 ngày</p>
                         </div><!-- End .icon-box-content -->
                     </div><!-- End .icon-box -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -3550,8 +3343,8 @@
                         </span>
 
                         <div class="icon-box-content">
-                            <h3 class="icon-box-title">Get 20% Off 1 Item</h3><!-- End .icon-box-title -->
-                            <p>when you sign up</p>
+                            <h3 class="icon-box-title">Giảm  10%</h3><!-- End .icon-box-title -->
+                            <p>đơn hàng đầu tiên</p>
                         </div><!-- End .icon-box-content -->
                     </div><!-- End .icon-box -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -3563,8 +3356,8 @@
                         </span>
 
                         <div class="icon-box-content">
-                            <h3 class="icon-box-title">We Support</h3><!-- End .icon-box-title -->
-                            <p>24/7 amazing services</p>
+                            <h3 class="icon-box-title">Hỗ trợ dịch vụ</h3><!-- End .icon-box-title -->
+                            <p>24/7</p>
                         </div><!-- End .icon-box-content -->
                     </div><!-- End .icon-box -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
