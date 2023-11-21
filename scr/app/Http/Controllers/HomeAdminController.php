@@ -13,7 +13,8 @@ class HomeAdminController extends Controller
         $sliders = Slider::latest()->get();
         $categorys = Category::where('parent_id', 0)->get();
         $products = Product::latest()->take(10)->get();
-        return view("home.home", compact("sliders", "categorys", "products"));
+        $productsSelling = Product::latest('views_count', 'desc')->take(12)->get();
+        return view("home.home", compact("sliders", "categorys", "products","productsSelling"));
     }
 
     public function test(){

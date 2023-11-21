@@ -16,4 +16,9 @@ class Category extends Model
     public function categoryChildrent(){
         return $this->hasMany(Category::class, 'parent_id');
     }
+
+    //Lấy tất cả sản phẩm thuộc về danh mục nào đó
+    public function products(){
+        return $this->hasMany(Product::class,'category_id');
+    }
 }
