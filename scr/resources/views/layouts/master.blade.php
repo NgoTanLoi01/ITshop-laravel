@@ -32,11 +32,11 @@
     <!-- Plugins JS File -->
     <script src="{{ asset('UserLTE/assets/js//jquery.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('UserLTE/assets/js//jquery.hoverIntent.min.j') }}s"></script>
+    <script src="{{ asset('UserLTE/assets/js//jquery.hoverIntent.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//superfish.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('UserLTE/assets/js//bootstrap-input-spinner.j') }}s"></script>
+    <script src="{{ asset('UserLTE/assets/js//bootstrap-input-spinner.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//jquery.plugin.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//jquery.countdown.min.js') }}"></script>

@@ -30,9 +30,11 @@
                             <thead>
                                 <th scope="col">Thứ tự</th>
                                 <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Giá</th>
+                                <th scope="col">Giá gốc</th>
+                                <th scope="col">Giá khuyến mãi</th>
                                 <th scope="col">Hình ảnh</th>
                                 <th scope="col">Danh mục</th>
+                                <th scope="col">Kho</th>
                                 <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -43,11 +45,13 @@
                                         <td>{{ $productItem->name }}</td>
                                         {{-- <td>{{ number_format($productItem->price) }}</td> --}}
                                         <td>{{ number_format(floatval($productItem->price)) }}</td>
+                                        <td>{{ number_format(floatval($productItem->sale_price)) }}</td>
                                         <td>
                                             <img class="product_image_150_100" src="{{ $productItem->feature_image_path }}"
                                                 alt="">
                                         </td>
                                         <td>{{ optional($productItem->category)->name }}</td>
+                                        <td>{{ $productItem->quantity }}</td>
                                         <td>
                                             <a href="{{ route('product.edit', ['id' => $productItem->id]) }}"
                                                 class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>

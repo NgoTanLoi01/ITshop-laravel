@@ -50,6 +50,16 @@
                             @enderror
 
                             <div class="form-group">
+                                <label>Giá sản phẩm sau khi giảm</label>
+                                <input name="sale_price" type="text"
+                                    class="form-control @error('sale_price') is-invalid @enderror"
+                                    placeholder="Nhập giá sản phẩm sau khi giảm" value="{{ old('sale_price') }}">
+                            </div>
+                            @error('sale_price')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+
+                            <div class="form-group">
                                 <label>Ảnh đại diện</label>
                                 <input name="feature_image_path" type="file" class="form-control-file">
                             </div>
@@ -83,6 +93,12 @@
                             @error('contents')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
+                            <div class="form-group">
+                                <label>Kho</label>
+                                <input name="quantity" type="text"
+                                    class="form-control" placeholder="Nhập số lượng sản phẩm nhập"
+                                    value="{{ old('quantity') }}">
+                            </div>
 
                             <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Submit</button>
                         </form>

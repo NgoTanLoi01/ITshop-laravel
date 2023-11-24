@@ -66,9 +66,11 @@ class AdminProductController extends Controller
             $dataProductCreate = [
                 'name' => $request->name,
                 'price' => $request->price,
+                'sale_price' => $request->sale_price,
                 'content' => $request->contents,
                 'user_id' => auth()->id(),
-                'category_id' => $request->category_id
+                'category_id' => $request->category_id,
+                'quantity' => $request->quantity
 
             ];
             $dataUploadFeatureImage = $this->storageTraitUpload($request,'feature_image_path','product/');
@@ -119,9 +121,11 @@ class AdminProductController extends Controller
             $dataProductUpdate = [
                 'name' => $request->name,
                 'price' => $request->price,
+                'sale_price' => $request->sale_price,
                 'content' => $request->contents,
                 'user_id' => auth()->id(),
-                'category_id' => $request->category_id
+                'category_id' => $request->category_id,
+                'quantity' => $request->quantity
 
             ];
             $dataUploadFeatureImage = $this->storageTraitUpload($request,'feature_image_path', 'product/');

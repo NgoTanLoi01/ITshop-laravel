@@ -1,10 +1,10 @@
 @extends('layouts.master')
 @section('title')
-<title>Home page</title>
+<title>NGO TAN LOI</title>
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('home/home.css') }}">
+<link rel="stylesheet" href="{{ asset('home/hPome.css') }}">
 @endsection
 
 @section('js')
@@ -75,27 +75,27 @@
     <div class="bg-light deal-container pt-7 pb-7 mb-5">
         <div class="container">
             <div class="heading text-center mb-4">
-                <h2 class="title">Deals & Outlet</h2><!-- End .title -->
-                <p class="title-desc">Today’s deal and more</p><!-- End .title-desc -->
+                <h2 class="title">Ưu đãi</h2><!-- End .title -->
+                <p class="title-desc">Ưu đã hôm nay và hơn thế</p><!-- End .title-desc -->
             </div><!-- End .heading -->
 
             <div class="row">
                 <div class="col-lg-6 deal-col">
                     <div class="deal" style="background-image: url('UserLTE/assets/images/demos/demo-3/deal/bg-1.jpg');">
                         <div class="deal-top">
-                            <h2>Deal of the Day.</h2>
-                            <h4>Limited quantities. </h4>
+                            <h2>Ưu đãi trong ngày</h2>
+                            <h4>Số lượng hạn chế </h4>
                         </div><!-- End .deal-top -->
 
                         <div class="deal-content">
-                            <h3 class="product-title"><a href="product.html">Home Smart Speaker with  Google Assistant</a></h3><!-- End .product-title -->
+                            <h3 class="product-title"><a href="product.html">Loa thông minh tại nhà có Google Assistant</a></h3><!-- End .product-title -->
 
                             <div class="product-price">
-                                <span class="new-price">$129.00</span>
-                                <span class="old-price">Was $150.99</span>
+                                <span class="new-price">2,900,000 VNĐ</span>
+                                <span class="old-price">Giá gốc 3,900,000 VNĐ</span>
                             </div><!-- End .product-price -->
 
-                            <a href="product.html" class="btn btn-link"><span>Shop Now</span><i class="icon-long-arrow-right"></i></a>
+                            <a href="#" class="btn btn-link"><span>Mua ngay</span><i class="icon-long-arrow-right"></i></a>
                         </div><!-- End .deal-content -->
 
                         <div class="deal-bottom">
@@ -186,7 +186,7 @@
             </div><!-- End .row -->
 
             <div class="more-container text-center mt-3 mb-0">
-                <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>Shop more Outlet deals</span><i class="icon-long-arrow-right"></i></a>
+                <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>Ưu đãi thêm</span><i class="icon-long-arrow-right"></i></a>
             </div><!-- End .more-container -->
         </div><!-- End .container -->
     </div><!-- End .deal-container -->

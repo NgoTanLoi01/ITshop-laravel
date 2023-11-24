@@ -31,6 +31,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Giá sản phẩm sau khi giảm</label>
+                                <input name="sale_price" type="text" class="form-control" placeholder="Nhập giá sản phẩm sau khi giảm"
+                                    value="{{ $product->sale_price }}">
+                            </div>
+
+                            <div class="form-group">
                                 <label>Ảnh đại diện</label>
                                 <input name="feature_image_path" type="file" class="form-control-file">
                                 <div class="col-md-3 feature_image_container">
@@ -74,6 +80,11 @@
                             <div class="form-group">
                                 <label>Miêu tả sản phẩm</label>
                                 <textarea name="contents" class="form-control" id="content">{{ $product->content }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Kho</label>
+                                <input name="quantity" type="text" class="form-control" placeholder="Nhập số lượng sản phẩm nhập"
+                                    value="{{ $product->quantity }}">
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Submit</button>
                         </form>

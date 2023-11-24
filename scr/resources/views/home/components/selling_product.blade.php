@@ -1,7 +1,7 @@
 <div class="container top">
     <div class="heading heading-flex mb-3">
         <div class="heading-left">
-            <h2 class="title">Sản phẩm bán chạy</h2><!-- End .title -->
+            <h2 class="title">Sản phẩm thịnh hành</h2><!-- End .title -->
         </div><!-- End .heading-left -->
     </div><!-- End .heading -->
 
@@ -54,20 +54,15 @@
 
                         <div class="product-body">
                             <div class="product-cat">
-                                <a href="#">Laptops</a>
+                                <a href="#"></a>
                             </div><!-- End .product-cat -->
                             <h3 class="product-title"><a
-                                    href="product.html">{{ ($productsSellingItem->name) }}</a></h3>
+                                    href="{{ asset('UserLTE/product') }}">{{ ($productsSellingItem->name) }}</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
-                                {{ ($productsSellingItem->price) }}
+                                <span class="old-price"> Gốc: <del>{{ number_format($productsSellingItem->price) }} VNĐ</del></span>
+                                <span class="new-price">{{ number_format($productsSellingItem->sale_price) }} VNĐ</span>
                             </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 4 đánh giá )</span>
-                            </div><!-- End .rating-container -->
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->
                 @endforeach

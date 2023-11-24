@@ -9,7 +9,6 @@
                 @php
                     $activeTab = true; // Biến để kiểm soát tab đang active
                 @endphp
-
                 @foreach ($categorys as $indexCategory => $categoryItem)
                     <li class="{{ $indexCategory == 0 ? 'nav-item' : '' }}">
                         <a class="nav-link {{ $activeTab ? 'active' : '' }}" id="trending-tab-{{ $categoryItem->id }}"
@@ -30,9 +29,7 @@
     <div class="row">
         <div class="col-xl-5col d-none d-xl-block">
             <div class="banner">
-                <a href="#">
-                    <img src="UserLTE/assets/images/demos/demo-3/banners/banner-4.jpg" alt="banner">
-                </a>
+                <img src="UserLTE/assets/images/demos/demo-3/banners/banner-5.png" alt="banner">
             </div><!-- End .banner -->
         </div><!-- End .col-xl-5col -->
 
@@ -67,7 +64,7 @@
                                 <div class="product {{ $indexCategoryProduct == 0 ? 'product-2' : '' }}">
                                     <figure class="product-media">
                                         <a href="product.html">
-                                            <img src="{{ config('app.base_url') .  $productItemTabs->feature_image_path}}"
+                                            <img src="{{ config('app.base_url') . $productItemTabs->feature_image_path }}"
                                                 alt="Product image" class="product-image">
                                         </a>
 
@@ -78,7 +75,8 @@
                                         </div><!-- End .product-action -->
 
                                         <div class="product-action product-action-dark">
-                                            <a href="#" class="btn-product btn-cart" title="Thêm vào giỏ hàng"><span>Thêm vào
+                                            <a href="#" class="btn-product btn-cart"
+                                                title="Thêm vào giỏ hàng"><span>Thêm vào
                                                     giỏ hàng</span></a>
                                             <a href="popup/quickView.html" class="btn-product btn-quickview"
                                                 title="Xem nhanh"><span>Xem nhanh</span></a>
@@ -97,8 +95,10 @@
                                             </a>
                                         </h3><!-- End .product-title -->
                                         <div class="product-price">
-                                            {{ $productItemTabs->price }}
-                                        </div><!-- End .product-price -->
+                                            <span class="old-price">Gốc:<del> {{ number_format($productItemTabs->price) }} VNĐ </del></span>
+                                            <br>
+                                            <span class="new-price">{{ number_format($productItemTabs->sale_price) }} VNĐ </span>
+                                        </div>
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
                             @endforeach
