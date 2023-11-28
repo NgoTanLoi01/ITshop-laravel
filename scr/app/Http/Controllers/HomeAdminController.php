@@ -14,10 +14,8 @@ class HomeAdminController extends Controller
         $categorys = Category::where('parent_id', 0)->get();
         $products = Product::latest()->take(10)->get();
         $productsSelling = Product::latest('views_count', 'desc')->take(12)->get();
-        return view("home.home", compact("sliders", "categorys", "products","productsSelling"));
+        $categorysLimit = Category::where('parent_id', 0)->take(6)->get();
+        return view("home.home", compact("sliders", "categorys", "products","productsSelling", "categorysLimit"));
     }
 
-    public function test(){
-        return view("test");
-    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeAdminController;
+use App\Http\Controllers\CategoryAdminController;
 use Illuminate\Support\Facades\Route; 
 
 
@@ -34,7 +35,10 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 //man hinh user
 Route::get('/', [HomeAdminController::class, 'index'])->name('home');
-Route::get('/test', [HomeAdminController::class, 'test'])->name('test');
+Route::get('/category/{slug}/{id}', [
+    'as' => 'category.product',
+    'uses' => 'App\Http\Controllers\CategoryAdminController@index'
+]);
 
 //xu ly admin
 Route::prefix('admin')->group(function () {

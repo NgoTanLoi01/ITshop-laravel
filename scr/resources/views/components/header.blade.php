@@ -139,21 +139,7 @@
         <div class="container">
             @include('components/siderbar')
 
-            <div class="header-center">
-                <nav class="main-nav">
-                    <ul class="menu sf-arrows">
-                        <li class="megamenu-container ">
-                            <a href="#">Trang chủ</a>
-                        </li>
-                        <li>
-                            <a href="#" class="">Sản phẩm</a>
-                        </li>
-                        <li>
-                            <a href="#" class="">Câu chuyện về sản phẩm</a>
-                        </li>
-                    </ul><!-- End .menu -->
-                </nav><!-- End .main-nav -->
-            </div><!-- End .header-center -->
+            @include('components/main_menu')
 
             <div class="header-right">
                 <i class="la la-lightbulb-o"></i>

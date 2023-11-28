@@ -17,13 +17,11 @@ class CategoryController extends Controller
     }
     public function create()
     {
-        $htmlOption = $this -> getCategory($parent_id ='');
+        $htmlOption = $this->getCategory($parent_id = '');
         return view('admin.category.add', compact('htmlOption'));
     }
     public function index()
     {
-        // $categories = $this->category->latest()->paginate(5);
-        // return view(view:'category.index', compact(var_name:'categories'));
         $categories = $this->category->paginate(5);
         return view('admin.category.index', compact('categories'));
     }
@@ -38,7 +36,8 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-    public function getCategory($parent_id) {
+    public function getCategory($parent_id)
+    {
         $data = $this->category->all();
         $recusive = new Recusive($data);
         $htmlOption = $recusive->categoryRecusive($parent_id);
@@ -48,20 +47,21 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->category->find($id);
-        $htmlOption = $this -> getCategory($category->parent_id);
+        $htmlOption = $this->getCategory($category->parent_id);
         return view('admin.category.edit', compact('category', 'htmlOption'));
     }
     public function delete($id)
     {
         $this->category->find($id)->delete();
-        return redirect()->route( 'categories.index');
+        return redirect()->route('categories.index');
     }
-    public function update($id, Request $request){
-        $this -> category->find($id)->update([
-        'name' => $request->name,
-        'parent_id' => $request->parent_id,
-        'slug' => str::slug($request->name)
+    public function update($id, Request $request)
+    {
+        $this->category->find($id)->update([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'slug' => str::slug($request->name)
         ]);
-        return redirect()->route( 'categories.index');
+        return redirect()->route('categories.index');
     }
 }

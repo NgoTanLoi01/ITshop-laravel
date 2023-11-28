@@ -11,18 +11,24 @@
                     {{-- <li class="item-lead"><a href="#">Daily offers</a></li>
                     <li class="item-lead"><a href="#">Gift Ideas</a></li> --}}
 
-                    @foreach ($categorys as $category)
+                    @foreach ($categorysLimit as $category)
                         <li>
                             <a href="#">{{ $category->name }}</a>
                             <!-- Danh mục con của Beds -->
                             <ul class="submenu">
                                 @foreach ($category->categoryChildrent as $categoryChildrent)
-                                    <li><a href="#">{{ $categoryChildrent->name }}</a></li>
+                                    <li>
+                                        <a
+                                            href="{{ route('category.product', ['slug' => $categoryChildrent->slug, 'id' => $categoryChildrent->id]) }}">
+                                            {{ $categoryChildrent->name }}
+                                        </a>
+                                    </li>
                                     <!-- Thêm danh mục con khác nếu cần -->
                                 @endforeach
                             </ul>
                         </li>
                     @endforeach
+
 
                 </ul><!-- End .menu-vertical -->
             </nav><!-- End .side-nav -->

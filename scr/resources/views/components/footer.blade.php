@@ -4,56 +4,50 @@
             <div class="row">
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget widget-about">
-                        <img src="UserLTE/assets/images/demos/demo-3/logo-footer.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
-                        <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+                        <img src="{{ asset('AdminLTE/dist/img/login_logo.png') }}" class="footer-logo" alt="Footer Logo"
+                            width="105" height="25">
+                        <p> NGO TAN LOI Digital Technologies Mang lại trải nghiệm mua sắm hơn cả tuyệt vời!</p>
 
                         <div class="widget-call">
                             <i class="icon-phone"></i>
-                            Got Question? Call us 24/7
-                            <a href="tel:#">+0123 456 789</a>         
+                            Có một câu hỏi? Gọi cho chúng tôi 24/7
+                            <a href="tel:#">033 712 0073</a>
                         </div><!-- End .widget-call -->
                     </div><!-- End .widget about-widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
 
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget">
-                        <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
-
                         <ul class="widget-list">
-                            <li><a href="about.html">About Molla</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">How to shop on Molla</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="contact.html">Contact us</a></li>
+                            <li><a href="#">Về NGO TAN LOI Digital Technologies</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Quy chế hoạt động</a></li>
+                            <li><a href="#">Câu hỏi thường gặp mua hàng</a></li>
+                            <li><a href="#">Tra cứu thông tin bảo hành</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
 
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget">
-                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
-
                         <ul class="widget-list">
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Money-back guarantee!</a></li>
-                            <li><a href="#">Returns</a></li>
-                            <li><a href="#">Shipping</a></li>
-                            <li><a href="#">Terms and conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Tin khuyến mãi</a></li>
+                            <li><a href="#">Hướng dẫn mua online</a></li>
+                            <li><a href="#">Hướng dẫn mua trả góp</a></li>
+                            <li><a href="#">Chính sách trả góp</a></li>
+                            <li><a href="#">Tin tuyển dụng</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
 
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget">
-                        <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
-
                         <ul class="widget-list">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="cart.html">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Hệ thống cửa hàng</a></li>
+                            <li><a href="#">Hệ thống cửa hàng</a></li>
+                            <li><a href="#">Hệ thống bảo hành</a></li>
+                            <li><a href="#">Giới thiệu máy đổi trả</a></li>
+                            <li><a href="#">Tin khuyến mãi</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -63,9 +57,11 @@
 
     <div class="footer-bottom">
         <div class="container">
-            <p class="footer-copyright">{{ getConfigValueFromSettingTable('Copyright') }}</p><!-- End .footer-copyright -->
+            <p class="footer-copyright">{{ getConfigValueFromSettingTable('Copyright') }}</p>
+            <!-- End .footer-copyright -->
             <figure class="footer-payments">
-                <img src="UserLTE/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                <img src="{{ asset('UserLTE/assets/images/payments.png') }}" alt="Payment methods" width="272"
+                    height="20">
             </figure><!-- End .footer-payments -->
         </div><!-- End .container -->
     </div><!-- End .footer-bottom -->

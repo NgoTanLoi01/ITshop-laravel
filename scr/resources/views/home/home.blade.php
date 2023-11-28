@@ -25,37 +25,34 @@
                     <div class="intro-banners">
                         <div class="banner mb-lg-1 mb-xl-2">
                             <a href="#">
-                                <img src="UserLTE/assets/images/demos/demo-3/banners/banner-1.jpg" alt="Banner">
+                                <img src="{{ asset('UserLTE/assets/images/demos/demo-3/banners/banner-1.jpg') }}" alt="Banner">
                             </a>
 
                             <div class="banner-content">
-                                <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="#">Top Product</a></h4><!-- End .banner-subtitle -->
-                                <h3 class="banner-title"><a href="#">Edifier <br>Stereo Bluetooth</a></h3><!-- End .banner-title -->
-                                <a href="#" class="banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="#">Sản phẩm hàng đầu</a></h4><!-- End .banner-subtitle -->
+                                <h3 class="banner-title"><a href="#">Loa <span>JPG Bluetooth</span></a></h3><!-- End .banner-title -->
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
 
                         <div class="banner mb-lg-1 mb-xl-2">
                             <a href="#">
-                                <img src="UserLTE/assets/images/demos/demo-3/banners/banner-2.jpg" alt="Banner">
+                                <img src="{{ asset('UserLTE/assets/images/demos/demo-3/banners/banner-2.jpg') }}" alt="Banner">
                             </a>
 
                             <div class="banner-content">
-                                <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="#">Clearance</a></h4><!-- End .banner-subtitle -->
-                                <h3 class="banner-title"><a href="#">GoPro - Fusion 360 <span>Save $70</span></a></h3><!-- End .banner-title -->
-                                <a href="#" class="banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="#">Sản phẩm nổi bật</a></h4><!-- End .banner-subtitle -->
+                                <h3 class="banner-title"><a href="#">Camera<span>GoPro - Fusion 360</span></a></h3><!-- End .banner-title -->
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
 
                         <div class="banner mb-0">
                             <a href="#">
-                                <img src="UserLTE/assets/images/demos/demo-3/banners/banner-3.jpg" alt="Banner">
+                                <img src="{{ asset('UserLTE/assets/images/demos/demo-3/banners/banner-3.jpg') }}" alt="Banner">
                             </a>
 
                             <div class="banner-content">
-                                <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="#">Featured</a></h4><!-- End .banner-subtitle -->
-                                <h3 class="banner-title"><a href="#">Apple Watch 4 <span>Our Hottest Deals</span></a></h3><!-- End .banner-title -->
-                                <a href="#" class="banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="#">Sản phẩm thịnh hành</a></h4><!-- End .banner-subtitle -->
+                                <h3 class="banner-title"><a href="#">Đồng hồ thông minh<span>Apple Watch 4</span></a></h3><!-- End .banner-title -->
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
                     </div><!-- End .intro-banners -->
@@ -72,124 +69,6 @@
 
     <div class="mb-7 mb-lg-11"></div><!-- End .mb-7 -->
 
-    <div class="bg-light deal-container pt-7 pb-7 mb-5">
-        <div class="container">
-            <div class="heading text-center mb-4">
-                <h2 class="title">Ưu đãi</h2><!-- End .title -->
-                <p class="title-desc">Ưu đã hôm nay và hơn thế</p><!-- End .title-desc -->
-            </div><!-- End .heading -->
-
-            <div class="row">
-                <div class="col-lg-6 deal-col">
-                    <div class="deal" style="background-image: url('UserLTE/assets/images/demos/demo-3/deal/bg-1.jpg');">
-                        <div class="deal-top">
-                            <h2>Ưu đãi trong ngày</h2>
-                            <h4>Số lượng hạn chế </h4>
-                        </div><!-- End .deal-top -->
-
-                        <div class="deal-content">
-                            <h3 class="product-title"><a href="product.html">Loa thông minh tại nhà có Google Assistant</a></h3><!-- End .product-title -->
-
-                            <div class="product-price">
-                                <span class="new-price">2,900,000 VNĐ</span>
-                                <span class="old-price">Giá gốc 3,900,000 VNĐ</span>
-                            </div><!-- End .product-price -->
-
-                            <a href="#" class="btn btn-link"><span>Mua ngay</span><i class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .deal-content -->
-
-                        <div class="deal-bottom">
-                            <div class="deal-countdown" data-until="+10h"></div><!-- End .deal-countdown -->
-                        </div><!-- End .deal-bottom -->
-                    </div><!-- End .deal -->
-                </div><!-- End .col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="products">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-top">Top</span>
-                                        <span class="product-label label-circle label-sale">Sale</span>
-                                        <a href="product.html">
-                                            <img src="UserLTE/assets/images/demos/demo-3/products/product-5.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action product-action-dark">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Digital Cameras</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Canon - EOS 5D Mark IV DSLR  Camera</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            <span class="new-price">$3,599.99</span>
-                                            <span class="old-price">Was $3,999.99</span>
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 5 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-                            </div><!-- End .col-sm-6 -->
-                            
-                            <div class="col-6">
-                                <div class="product product-2">
-                                    <figure class="product-media">
-                                        <span class="product-label label-circle label-sale">Sale</span>
-                                        <a href="product.html">
-                                            <img src="UserLTE/assets/images/demos/demo-3/products/product-6.jpg" alt="Product image" class="product-image">
-                                        </a>
-
-                                        <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                        </div><!-- End .product-action -->
-
-                                        <div class="product-action product-action-dark">
-                                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="#">Computers & Tablets</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="product.html">Apple - Smart Keyboard Folio  for 11-inch iPad Pro</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                            <span class="new-price">$179.00</span>
-                                            <span class="old-price">Was $200.99</span>
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 4 Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
-                            </div><!-- End .col-sm-6 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .products -->
-                </div><!-- End .col-lg-6 -->
-            </div><!-- End .row -->
-
-            <div class="more-container text-center mt-3 mb-0">
-                <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>Ưu đãi thêm</span><i class="icon-long-arrow-right"></i></a>
-            </div><!-- End .more-container -->
-        </div><!-- End .container -->
-    </div><!-- End .deal-container -->
 
     <div class="container">
         <div class="owl-carousel mt-5 mb-5 owl-simple" data-toggle="owl" 
@@ -330,11 +209,11 @@
                             <p class="cta-desc">Mọi ý kiến đóng góp xin gửi về.</p><!-- End .cta-desc -->
                     
                             <div class="social-icons social-icons-colored justify-content-center">
-                                <a href="" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                <a href="" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                <a href="" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                                <a href="" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                                <a href="" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                <a href="#" class="social-icon social-facebook" title="Facebook"><i class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon social-twitter" title="Twitter" ><i class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon social-instagram" title="Instagram" ><i class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon social-youtube" title="Youtube"><i class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon social-pinterest" title="Pinterest"><i class="icon-pinterest"></i></a>
                             </div><!-- End .soial-icons -->
                         </div><!-- End .cta-wrapper -->
                     </div><!-- End .col-lg-6 -->
