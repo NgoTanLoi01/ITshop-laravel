@@ -37,11 +37,6 @@ $baseURL = config('app.base_url');
                                 {{ $slider->description }}
                             </p>
                         </div><!-- End .intro-price -->
-
-                        <a href="#" class="btn btn-primary btn-round">
-                            <span>Click Here</span>
-                            <i class="icon-long-arrow-right"></i>
-                        </a>
                     </div><!-- End .intro-content -->
 
                 </div><!-- End .intro-slide -->

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeAdminController;
 use App\Http\Controllers\CategoryAdminController;
-use Illuminate\Support\Facades\Route; 
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -21,9 +21,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/home', function () {
-//     return view('home');
-// });
+
 //man hinh admin
 Route::get('/admin', [AdminController::class, 'loginAdmin'])->name('loginAdmin');
 Route::get('/login', [UserController::class, 'login'])->name('login');
@@ -39,6 +37,7 @@ Route::get('/category/{slug}/{id}', [
     'as' => 'category.product',
     'uses' => 'App\Http\Controllers\CategoryAdminController@index'
 ]);
+Route::get('/detail/{slug}', [HomeAdminController::class, 'detail'])->name('detail');
 
 //xu ly admin
 Route::prefix('admin')->group(function () {
@@ -47,12 +46,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [
             'as' => 'categories.index',
             'uses' => 'App\Http\Controllers\CategoryController@index',
-            'middleware'=>'can:category-list'
+            'middleware' => 'can:category-list'
         ]);
         Route::get('/create', [
             'as' => 'categories.create',
             'uses' => 'App\Http\Controllers\CategoryController@create',
-            'middleware'=>'can:category-add'
+            'middleware' => 'can:category-add'
         ]);
         Route::post('/store', [
             'as' => 'categories.store',
@@ -61,7 +60,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [
             'as' => 'categories.edit',
             'uses' => 'App\Http\Controllers\CategoryController@edit',
-            'middleware'=>'can:category-edit'
+            'middleware' => 'can:category-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'categories.update',
@@ -70,22 +69,21 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as' => 'categories.delete',
             'uses' => 'App\Http\Controllers\CategoryController@delete',
-            'middleware'=>'can:category-delete'
+            'middleware' => 'can:category-delete'
         ]);
-        
     });
-    
+
     //menus
     Route::prefix('menus')->group(function () {
         Route::get('/', [
             'as' => 'menus.index',
             'uses' => 'App\Http\Controllers\MenusController@index',
-            'middleware'=>'can:menu-list'
+            'middleware' => 'can:menu-list'
         ]);
         Route::get('/create', [
             'as' => 'menus.create',
             'uses' => 'App\Http\Controllers\MenusController@create',
-            'middleware'=>'can:menu-add'
+            'middleware' => 'can:menu-add'
         ]);
         Route::post('/store', [
             'as' => 'menus.store',
@@ -94,7 +92,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [
             'as' => 'menus.edit',
             'uses' => 'App\Http\Controllers\MenusController@edit',
-            'middleware'=>'can:menu-edit'
+            'middleware' => 'can:menu-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'menus.update',
@@ -103,39 +101,39 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as' => 'menus.delete',
             'uses' => 'App\Http\Controllers\MenusController@delete',
-            'middleware'=>'can:menu-delete'
+            'middleware' => 'can:menu-delete'
         ]);
     });
 
     //product
     Route::prefix('product')->group(function () {
         Route::get('/', [
-            'as' => 'product.index', 
+            'as' => 'product.index',
             'uses' => 'App\Http\Controllers\AdminProductController@index',
-            'middleware'=>'can:product-list'
+            'middleware' => 'can:product-list'
         ]);
         Route::get('/create', [
-            'as' => 'product.create', 
+            'as' => 'product.create',
             'uses' => 'App\Http\Controllers\AdminProductController@create',
-            'middleware'=>'can:product-add'
+            'middleware' => 'can:product-add'
         ]);
         Route::post('/store', [
-            'as' => 'product.store', 
+            'as' => 'product.store',
             'uses' => 'App\Http\Controllers\AdminProductController@store'
         ]);
         Route::get('/edit/{id}', [
-            'as' => 'product.edit', 
+            'as' => 'product.edit',
             'uses' => 'App\Http\Controllers\AdminProductController@edit',
-            'middleware'=>'can:product-edit'
+            'middleware' => 'can:product-edit'
         ]);
         Route::post('/update/{id}', [
-            'as' => 'product.update', 
+            'as' => 'product.update',
             'uses' => 'App\Http\Controllers\AdminProductController@update'
         ]);
         Route::get('/delete/{id}', [
-            'as' => 'product.delete', 
+            'as' => 'product.delete',
             'uses' => 'App\Http\Controllers\AdminProductController@delete',
-            'middleware'=>'can:product-delete'
+            'middleware' => 'can:product-delete'
         ]);
     });
 
@@ -144,12 +142,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [
             'as' => 'slider.index',
             'uses' => 'App\Http\Controllers\SliderAdminController@index',
-            'middleware'=>'can:slider-list'
+            'middleware' => 'can:slider-list'
         ]);
         Route::get('/create', [
             'as' => 'slider.create',
             'uses' => 'App\Http\Controllers\SliderAdminController@create',
-            'middleware'=>'can:slider-add'
+            'middleware' => 'can:slider-add'
         ]);
         Route::post('/store', [
             'as' => 'slider.store',
@@ -158,7 +156,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [
             'as' => 'slider.edit',
             'uses' => 'App\Http\Controllers\SliderAdminController@edit',
-            'middleware'=>'can:slider-edit'
+            'middleware' => 'can:slider-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'slider.update',
@@ -167,9 +165,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as' => 'slider.delete',
             'uses' => 'App\Http\Controllers\SliderAdminController@delete',
-            'middleware'=>'can:slider-delete'
+            'middleware' => 'can:slider-delete'
         ]);
-        
     });
 
     //setting
@@ -177,12 +174,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [
             'as' => 'settings.index',
             'uses' => 'App\Http\Controllers\AdminSettingController@index',
-            'middleware'=>'can:setting-list'
+            'middleware' => 'can:setting-list'
         ]);
         Route::get('/create', [
             'as' => 'settings.create',
             'uses' => 'App\Http\Controllers\AdminSettingController@create',
-            'middleware'=>'can:slider-add'
+            'middleware' => 'can:slider-add'
         ]);
         Route::post('/store', [
             'as' => 'settings.store',
@@ -191,7 +188,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [
             'as' => 'settings.edit',
             'uses' => 'App\Http\Controllers\AdminSettingController@edit',
-            'middleware'=>'can:slider-edit'
+            'middleware' => 'can:slider-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'settings.update',
@@ -200,7 +197,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as' => 'settings.delete',
             'uses' => 'App\Http\Controllers\AdminSettingController@delete',
-            'middleware'=>'can:slider-delete'
+            'middleware' => 'can:slider-delete'
         ]);
     });
 
@@ -209,12 +206,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [
             'as' => 'users.index',
             'uses' => 'App\Http\Controllers\AdminUserController@index',
-            'middleware'=>'can:role-list'
+            'middleware' => 'can:role-list'
         ]);
         Route::get('/create', [
             'as' => 'users.create',
             'uses' => 'App\Http\Controllers\AdminUserController@create',
-            'middleware'=>'can:user-add'
+            'middleware' => 'can:user-add'
         ]);
         Route::post('/store', [
             'as' => 'users.store',
@@ -223,7 +220,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [
             'as' => 'users.edit',
             'uses' => 'App\Http\Controllers\AdminUserController@edit',
-            'middleware'=>'can:user-edit'
+            'middleware' => 'can:user-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'users.update',
@@ -232,7 +229,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as' => 'users.delete',
             'uses' => 'App\Http\Controllers\AdminUserController@delete',
-            'middleware'=>'can:user-delete'
+            'middleware' => 'can:user-delete'
         ]);
     });
 
@@ -241,12 +238,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [
             'as' => 'roles.index',
             'uses' => 'App\Http\Controllers\AdminRoleController@index',
-            'middleware'=>'can:role-list'
+            'middleware' => 'can:role-list'
         ]);
         Route::get('/create', [
             'as' => 'roles.create',
             'uses' => 'App\Http\Controllers\AdminRoleController@create',
-            'middleware'=>'can:role-add'
+            'middleware' => 'can:role-add'
         ]);
         Route::post('/store', [
             'as' => 'roles.store',
@@ -255,7 +252,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [
             'as' => 'roles.edit',
             'uses' => 'App\Http\Controllers\AdminRoleController@edit',
-            'middleware'=>'can:role-edit'
+            'middleware' => 'can:role-edit'
         ]);
         Route::post('/update/{id}', [
             'as' => 'roles.update',
@@ -264,7 +261,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as' => 'roles.delete',
             'uses' => 'App\Http\Controllers\AdminRoleController@delete',
-            'middleware'=>'can:role-delete'
+            'middleware' => 'can:role-delete'
         ]);
     });
 
@@ -279,8 +276,4 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\AdminPermissionController@store'
         ]);
     });
-
 });
-
-
-

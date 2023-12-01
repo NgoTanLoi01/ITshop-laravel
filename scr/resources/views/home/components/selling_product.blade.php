@@ -35,7 +35,7 @@
                 @foreach ($productsSelling as $keySelling => $productsSellingItem)
                     <div class="product product-2">
                         <figure class="product-media">
-                            <a href="product.html">
+                            <a href="{{ route('detail', $productsSellingItem->slug) }}">
                                 <img src="{{ config('app.base_url') .  $productsSellingItem->feature_image_path}}"
                                     alt="Product image" class="product-image">
                             </a>
@@ -54,7 +54,7 @@
 
                         <div class="product-body">
                             <div class="product-cat">
-                                <a href="#"></a>
+                                <a href="{{ route('detail', $productsSellingItem->slug) }}"></a>
                             </div><!-- End .product-cat -->
                             <h3 class="product-title"><a
                                     href="{{ asset('UserLTE/product') }}">{{ ($productsSellingItem->name) }}</a></h3>

@@ -63,7 +63,7 @@
                             @foreach ($categoryItemProduct->products as $productItemTabs)
                                 <div class="product {{ $indexCategoryProduct == 0 ? 'product-2' : '' }}">
                                     <figure class="product-media">
-                                        <a href="product.html">
+                                        <a href="{{ route('detail', $productItemTabs->slug) }}">
                                             <img src="{{ config('app.base_url') . $productItemTabs->feature_image_path }}"
                                                 alt="Product image" class="product-image">
                                         </a>
@@ -85,7 +85,7 @@
 
                                     <div class="product-body">
                                         <div class="product-cat">
-                                            <a href="#"> <!-- Thêm đường dẫn tương ứng -->
+                                            <a href="{{ route('detail', $productItemTabs->slug) }}"> <!-- Thêm đường dẫn tương ứng -->
                                                 {{ $productItemTabs->category_name }}
                                             </a>
                                         </div><!-- End .product-cat -->

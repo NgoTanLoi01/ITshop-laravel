@@ -4,7 +4,7 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('home/hPome.css') }}">
+    <link rel="stylesheet" href="{{ asset('home/home.css') }}">
 @endsection
 
 @section('js')

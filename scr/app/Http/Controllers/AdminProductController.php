@@ -42,7 +42,7 @@ class AdminProductController extends Controller
     public function index()
     {
         $products = $this->product->latest()->paginate(5);
-        return view('admin.product.index', compact( 'products'));
+        return view('admin.product.index', compact('products'));
     }
 
     public function create()
@@ -61,6 +61,7 @@ class AdminProductController extends Controller
 
     public function store(ProductAddRequest $request)
     {
+        
         try {
             DB::beginTransaction();
             $dataProductCreate = [
@@ -70,10 +71,11 @@ class AdminProductController extends Controller
                 'content' => $request->contents,
                 'user_id' => auth()->id(),
                 'category_id' => $request->category_id,
-                'quantity' => $request->quantity
+                'quantity' => $request->quantity,
+                'slug' => Str::slug($request->name),
 
             ];
-            $dataUploadFeatureImage = $this->storageTraitUpload($request,'feature_image_path','product/');
+            $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product/');
             if (!empty($dataUploadFeatureImage)) {
                 $dataProductCreate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
                 $dataProductCreate['feature_image_path'] = $dataUploadFeatureImage['file_path'];
@@ -83,7 +85,7 @@ class AdminProductController extends Controller
             //insert data to product_images
             if ($request->hasFile('image_path')) {
                 foreach ($request->image_path as $fileItem) {
-                    $dataProductImageDetail = $this->storageTraitUploadMytiple($fileItem,'product/');
+                    $dataProductImageDetail = $this->storageTraitUploadMytiple($fileItem, 'product/');
                     $product->images()->create([
                         'image_path' => $dataProductImageDetail['file_path'],
                         'image_name' => $dataProductImageDetail['file_name']
@@ -92,7 +94,7 @@ class AdminProductController extends Controller
             }
             //Insert tags for product
             if (!empty($request->tags)) {
-                
+
                 foreach ($request->tags as $tagItem) {
                     //insert to tags
                     $tagInstance = $this->tag->firstOrCreate(['name' => $tagItem]);
@@ -102,7 +104,7 @@ class AdminProductController extends Controller
 
             $product->tags()->attach($tagIds);
             DB::commit();
-            return redirect()->route( 'product.index');
+            return redirect()->route('product.index');
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
@@ -110,6 +112,7 @@ class AdminProductController extends Controller
     }
     public function edit($id)
     {
+        
         $product = $this->product->find($id);
         $htmlOption = $this->getCategory($product->category_id);
         return view('admin.product.edit', compact('htmlOption', 'product'));
@@ -125,10 +128,12 @@ class AdminProductController extends Controller
                 'content' => $request->contents,
                 'user_id' => auth()->id(),
                 'category_id' => $request->category_id,
-                'quantity' => $request->quantity
+                'quantity' => $request->quantity,
+                'slug' => Str::slug($request->name),
+
 
             ];
-            $dataUploadFeatureImage = $this->storageTraitUpload($request,'feature_image_path', 'product/');
+            $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product/');
             if (!empty($dataUploadFeatureImage)) {
                 $dataProductUpdate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
                 $dataProductUpdate['feature_image_path'] = $dataUploadFeatureImage['file_path'];
@@ -140,7 +145,7 @@ class AdminProductController extends Controller
             if ($request->hasFile('image_path')) {
                 $this->productImage->where('product_id', $id)->delete();
                 foreach ($request->image_path as $fileItem) {
-                    $dataProductImageDetail = $this->storageTraitUploadMytiple($fileItem,'product');
+                    $dataProductImageDetail = $this->storageTraitUploadMytiple($fileItem, 'product');
                     $product->images()->create([
                         'image_path' => $dataProductImageDetail['file_path'],
                         'image_name' => $dataProductImageDetail['file_name']
@@ -159,7 +164,7 @@ class AdminProductController extends Controller
 
             $product->tags()->sync($tagIds);
             DB::commit();
-            return redirect()->route( 'product.index');
+            return redirect()->route('product.index');
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());

@@ -95,11 +95,10 @@
                             @enderror
                             <div class="form-group">
                                 <label>Kho</label>
-                                <input name="quantity" type="text"
-                                    class="form-control" placeholder="Nhập số lượng sản phẩm nhập"
-                                    value="{{ old('quantity') }}">
+                                <input name="quantity" type="text" class="form-control"
+                                    placeholder="Nhập số lượng sản phẩm nhập" value="{{ old('quantity') }}">
                             </div>
-
+                            
                             <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Submit</button>
                         </form>
                     </div>
