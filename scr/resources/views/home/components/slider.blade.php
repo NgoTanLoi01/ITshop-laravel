@@ -34,7 +34,7 @@ $baseURL = config('app.base_url');
 
                         <div class="intro-price">
                             <p> 
-                                {{ $slider->description }}
+                                {!! $slider->description !!}
                             </p>
                         </div><!-- End .intro-price -->
                     </div><!-- End .intro-content -->

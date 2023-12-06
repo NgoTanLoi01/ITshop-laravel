@@ -64,27 +64,36 @@
                                 <!-- End .product-title -->
 
                                 <div class="product-price">
-                                    <span class="old-price"> Gốc: <del>{{ number_format($product->price) }} VNĐ</del></span>
+                                    <span class="old-price"> Gốc: <del>{{ number_format($product->price) }}
+                                            VNĐ</del></span>
                                 </div><!-- End .product-price -->
                                 <div class="product-price">
                                     <span class="new-price">{{ number_format($product->sale_price) }} VNĐ</span>
                                 </div><!-- End .product-price -->
                                 <div class="">
-                                    <label for="qty">{{ $product->quantity }} sản phẩm có sẵn</label>
-                                    <div class="product-details-quantity">
-                                        <input type="number" id="qty" class="form-control" value="1"
-                                            min="1" max="{{ $product->quantity }}" step="1" data-decimals="0"
-                                            required>
-                                    </div><!-- End .product-details-quantity -->
-                                </div><!-- End .details-filter-row -->
-                                <br>
-                                <div class="product-details-action">
-                                    <a href="#" class="btn-product btn-cart"><span>Thêm vào giỏ hàng</span></a>
+                                    <form action="{{ route('cart.add') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <label for="qty">{{ $product->quantity }} sản phẩm có sẵn</label>
+                                        <div class="product-details-quantity">
+                                            <input type="number" name="quantity" class="form-control" value="1"
+                                                min="1" max="{{ $product->quantity }}" step="1"
+                                                data-decimals="0" required>
+                                        </div><!-- End .product-details-quantity -->
+                                        <br>
+                                        <div class="product-details-action">
+                                            <button type="submit" class="btn-product btn-cart"><span>Thêm vào giỏ
+                                                    hàng</span></button>
 
-                                    <div class="details-action-wrapper">
-                                        <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Thêm vào danh sách yêu thích</span></a>
-                                    </div><!-- End .details-action-wrapper -->
-                                </div><!-- End .product-details-action -->
+                                            <div class="details-action-wrapper">
+                                                <a href="#" class="btn-product btn-wishlist"
+                                                    title="Wishlist"><span>Thêm
+                                                        vào danh sách yêu thích</span></a>
+                                            </div><!-- End .details-action-wrapper -->
+                                        </div><!-- End .product-details-action -->
+                                    </form>
+                                </div><!-- End .details-filter-row -->
+
 
                                 <div class="product-details-footer">
                                     <div class="social-icons social-icons-sm">
@@ -159,7 +168,8 @@
                                 </a>
 
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm vào danh sách yêu thích</span></a>
+                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm vào
+                                            danh sách yêu thích</span></a>
                                     <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
                                         title="Xem nhanh"><span>Xem nhanh</span></a>
                                 </div><!-- End .product-action-vertical -->
@@ -173,11 +183,15 @@
                                 {{-- <div class="product-cat">
                                     <a href="#">Danh mục</a>
                                 </div><!-- End .product-cat --> --}}
-                                <h3 class="product-title"><a href="{{ route('detail', $productsSellingItem->slug) }}">{{ $productsSellingItem->name }}</a></h3>
+                                <h3 class="product-title"><a
+                                        href="{{ route('detail', $productsSellingItem->slug) }}">{{ $productsSellingItem->name }}</a>
+                                </h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
-                                    <span class="old-price"> Gốc: <del>{{ number_format($productsSellingItem->price) }} VNĐ</del></span>
-                                    <span class="new-price">{{ number_format($productsSellingItem->sale_price) }} VNĐ</span>
+                                    <span class="old-price"> Gốc: <del>{{ number_format($productsSellingItem->price) }}
+                                            VNĐ</del></span>
+                                    <span class="new-price">{{ number_format($productsSellingItem->sale_price) }}
+                                        VNĐ</span>
                                 </div><!-- End .product-price -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->

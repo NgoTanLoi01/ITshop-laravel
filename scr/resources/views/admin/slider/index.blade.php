@@ -43,7 +43,7 @@
                                     <tr>
                                         <th scope="row">{{ $slider->id }}</th>
                                         <td>{{ $slider->name }}</td>
-                                        <td>{{ $slider->description }}</td>
+                                        <td>{!! $slider->description !!}</td>
                                         <td><img class="image_slider_150_100" src="{{ $slider->image_path }}"
                                                 alt=""></td>
                                         <td>

@@ -2,7 +2,8 @@
     <div class="header-top">
         <div class="container">
             <div class="header-left">
-                <a href="tel:#"><i class="icon-phone"></i>{{ getConfigValueFromSettingTable('Phone_contact') }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="tel:#"><i
+                        class="icon-phone"></i>{{ getConfigValueFromSettingTable('Phone_contact') }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div><!-- End .header-left -->
             <div class="header-left">
                 <a href="tel:#"><i class="icon-envelope"></i>{{ getConfigValueFromSettingTable('Email') }}</a>
@@ -68,68 +69,50 @@
                         aria-expanded="false" data-display="static">
                         <div class="icon">
                             <i class="icon-shopping-cart"></i>
-                            <span class="cart-count">2</span>
+                            <span class="cart-count">{{ $cart->getTotalQuantity() }}</span>
                         </div>
                         <p>Giỏ hàng</p>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-cart-products">
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">Beige knitted elastic runner shoes</a>
-                                    </h4>
+                    @foreach ($cart->list() as $key => $value)
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-cart-products">
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <h4 class="product-title">
+                                            <a href="#">{{ $value['name'] }}</a>
+                                        </h4>
 
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1</span>
-                                        x $84.00
-                                    </span>
-                                </div><!-- End .product-cart-details -->
+                                        <span class="cart-product-info">
+                                            <span class="cart-product-qty">{{$value['quantity']}} x</span>
+                                            {{number_format($value['price'])}} VNĐ
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
 
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="UserLTE/assets/images/products/cart/product-1.jpg" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i
-                                        class="icon-close"></i></a>
-                            </div><!-- End .product -->
+                                    <figure class="product-image-container">
+                                        <a href="#" class="product-image">
+                                            <img src="{{ config('app.base_url') .$value['image']}}" alt="product">
+                                        </a>
+                                    </figure>
+                                    <a href="#" class="btn-remove" title="Remove Product"><i
+                                            class="icon-close"></i></a>
+                                </div><!-- End .product -->
+                            </div><!-- End .cart-product -->
 
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">Blue utility pinafore denim dress</a>
-                                    </h4>
+                            <div class="dropdown-cart-total">
+                                <span>Tổng tiền</span>
 
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1</span>
-                                        x $76.00
-                                    </span>
-                                </div><!-- End .product-cart-details -->
+                                <span class="cart-total-price">{{ number_format($value['price'] * $value['quantity']) }} VNĐ</span>
+                            </div><!-- End .dropdown-cart-total -->
 
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="UserLTE/assets/images/products/cart/product-2.jpg" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i
-                                        class="icon-close"></i></a>
-                            </div><!-- End .product -->
-                        </div><!-- End .cart-product -->
+                            <div class="dropdown-cart-action">
+                                <a href="{{ route('cart.index') }}" class="btn btn-primary">Xem</a>
+                                <a href="{{ route('cart.index') }}" class="btn btn-outline-primary-2"><span>Thanh
+                                        toán</span><i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .dropdown-cart-total -->
+                        </div><!-- End .dropdown-menu -->
+                    @endforeach
 
-                        <div class="dropdown-cart-total">
-                            <span>Total</span>
-
-                            <span class="cart-total-price">$160.00</span>
-                        </div><!-- End .dropdown-cart-total -->
-
-                        <div class="dropdown-cart-action">
-                            <a href="cart.html" class="btn btn-primary">View Cart</a>
-                            <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i
-                                    class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .dropdown-cart-total -->
-                    </div><!-- End .dropdown-menu -->
                 </div><!-- End .cart-dropdown -->
             </div><!-- End .header-right -->
         </div><!-- End .container -->
@@ -143,7 +126,8 @@
 
             <div class="header-right">
                 <i class="la la-lightbulb-o"></i>
-                <p>Khai trương<span class="highlight">&nbsp;<span style="color: red; font-size: 20px" >SỐC</span> không giảm giá!</span></p>
+                <p>Khai trương<span class="highlight">&nbsp;<span style="color: red; font-size: 20px">SỐC</span> không
+                        giảm giá!</span></p>
             </div>
         </div><!-- End .container -->
     </div><!-- End .header-bottom -->

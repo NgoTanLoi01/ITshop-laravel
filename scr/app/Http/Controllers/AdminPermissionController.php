@@ -10,7 +10,7 @@ class AdminPermissionController extends Controller
     public function createPermissions(){
         return view('admin.permission.add');
     }
-
+    
     public function store(Request $request){
         $permissions = Permission::create([
             'name'=> $request->module_parent,

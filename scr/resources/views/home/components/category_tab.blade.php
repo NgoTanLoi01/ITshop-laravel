@@ -74,13 +74,6 @@
                                                     thích</span></a>
                                         </div><!-- End .product-action -->
 
-                                        <div class="product-action product-action-dark">
-                                            <a href="#" class="btn-product btn-cart"
-                                                title="Thêm vào giỏ hàng"><span>Thêm vào
-                                                    giỏ hàng</span></a>
-                                            <a href="popup/quickView.html" class="btn-product btn-quickview"
-                                                title="Xem nhanh"><span>Xem nhanh</span></a>
-                                        </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">

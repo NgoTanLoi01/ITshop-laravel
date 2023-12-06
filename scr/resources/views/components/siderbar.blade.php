@@ -11,7 +11,7 @@
                     @foreach ($categorys as $category)
                         <li>
                             <a href="#">{{ $category->name }}</a>
-                            <!-- Danh mục con của Beds -->
+                            <!-- Danh mục con-->
                             <ul class="submenu">
                                 @foreach ($category->categoryChildrent as $categoryChildrent)
                                     <li>

@@ -42,7 +42,7 @@
                                     <tr>
                                         <th scope="row">{{ $role->id }}</th>
                                         <td>{{ $role->name }}</td>
-                                        <td>{{ $role->display_name }}</td>
+                                        <td>{!! $role->display_name !!}</td>
                                         <td>
                                             <a href="{{ route('roles.edit', ['id' => $role->id]) }}"
                                                 class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
