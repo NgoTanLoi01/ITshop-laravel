@@ -26,7 +26,10 @@
           composer update
 
   - Chạy dự án
-    - Chạy lệnh sau để tạo ra một symbolic link trong thư mục public của Laravel
+    - Chạy lệnh sau để xóa symbolic link cũ trong thư mục public của Laravel 
+   
+           Remove-Item -Recurse -Force public\storage
+    - Chạy lệnh sau để tạo ra một symbolic link mới trong thư mục public của Laravel
    
            php artisan storage:link
     - Chạy lệnh sau để tạo các bảng cơ sở dữ liệu
