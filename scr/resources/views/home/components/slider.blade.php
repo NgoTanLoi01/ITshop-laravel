@@ -15,7 +15,7 @@ $baseURL = config('app.base_url');
                     }
                 }
             }'>
-            @foreach ($sliders as $slider)
+            @foreach ($sliders as $index => $slider)
                 <div class="intro-slide">
 
                     <figure class="slide-image">
@@ -45,4 +45,26 @@ $baseURL = config('app.base_url');
 
         <span class="slider-loader"></span><!-- End .slider-loader -->
     </div><!-- End .intro-slider-container -->
+
+    <script>
+        $(document).ready(function () {
+            var introSlider = $(".intro-slider");
+            
+            introSlider.owlCarousel();
+
+            var autoSlideInterval = setInterval(function () {
+                introSlider.trigger('next.owl.carousel');
+            }, 3000); 
+
+            introSlider.on('mouseover', function () {
+                clearInterval(autoSlideInterval);
+            });
+
+            introSlider.on('mouseout', function () {
+                autoSlideInterval = setInterval(function () {
+                    introSlider.trigger('next.owl.carousel');
+                }, 3000); 
+            });
+        });
+    </script>
 </div><!-- End .col-lg-8 -->

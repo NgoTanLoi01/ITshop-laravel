@@ -17,7 +17,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'Settings', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Danh sách', 'key' => 'setting'])
 
         <div class="content">
             <div class="container-fluid">
@@ -25,13 +25,13 @@
                     <div class="col-md-12">
                         <div class="btn-group dropleft float-right">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="">
-                                <b class="">Add setting</b>
+                                <b class="">Thêm setting</b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('settings.create') . '?type=Text' }}">Text</a>
+                                <li><a class="dropdown-item" href="{{ route('settings.create') . '?type=Text' }}">Văn bản</a>
                                 </li>
                                 <li><a class="dropdown-item"
-                                        href="{{ route('settings.create') . '?type=Textarea' }}">Textarea</a></li>
+                                        href="{{ route('settings.create') . '?type=Textarea' }}">Vùng văn bản</a></li>
                             </ul>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                     <th scope="col">Thứ tự</th>
                                     <th scope="col">Config key</th>
                                     <th scope="col">Config value</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,10 +53,10 @@
                                         <td>{{ $setting->config_value }}</td>
                                         <td>
                                             <a href="{{ route('settings.edit', ['id' => $setting->id]) . '?type=' . $setting->type }}"
-                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Sửa</a>
                                             <a href="" class="btn btn-sm btn-danger action_delete"
                                                 data-url="{{ route('settings.delete', ['id' => $setting->id]) }}"><i
-                                                    class="fas fa-trash"></i>Delete</a>
+                                                    class="fas fa-trash"></i>Xóa</a>
 
                                         </td>
                                     </tr>

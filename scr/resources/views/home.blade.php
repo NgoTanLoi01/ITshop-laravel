@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-<title>Trang chủ</title>
+<title>Admin</title>
 
 @endsection
 
@@ -19,7 +19,6 @@
                 <div class="col-md-12">
                 </div>
                 <div class="col-md-12">
-                    Trang chủ
                 </div>
             </div>
             <!-- /.row -->

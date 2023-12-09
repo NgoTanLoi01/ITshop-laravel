@@ -1,4 +1,64 @@
 <div class="container top">
+    
+    <div class="container">
+        <div class="heading text-center mb-3">
+            <h2 class="title">Ưu đãi lớn</h2><!-- End .title -->
+            <p class="title-desc">Ưu đãi hôm nay và hơn thế nữa</p><!-- End .title-desc -->
+        </div><!-- End .heading -->
+
+        <div class="row">
+            <div class="col-lg-6 deal-col">
+                <div class="deal" style="background-image: url('{{asset('UserLTE/assets/images/demos/demo-4/deal/bg-1.jpg')}}');">
+                    <div class="deal-top">
+                        <h2>Ưu đãi trong ngày.</h2>
+                        <h4>Số lượng hạn chế. </h4>
+                    </div><!-- End .deal-top -->
+
+                    <div class="deal-content">
+                        <h3 class="product-title"><a href="product.html">Loa thông minh có Google Assistant</a></h3><!-- End .product-title -->
+
+                        <div class="product-price">
+                            <span class="new-price">3,490,000 VNĐ</span>
+                            <span class="old-price">Gốc <del>4,490,000 VNĐ</del></span>
+                        </div><!-- End .product-price -->
+
+                        {{-- <a href="product.html" class="btn btn-link"><span>Shop Now</span><i class="icon-long-arrow-right"></i></a> --}}
+                    </div><!-- End .deal-content -->
+
+                    <div class="deal-bottom">
+                        <div class="deal-countdown daily-deal-countdown" data-until="+10h"></div><!-- End .deal-countdown -->
+                    </div><!-- End .deal-bottom -->
+                </div><!-- End .deal -->
+            </div><!-- End .col-lg-6 -->
+
+            <div class="col-lg-6 deal-col">
+                <div class="deal" style="background-image: url('{{asset('UserLTE/assets/images/demos/demo-4/deal/bg-2.jpg')}}');">
+                    <div class="deal-top">
+                        <h2>Ưu đãi hàng tuần.</h2>
+                        <h4>Số lượng hạn chế.</h4>
+                    </div><!-- End .deal-top -->
+
+                    <div class="deal-content">
+                        <h3 class="product-title"><a href="product.html">Sạc không dây dành cho iPhone / Android</a></h3><!-- End .product-title -->
+
+                        <div class="product-price">
+                            <span class="new-price">999,000 VNĐ</span>
+                        </div><!-- End .product-price -->
+
+                        {{-- <a href="login.html" class="btn btn-link"><span>Sign In and Save money</span><i class="icon-long-arrow-right"></i></a> --}}
+                    </div><!-- End .deal-content -->
+
+                    <div class="deal-bottom">
+                        <div class="deal-countdown offer-countdown" data-until="+11d"></div><!-- End .deal-countdown -->
+                    </div><!-- End .deal-bottom -->
+                </div><!-- End .deal -->
+            </div><!-- End .col-lg-6 -->
+        </div><!-- End .row -->
+
+        <div class="more-container text-center mt-1 mb-5">
+            <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>Shop more Outlet deals</span><i class="icon-long-arrow-right"></i></a>
+        </div><!-- End .more-container -->
+    </div><!-- End .container -->
     <div class="heading heading-flex mb-3">
         <div class="heading-left">
             <h2 class="title">Sản phẩm thịnh hành</h2><!-- End .title -->

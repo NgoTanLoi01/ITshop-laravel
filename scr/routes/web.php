@@ -39,12 +39,22 @@ Route::get('/category/{slug}/{id}', [
     'as' => 'category.product',
     'uses' => 'App\Http\Controllers\CategoryAdminController@index'
 ]);
+Route::post('/tim_kiem', [HomeAdminController::class, 'search'])->name('tim_kiem.search');
 Route::get('/detail/{slug}', [HomeAdminController::class, 'detail'])->name('detail');
 Route::post('/add-cart', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 //xu ly admin
 Route::prefix('admin')->group(function () {
+
+    //Home
+    Route::prefix('home')->group(function () {
+        Route::get('/', [
+            'as' => 'home.index',
+            'uses' => 'App\Http\Controllers\AdminController@index',
+        ]);
+    });
+    
     //categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [

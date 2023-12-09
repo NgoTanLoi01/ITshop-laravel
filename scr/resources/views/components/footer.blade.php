@@ -19,11 +19,11 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget">
                         <ul class="widget-list">
-                            <li><a href="#">Về NGO TAN LOI Digital Technologies</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Quy chế hoạt động</a></li>
-                            <li><a href="#">Câu hỏi thường gặp mua hàng</a></li>
-                            <li><a href="#">Tra cứu thông tin bảo hành</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting1') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting2') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting3') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting4') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting5') }}</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -31,11 +31,11 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget">
                         <ul class="widget-list">
-                            <li><a href="#">Tin khuyến mãi</a></li>
-                            <li><a href="#">Hướng dẫn mua online</a></li>
-                            <li><a href="#">Hướng dẫn mua trả góp</a></li>
-                            <li><a href="#">Chính sách trả góp</a></li>
-                            <li><a href="#">Tin tuyển dụng</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting6') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting7') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting8') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting9') }}</a></li>
+                            <li><a href="#">{{ getConfigValueFromSettingTable('setting10') }}</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->

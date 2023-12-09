@@ -18,14 +18,14 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'Role', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Danh sách', 'key' => 'vai trò'])
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{ route('roles.create') }}" class="btn btn-sm btn-primary float-right m-2"><i
-                                class="fas fa-plus fa-fw fa-xs"></i>Add</a>
+                                class="fas fa-plus fa-fw fa-xs"></i>Thêm</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table">
@@ -34,7 +34,7 @@
                                     <th scope="col">Thứ tự</th>
                                     <th scope="col">Tên vai trò</th>
                                     <th scope="col">Mô tả vai trò</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,9 +45,9 @@
                                         <td>{!! $role->display_name !!}</td>
                                         <td>
                                             <a href="{{ route('roles.edit', ['id' => $role->id]) }}"
-                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Sửa</a>
                                             <a href="" data-url="{{ route('roles.delete', ['id' => $role->id]) }}" 
-                                                class="btn btn-sm btn-danger action_delete"> <i class="fas fa-trash"></i>Delete</a>
+                                                class="btn btn-sm btn-danger action_delete"> <i class="fas fa-trash"></i>Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

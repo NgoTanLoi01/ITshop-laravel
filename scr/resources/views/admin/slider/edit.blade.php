@@ -9,7 +9,7 @@
 @endsection
 @section('content')
     <div class="content-wrapper">
-        @include('partials.content-header', ['name' => 'Slider', 'key' => 'Edit'])
+        @include('partials.content-header', ['name' => 'Sửa', 'key' => 'slider'])
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -49,7 +49,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Submit</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Gửi</button>
                         </form>
                     </div>
                 </div>

@@ -17,14 +17,14 @@
 @section('content')
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'User', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Danh sách', 'key' => 'thành viên'])
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary float-right m-2"><i
-                                class="fas fa-plus fa-fw fa-xs"></i>Add</a>
+                                class="fas fa-plus fa-fw fa-xs"></i>Thêm</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table">
@@ -33,7 +33,7 @@
                                     <th scope="col">Thứ tự</th>
                                     <th scope="col">Tên</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,9 +45,9 @@
 
                                         <td>
                                             <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-warning">
-                                                <i class="fas fa-edit"></i>Edit</a>
+                                                <i class="fas fa-edit"></i>Sửa</a>
                                             <a href="" data-url="{{ route('users.delete', ['id' => $user->id]) }}" 
-                                                class="btn btn-sm btn-danger action_delete"><i class="fas fa-trash"></i>Delete</a>
+                                                class="btn btn-sm btn-danger action_delete"><i class="fas fa-trash"></i>Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

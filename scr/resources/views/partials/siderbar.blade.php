@@ -4,7 +4,7 @@
       <a href="{{ route('home') }}" class="brand-link">
           <img src="{{ asset('AdminLTE/dist/img/login_logo.png') }}" alt="AdminLTE Logo"
               class="brand-image img-circle elevation-3" style="opacity: .8">
-          <span class="brand-text font-weight-light"><b>Shopping</b></span>
+          <span class="brand-text font-weight-light"><b>Ngo Tan Loi</b></span>
       </a>
 
       <!-- Sidebar -->
@@ -20,7 +20,7 @@
                   </div>
                   <div class="info">
                       <a href="{{ route('logout') }}">
-                          Logout
+                          Thoát
                       </a>
                   </div>
               @else
@@ -37,7 +37,7 @@
           <div class="form-inline">
               <div class="input-group" data-widget="sidebar-search">
                   <input style="background-color: #1f2234" class="form-control form-control-sidebar" type="search"
-                      placeholder="Search" aria-label="Search">
+                      placeholder="Tìm kiếm" aria-label="Search">
                   <div class="input-group-append">
                       <button style="background-color: #1f2234" class="btn btn-sidebar">
                           <i class="fas fa-search fa-fw"></i>
@@ -106,7 +106,7 @@
                       <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                           <p>
-                              Danh sách nhân viên
+                              Danh sách thành viên
                               <span class="right badge badge-danger"></span>
                           </p>
                       </a>
@@ -116,7 +116,7 @@
                     <a href="{{ route('roles.index') }}" class="nav-link">
                       <i class="nav-icon fas fa-users-cog"></i>
                         <p>
-                            Danh sách vai trò (Roles)
+                            Danh sách vai trò
                             <span class="right badge badge-danger"></span>
                         </p>
                     </a>
@@ -126,7 +126,7 @@
                     <a href="{{ route('permissions.create') }}" class="nav-link">
                       <i class="nav-icon fas fa-user-check"></i>
                         <p>
-                            Data Permissions
+                            Quyền hệ thống
                             <span class="right badge badge-danger"></span>
                         </p>
                     </a>

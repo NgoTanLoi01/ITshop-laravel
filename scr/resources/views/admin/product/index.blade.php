@@ -16,14 +16,14 @@
 @section('content')
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'Product', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Danh sách', 'key' => 'sản phẩm'])
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary float-right m-2"><i
-                                class="fas fa-plus fa-fw fa-xs"></i>Add</a>
+                                class="fas fa-plus fa-fw fa-xs"></i>Thêm</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table">
@@ -35,7 +35,7 @@
                                 <th scope="col">Hình ảnh</th>
                                 <th scope="col">Danh mục</th>
                                 <th scope="col">Kho</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,8 +44,8 @@
                                         <th scope="row">{{ $productItem->id }}</th>
                                         <td>{{ $productItem->name }}</td>
                                         {{-- <td>{{ number_format($productItem->price) }}</td> --}}
-                                        <td>{{ number_format(floatval($productItem->price)) }}</td>
-                                        <td>{{ number_format(floatval($productItem->sale_price)) }}</td>
+                                        <td>{{ number_format(floatval($productItem->price)) }} VNĐ</td>
+                                        <td style="color: red">{{ number_format(floatval($productItem->sale_price)) }} VNĐ</td>
                                         <td>
                                             <img class="product_image_150_100" src="{{ $productItem->feature_image_path }}"
                                                 alt="">
@@ -54,10 +54,10 @@
                                         <td>{{ $productItem->quantity }}</td>
                                         <td>
                                             <a href="{{ route('product.edit', ['id' => $productItem->id]) }}"
-                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Sửa</a>
                                             <a href="" class="btn btn-sm btn-danger action_delete"
                                                 data-url="{{ route('product.delete', ['id' => $productItem->id]) }}"><i
-                                                    class="fas fa-trash"></i>Delete</a>
+                                                    class="fas fa-trash"></i>Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

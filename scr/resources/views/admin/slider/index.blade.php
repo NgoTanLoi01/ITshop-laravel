@@ -18,14 +18,14 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('partials.content-header', ['name' => 'Slider', 'key' => 'List'])
+        @include('partials.content-header', ['name' => 'Danh sách', 'key' => 'slider'])
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{ route('slider.create') }}" class="btn btn-sm btn-primary float-right m-2"><i
-                                class="fas fa-plus fa-fw fa-xs"></i>Add</a>
+                                class="fas fa-plus fa-fw fa-xs"></i>Thêm</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table">
@@ -33,9 +33,9 @@
                                 <tr>
                                     <th scope="col">Thứ tự</th>
                                     <th scope="col">Tên slider</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Miêu tả</th>
                                     <th scope="col">Hình ảnh</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,11 +48,11 @@
                                                 alt=""></td>
                                         <td>
                                             <a href="{{ route('slider.edit', ['id' => $slider->id]) }}"
-                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Edit</a>
+                                                class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Sửa</a>
                                             <a href=""
                                                 data-url="{{ route('slider.delete', ['id' => $slider->id]) }}"
                                                 class="btn btn-sm btn-danger action_delete">
-                                                <i class="fas fa-trash"></i>Delete</a>
+                                                <i class="fas fa-trash"></i>Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

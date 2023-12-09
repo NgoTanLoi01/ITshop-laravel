@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="content-wrapper">
-        @include('partials.content-header', ['name' => 'product', 'key' => 'Add'])
+        @include('partials.content-header', ['name' => 'Thêm', 'key' => 'sản phẩm'])
         <div class="col-md-12">
             {{-- @if ($errors->any())
                 <div class="alert alert-danger">
@@ -87,7 +87,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Miêu tả sản phẩm</label>
+                                <label>Mô tả sản phẩm</label>
                                 <textarea name="contents" class="form-control @error('content') is-invalid @enderror" id="content">{{ old('contents') }}</textarea>
                             </div>
                             @error('contents')
@@ -99,7 +99,7 @@
                                     placeholder="Nhập số lượng sản phẩm nhập" value="{{ old('quantity') }}">
                             </div>
                             
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Submit</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i>Gửi</button>
                         </form>
                     </div>
                 </div>

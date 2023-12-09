@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {{-- @yield('title') --}}
+    <title>NTL Digital Technologies</title>
     <meta name="keywords" content="HTML5">
     <meta name="description" content="">
     <meta name="author" content="p-themes">
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('UserLTE/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('UserLTE/assets/css/skins/skin-demo-3.css') }}">
     <link rel="stylesheet" href="{{ asset('UserLTE/assets/css/demos/demo-3.css') }}">
-    <link rel="stylesheet" href="{{ asset('UserLTE/assets/css/plugins/nouislider/nouislider.css')}}">
+    <link rel="stylesheet" href="{{ asset('UserLTE/assets/css/plugins/nouislider/nouislider.css') }}">
     @yield('css')
 </head>
 
@@ -41,7 +42,7 @@
     <script src="{{ asset('UserLTE/assets/js//jquery.plugin.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//jquery.countdown.min.js') }}"></script>
-    <script src="{{ asset('UserLTE/assets/js//jquery.elevateZoom.min.js')}}"></script>
+    <script src="{{ asset('UserLTE/assets/js//jquery.elevateZoom.min.js') }}"></script>
     <!-- Main JS File -->
     <script src="{{ asset('UserLTE/assets/js//main.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//demos/demo-3.js') }}"></script>
