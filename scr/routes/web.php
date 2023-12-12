@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeAdminController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CategoryAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,8 +42,20 @@ Route::get('/category/{slug}/{id}', [
 ]);
 Route::post('/tim_kiem', [HomeAdminController::class, 'search'])->name('tim_kiem.search');
 Route::get('/detail/{slug}', [HomeAdminController::class, 'detail'])->name('detail');
-Route::post('/add-cart', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
+
+//gio hang
+Route::post('/save-cart', [CartController::class, 'save_cart']);
+Route::get('/show-cart', [CartController::class, 'show_cart'])->name('home.showcart');
+Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']);
+Route::get('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
+
+//thanh toan
+Route::get('/login-checkout', [CheckoutController::class, 'login_checkout']);
+Route::post('/add-customer', [CheckoutController::class, 'add_customer']);
+Route::get('/checkout', [CheckoutController::class, 'checkout']);
+Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer']);
+
 
 //xu ly admin
 Route::prefix('admin')->group(function () {
@@ -54,7 +67,7 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\AdminController@index',
         ]);
     });
-    
+
     //categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [

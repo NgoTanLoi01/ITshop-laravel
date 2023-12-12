@@ -14,7 +14,7 @@
               @if (Auth::check())
                   <div class="info">
                       <a href="">
-                        <i class="fas fa-user-tie"></i>
+                          <i class="fas fa-user-tie"></i>
                           {{ Auth::user()->name }}
                       </a>
                   </div>
@@ -74,7 +74,7 @@
 
                   <li class="nav-item">
                       <a href="{{ route('product.index') }}" class="nav-link">
-                          <i class="nav-icon fas fa-shopping-cart"></i>
+                        <i class="icon fas fa-laptop"></i>
                           <p>
                               Sản phẩm
                               <span class="right badge badge-danger"></span>
@@ -103,8 +103,18 @@
                   </li>
 
                   <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                          <p>
+                              Đơn hàng
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item">
                       <a href="{{ route('users.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                          <i class="nav-icon fas fa-users"></i>
                           <p>
                               Danh sách thành viên
                               <span class="right badge badge-danger"></span>
@@ -113,24 +123,24 @@
                   </li>
 
                   <li class="nav-item">
-                    <a href="{{ route('roles.index') }}" class="nav-link">
-                      <i class="nav-icon fas fa-users-cog"></i>
-                        <p>
-                            Danh sách vai trò
-                            <span class="right badge badge-danger"></span>
-                        </p>
-                    </a>
-                </li>
+                      <a href="{{ route('roles.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-users-cog"></i>
+                          <p>
+                              Danh sách vai trò
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('permissions.create') }}" class="nav-link">
-                      <i class="nav-icon fas fa-user-check"></i>
-                        <p>
-                            Quyền hệ thống
-                            <span class="right badge badge-danger"></span>
-                        </p>
-                    </a>
-                </li>
+                  <li class="nav-item">
+                      <a href="{{ route('permissions.create') }}" class="nav-link">
+                          <i class="nav-icon fas fa-user-check"></i>
+                          <p>
+                              Quyền hệ thống
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
 
               </ul>
           </nav>

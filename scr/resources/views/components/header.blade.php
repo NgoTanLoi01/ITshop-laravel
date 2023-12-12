@@ -11,9 +11,19 @@
             <div class="header-right">
                 <ul class="top-menu">
                     <li>
-
                         <ul>
-                            <li><a href="#signin-modal" data-toggle="modal">Đăng nhập / Đăng ký</a></li>
+                            <?php
+                                $customer_id = Session::get('customer_id');
+                                if ($customer_id != null) {
+                            ?>
+                            <li><a href="{{ URL::to('/login-checkout') }}">Đăng xuất</a></li>
+                            <?php
+                                }else {
+                            ?>
+                            <li><a href="{{ URL::to('/login-checkout') }}">Đăng nhập / Đăng ký</a></li>
+                            <?php
+                                } 
+                            ?>
                         </ul>
                     </li>
                 </ul><!-- End .top-menu -->
@@ -41,11 +51,12 @@
             <div class="header-center">
                 <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                    <form action="{{URL::to('/tim_kiem')}}" method="POST">
+                    <form action="{{ URL::to('/tim_kiem') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="header-search-wrapper search-wrapper-wide">
                             <label for="q" class="sr-only">Search</label>
-                            <button class="btn btn-primary" name="search_items" type="submit"><i class="icon-search"></i></button>
+                            <button class="btn btn-primary" name="search_items" type="submit"><i
+                                    class="icon-search"></i></button>
                             <input type="search" class="form-control" name="keywords_submit" id="q"
                                 placeholder="Tìm kiếm sản phẩm ..." required>
                         </div><!-- End .header-search-wrapper -->
@@ -59,62 +70,48 @@
                     <a href="wishlist.html">
                         <div class="icon">
                             <i class="icon-heart-o"></i>
-                            <span class="wishlist-count badge">3</span>
+                            {{-- <span class="wishlist-count badge">3</span> --}}
                         </div>
-                        <p>Danh sách yêu thích</p>
+                        <p>Yêu thích</p>
                     </a>
                 </div><!-- End .compare-dropdown -->
 
-                <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" data-display="static">
+                <div class="wishlist">
+                    <a href="{{ URL::to('/show-cart') }}">
                         <div class="icon">
                             <i class="icon-shopping-cart"></i>
-                            <span class="cart-count">{{ $cart->getTotalQuantity() }}</span>
+
                         </div>
                         <p>Giỏ hàng</p>
                     </a>
-
-                    @foreach ($cart->list() as $key => $value)
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-cart-products">
-                                <div class="product">
-                                    <div class="product-cart-details">
-                                        <h4 class="product-title">
-                                            <a href="#">{{ $value['name'] }}</a>
-                                        </h4>
-
-                                        <span class="cart-product-info">
-                                            <span class="cart-product-qty">{{$value['quantity']}} x</span>
-                                            {{number_format($value['price'])}} VNĐ
-                                        </span>
-                                    </div><!-- End .product-cart-details -->
-
-                                    <figure class="product-image-container">
-                                        <a href="#" class="product-image">
-                                            <img src="{{ config('app.base_url') .$value['image']}}" alt="product">
-                                        </a>
-                                    </figure>
-                                    <a href="#" class="btn-remove" title="Remove Product"><i
-                                            class="icon-close"></i></a>
-                                </div><!-- End .product -->
-                            </div><!-- End .cart-product -->
-
-                            <div class="dropdown-cart-total">
-                                <span>Tổng tiền</span>
-
-                                <span class="cart-total-price">{{ number_format($value['price'] * $value['quantity']) }} VNĐ</span>
-                            </div><!-- End .dropdown-cart-total -->
-
-                            <div class="dropdown-cart-action">
-                                <a href="{{ route('cart.index') }}" class="btn btn-primary">Xem</a>
-                                <a href="{{ route('cart.index') }}" class="btn btn-outline-primary-2"><span>Thanh
-                                        toán</span><i class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .dropdown-cart-total -->
-                        </div><!-- End .dropdown-menu -->
-                    @endforeach
-
                 </div><!-- End .cart-dropdown -->
+
+                <?php
+                    $customer_id = Session::get('customer_id');
+                    if ($customer_id != null) {
+                ?>
+                <div class="wishlist">
+                    <a href="{{ URL::to('/checkout') }}">
+                        <div class="icon">
+                            <i class="icon-shopping-cart"></i>
+                        </div>
+                        <p>Thanh toán</p>
+                    </a>
+                </div><!-- End .compare-dropdown -->
+                <?php
+                    }else {
+                ?>
+                <div class="wishlist">
+                    <a href="{{ URL::to('/login-checkout') }}">
+                        <div class="icon">
+                            <i class="icon-shopping-cart"></i>
+                        </div>
+                        <p>Thanh toán</p>
+                    </a>
+                </div><!-- End .compare-dropdown -->
+                <?php
+                    } 
+                ?>
             </div><!-- End .header-right -->
         </div><!-- End .container -->
     </div><!-- End .header-middle -->

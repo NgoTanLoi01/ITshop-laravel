@@ -70,30 +70,31 @@
                                 <div class="product-price">
                                     <span class="new-price">{{ number_format($product->sale_price) }} VNĐ</span>
                                 </div><!-- End .product-price -->
-                                <div class="">
-                                    <form action="{{ route('cart.add') }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                
+                                <form action="{{ URL::to('/save-cart') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <div class="">
                                         <label for="qty">{{ $product->quantity }} sản phẩm có sẵn</label>
                                         <div class="product-details-quantity">
-                                            <input type="number" name="quantity" class="form-control" value="1"
-                                                min="1" max="{{ $product->quantity }}" step="1"
+                                            <input type="number" name="qty" id="qty" class="form-control"
+                                                value="1" min="1" max="{{ $product->quantity }}" step="1"
                                                 data-decimals="0" required>
+                                                <br>
+                                            <input name="productid_hidden" type="hidden" class="form-control"
+                                                value="{{ $product->id }}">
                                         </div><!-- End .product-details-quantity -->
-                                        <br>
-                                        <div class="product-details-action">
-                                            <button type="submit" class="btn-product btn-cart"><span>Thêm vào giỏ
-                                                    hàng</span></button>
+                                    </div><!-- End .details-filter-row -->
+                                    <div class="product-details-action">
+                                        {{-- <a href="#" class="btn-product btn-cart"><span>Thêm vào giỏ hàng</span></a> --}}
+                                        <button type="submit" class="btn-product btn-cart"><span>Thêm vào giỏ hàng</button>
 
-                                            <div class="details-action-wrapper">
-                                                <a href="#" class="btn-product btn-wishlist"
-                                                    title="Wishlist"><span>Thêm
-                                                        vào danh sách yêu thích</span></a>
-                                            </div><!-- End .details-action-wrapper -->
-                                        </div><!-- End .product-details-action -->
-                                    </form>
-                                </div><!-- End .details-filter-row -->
-
+                                        <div class="details-action-wrapper">
+                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Thêm
+                                                    vào
+                                                    danh sách yêu thích</span></a>
+                                        </div><!-- End .details-action-wrapper -->
+                                    </div><!-- End .product-details-action -->
+                                </form>
 
                                 <div class="product-details-footer">
                                     <div class="social-icons social-icons-sm">
@@ -173,6 +174,10 @@
                                     <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
                                         title="Xem nhanh"><span>Xem nhanh</span></a>
                                 </div><!-- End .product-action-vertical -->
+
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-cart"><span>Thêm vào giỏ hàng</span></a>
+                                </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">

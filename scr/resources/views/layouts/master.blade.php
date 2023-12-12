@@ -47,6 +47,7 @@
     <script src="{{ asset('UserLTE/assets/js//main.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//demos/demo-3.js') }}"></script>
     @yield('js')
+    
 </body>
 
 </html>
