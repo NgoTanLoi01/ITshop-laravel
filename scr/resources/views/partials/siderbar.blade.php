@@ -53,6 +53,16 @@
                   <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
 
                   <li class="nav-item">
+                      <a href="{{ route('home.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-tachometer-alt"></i>
+                          <p>
+                              Thống kê
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item">
                       <a href="{{ route('categories.index') }}" class="nav-link">
                           <i class="nav-icon fas fa-th"></i>
                           <p>
@@ -62,19 +72,19 @@
                       </a>
                   </li>
 
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                       <a href="{{ route('menus.index') }}" class="nav-link">
-                          <i class="nav-icon fas fa-bars"></i>
+                          <i class="nav-icon fas fa-users"></i>
                           <p>
-                              Menus
+                              Danh sách khách hàng
                               <span class="right badge badge-danger"></span>
                           </p>
                       </a>
-                  </li>
+                  </li> --}}
 
                   <li class="nav-item">
                       <a href="{{ route('product.index') }}" class="nav-link">
-                        <i class="icon fas fa-laptop"></i>
+                          <i class="nav-icon fas fa-laptop"></i>
                           <p>
                               Sản phẩm
                               <span class="right badge badge-danger"></span>
@@ -103,8 +113,8 @@
                   </li>
 
                   <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
+                      <a href="{{ URL::to('/manage-order') }}" class="nav-link">
+                          <i class="nav-icon fas fa-shopping-cart"></i>
                           <p>
                               Đơn hàng
                               <span class="right badge badge-danger"></span>
@@ -123,6 +133,16 @@
                   </li>
 
                   <li class="nav-item">
+                      <a href="{{ route('customers.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-users"></i>
+                          <p>
+                              Danh sách khách hàng
+                              <span class="right badge badge-danger"></span>
+                          </p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item">
                       <a href="{{ route('roles.index') }}" class="nav-link">
                           <i class="nav-icon fas fa-users-cog"></i>
                           <p>
@@ -132,7 +152,7 @@
                       </a>
                   </li>
 
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                       <a href="{{ route('permissions.create') }}" class="nav-link">
                           <i class="nav-icon fas fa-user-check"></i>
                           <p>
@@ -140,7 +160,7 @@
                               <span class="right badge badge-danger"></span>
                           </p>
                       </a>
-                  </li>
+                  </li> --}}
 
               </ul>
           </nav>

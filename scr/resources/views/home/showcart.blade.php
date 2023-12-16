@@ -91,16 +91,10 @@
                                             <td class="remove-col"><a
                                                     href="{{ URL::to('/delete-to-cart/' . $v_content->rowId) }}"
                                                     class="btn-remove"><i class="icon-close"></i></a></td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table><!-- End .table table-wishlist -->
-
-                            {{-- <div class="cart-bottom">
-                                <a href="#" class="btn btn-outline-dark-2"><span>Cập nhật giỏ hàng</span><i
-                                        class="icon-refresh"></i></a>
-                            </div><!-- End .cart-bottom --> --}}
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
                             <div class="summary summary-cart">
@@ -134,17 +128,23 @@
                                 <?php
                                 $customer_id = Session::get('customer_id');
                                 if ($customer_id != null) {
-                            ?>
+                                ?>
                                 <a href="{{ URL::to('/checkout') }}"
-                                    class="btn btn-outline-primary-2 btn-order btn-block">THANH TOÁN</a>
+                                    class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <span class="btn-text">Thanh toán</span>
+                                    <span class="btn-hover-text">Kiểm tra thông tin thanh toán</span>
+                                </a>
                                 <?php
                                 }else {
-                            ?>
+                                ?>
                                 <a href="{{ URL::to('/login-checkout') }}"
-                                    class="btn btn-outline-primary-2 btn-order btn-block">THANH TOÁN</a>
+                                    class="btn btn-outline-primary-2 btn-order btn-block">
+                                    <span class="btn-text">Thanh toán</span>
+                                    <span class="btn-hover-text">Kiểm tra thông tin thanh toán</span>
+                                </a>
                                 <?php
                                 } 
-                            ?>
+                                ?>
 
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->

@@ -6,93 +6,78 @@
 
 @section('content')
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <div class="content">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Trang chủ</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Lịch</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+                <br>
+                <h3>Thống kê</h3><br>
+                {{-- Thống kê --}}
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="sticky-top mb-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Sự kiện</h4>
-                                </div>
-                                <div class="card-body">
-                                    <!-- the events -->
-                                    <div id="external-events">
-                                        <div class="external-event bg-success">Làm việc</div>
-                                        <div class="external-event bg-warning">Họp</div>
-                                        <div class="external-event bg-info">Về nhà</div>
-                                        <div class="checkbox">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ $orderCount }}</h3>
+                                <p>Tổng số đơn hàng</p>
                             </div>
-                            <!-- /.card -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Thêm sự kiện</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                                        <ul class="fc-color-picker" id="color-chooser">
-                                            <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a>
-                                            </li>
-                                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a>
-                                            </li>
-                                            <li><a class="text-success" href="#"><i class="fas fa-square"></i></a>
-                                            </li>
-                                            <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- /btn-group -->
-                                    <div class="input-group">
-                                        <input id="new-event" type="text" class="form-control" placeholder="Tiêu đề sự kiện">
+                            <div class="icon">
+                                <!-- Thêm icon mới -->
+                                <i class="fas fa-shopping-cart"></i> <!-- Ví dụ thêm icon sao mới -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ number_format($totalRevenue) }} VNĐ</h3>
+                                <p>Tổng số doanh thu</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ $customerCount }}</h3>
+                                <p>Tổng số khách hàng</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ $productCount }}</h3>
+                                <p>Tổng số mặt hàng</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <div class="input-group-append">
-                                            <button id="add-new-event" type="button" class="btn btn-primary">Thêm</button>
-                                        </div>
-                                        <!-- /btn-group -->
-                                    </div>
-                                    <!-- /input-group -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-md-9">
-                        <div class="card card-primary">
-                            <div class="card-body p-0">
-                                <!-- THE CALENDAR -->
-                                <div id="calendar"></div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
+                    <!-- ./col -->
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+                <br>
+                {{-- Biểu đồ thống kê --}}
+                <div
+                    style="display: flex; justify-content: center; margin: auto; border: 1px solid #ddd; padding: 10px; box-sizing: border-box;">
+                    <div class="container">
+                        <div class="col-lg-12">
+                            <canvas id="myChart" style="width:100%; max-width:800px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

@@ -16,7 +16,7 @@
         <div class="page-header text-center"
             style="background-image: url('{{ asset('UserLTE/assets/images/page-header-bg.jpg') }}')">
             <div class="container">
-                <h1 class="page-title">Thanh toán<span>Cửa hàng</span></h1>
+                <h1 class="page-title">Thông tin đơn hàng<span>Cửa hàng</span></h1>
             </div><!-- End .container -->
         </div><!-- End .page-header -->
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -24,59 +24,39 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                     <li class="breadcrumb-item"><a href="#">Đơn hàng</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thông tin đơn hàng</li>
                 </ol>
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
 
-        <div class="page-content" >
+        <div class="page-content">
             <div class="checkout">
                 <div class="container">
                     <form action="{{ URL::to('/save-checkout-customer') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-lg-9">
-                                <h2 style="color: #fcb941" class="checkout-title">Chi tiết thanh toán</h2>
+                            <div class="col-lg-12">
+                                <h2 style="color: #fcb941" class="checkout-title">Chi tiết giao hàng</h2>
                                 <!-- End .checkout-title -->
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label>Họ và tên *</label>
+                                        <label>Họ và tên người nhận *</label>
                                         <input name="shipping_name" type="text" class="form-control" required>
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
                                 <label>Địa chỉ nhận hàng *</label>
                                 <input name="shipping_address" type="text" class="form-control" required>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Tỉnh / Thành phố *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6">
-                                        <label>Quận / Huyện *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
-
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Phường / Xã *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-
-                                    <div class="col-sm-6">
-                                        <label>Điện thoại *</label>
-                                        <input name="shipping_phone" type="tel" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
+                                <label>Điện thoại người nhận *</label>
+                                <input name="shipping_phone" type="tel" class="form-control" required>
 
                                 <label>Email *</label>
                                 <input name="shipping_email" type="email" class="form-control" required>
 
                                 <label>Ghi chú đơn hàng (nếu có)</label>
                                 <textarea class="form-control" cols="30" rows="4" name="shipping_notes"
-                                    placeholder="Ghi chú đơn hàng của bạn, ví dụ những lưu ý khi giao hàng"></textarea>
+                                    placeholder="Ghi chú đơn hàng của bạn, ví dụ những lưu ý khi giao hàng, thời gian giao hàng,..."></textarea>
 
                                 <button type="submit" value="Gửi" name="send_order"
                                     class="btn btn-outline-primary-2 btn-order btn-block">

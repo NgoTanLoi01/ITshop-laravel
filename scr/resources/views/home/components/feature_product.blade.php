@@ -1,3 +1,8 @@
+<style>
+    h6 {
+        font-size: 12px;
+    }
+</style>
 <div class="container featured">
     <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
         <li class="nav-item">
@@ -42,7 +47,6 @@
                                 <img src="{{ config('app.base_url') . $product->feature_image_path }}"
                                     alt="Product image" class="product-image">
                             </a>
-
                             {{-- <div class="product-action-vertical">
                             <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm Danh sách yêu thích</span></a>
                         </div><!-- End .product-action --> --}}
@@ -137,15 +141,20 @@
 
                         <div class="product-body">
                             <div class="product-cat">
-                                <a href="{{ route('detail', $productsSellingItem->slug) }}">{{ $productsSellingItem->category->name }}</a>
+                                <a
+                                    href="{{ route('detail', $productsSellingItem->slug) }}">{{ $productsSellingItem->category->name }}</a>
                             </div><!-- End .product-cat -->
                             <h3 class="product-title"><a
                                     href="{{ asset('UserLTE/product') }}">{{ $productsSellingItem->name }}</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
-                                <span class="old-price"> Gốc: <del>{{ number_format($productsSellingItem->price) }} VNĐ </del></span>
-                                <span class="new-price">{{ number_format($productsSellingItem->sale_price) }} VNĐ</span>
+                                <span class="old-price"> Gốc: <del>{{ number_format($productsSellingItem->price) }} VNĐ
+                                    </del></span>
+                                <span class="new-price">{{ number_format($productsSellingItem->sale_price) }}
+                                    VNĐ</span>
                             </div><!-- End .product-price -->
+                            <h6 class="">Lượt xem:
+                                {{ $productsSellingItem->views_count }}</h6>
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->
                 @endforeach

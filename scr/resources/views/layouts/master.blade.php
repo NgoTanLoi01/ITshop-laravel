@@ -46,6 +46,7 @@
     <!-- Main JS File -->
     <script src="{{ asset('UserLTE/assets/js//main.js') }}"></script>
     <script src="{{ asset('UserLTE/assets/js//demos/demo-3.js') }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @yield('js')
     
 </body>

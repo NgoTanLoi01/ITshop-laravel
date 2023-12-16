@@ -13,7 +13,7 @@
                 </li>
             @endforeach --}}
             <li>
-                <a href="#" class="">Câu chuyện sản phẩm</a>
+                <a href="{{ URL::to('/product_all') }}" class="">Sản phẩm</a>
             </li>
             <li>
                 <a href="#" class="">Hỏi đáp</a>

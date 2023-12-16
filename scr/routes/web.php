@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MenusController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Controller;
@@ -42,7 +43,7 @@ Route::get('/category/{slug}/{id}', [
 ]);
 Route::post('/tim_kiem', [HomeAdminController::class, 'search'])->name('tim_kiem.search');
 Route::get('/detail/{slug}', [HomeAdminController::class, 'detail'])->name('detail');
-
+Route::get('/product_all', [HomeAdminController::class, 'product_all']);
 
 //gio hang
 Route::post('/save-cart', [CartController::class, 'save_cart']);
@@ -52,9 +53,20 @@ Route::get('/update-cart-quantity', [CartController::class, 'update_cart_quantit
 
 //thanh toan
 Route::get('/login-checkout', [CheckoutController::class, 'login_checkout']);
+Route::get('/logout-checkout', [CheckoutController::class, 'logout_checkout']);
 Route::post('/add-customer', [CheckoutController::class, 'add_customer']);
+Route::post('/order-place', [CheckoutController::class, 'order_place']);
+Route::post('/login-customer', [CheckoutController::class, 'login_customer']);
 Route::get('/checkout', [CheckoutController::class, 'checkout']);
+Route::get('/payment', [CheckoutController::class, 'payment']);
 Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkout_customer']);
+
+//đơn hàng
+Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
+Route::get('/view-order/{orderId}', [CheckoutController::class, 'view_order']);
+Route::get('/delete-order/{orderId}', [CheckoutController::class, 'delete_order']);
+Route::get('/print-order', [CheckoutController::class, 'print_order']);
+
 
 
 //xu ly admin
@@ -260,6 +272,13 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 
+    //customer
+    Route::prefix('customers')->group(function () {
+        Route::get('/', [
+            'as' => 'customers.index',
+            'uses' => 'App\Http\Controllers\CustomerController@index'
+        ]);
+    });
     //role
     Route::prefix('roles')->group(function () {
         Route::get('/', [

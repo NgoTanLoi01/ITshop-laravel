@@ -32,20 +32,22 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="tab-content-5">
+
+                            {{-- Đăng nhập --}}
                             <div class="tab-pane fade show active" id="signin" role="tabpanel"
                                 aria-labelledby="signin-tab">
-                                <form action="#">
+
+                                <form action="{{ URL::to('/login-customer') }}" method="POST">
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="singin-email">Nhập địa chỉ Email của bạn *</label>
-                                        <input type="email" class="form-control" id="singin-email" name="singin-email"
-                                            required>
-                                    </div><!-- End .form-group -->
+                                        <input type="email" class="form-control" name="email_account" required>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="singin-password">Mật khẩu *</label>
-                                        <input type="password" class="form-control" id="singin-password"
-                                            name="singin-password" required>
-                                    </div><!-- End .form-group -->
+                                        <input type="password" class="form-control" name="password_account" required>
+                                    </div>
 
                                     <div class="form-footer">
                                         <button type="submit" class="btn btn-outline-primary-2">
@@ -57,28 +59,12 @@
                                             <input type="checkbox" class="custom-control-input" id="signin-remember">
                                             <label class="custom-control-label" for="signin-remember">Nhớ mật
                                                 khẩu</label>
-                                        </div><!-- End .custom-checkbox -->
+                                        </div>
 
                                         <a href="#" class="forgot-link">Quên mật khẩu?</a>
-                                    </div><!-- End .form-footer -->
+                                    </div>
                                 </form>
-                                <div class="form-choice">
-                                    <p class="text-center">hoặc đăng nhập với</p>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login btn-g">
-                                                <i class="icon-google"></i>
-                                                Đăng nhập với Google
-                                            </a>
-                                        </div><!-- End .col-6 -->
-                                        <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login btn-f">
-                                                <i class="icon-facebook-f"></i>
-                                                Đăng nhập với Facebook
-                                            </a>
-                                        </div><!-- End .col-6 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .form-choice -->
+                                {{-- end form --}}
                             </div><!-- .End .tab-pane -->
 
                             {{-- Đăng ký --}}
@@ -108,6 +94,15 @@
                                         <input type="password" class="form-control" name="customer_password" required>
                                     </div><!-- End .form-group -->
 
+                                    <div class="g-recaptcha" data-sitekey="{{ env('CAPTCHA_KEY') }}"></div>
+                                    <br>
+
+                                    @if ($errors->has('g-recaptcha-respones'))
+                                        <span class="invalid-feedback" style="display:block">
+                                            <strong>{{ $errors->first('g-recaptcha-respones') }}</strong>
+                                        </span>
+                                    @endif
+
                                     <div class="form-footer">
                                         <button type="submit" class="btn btn-outline-primary-2">
                                             <span>Đăng ký</span>
@@ -122,23 +117,6 @@
                                         </div><!-- End .custom-checkbox -->
                                     </div><!-- End .form-footer -->
                                 </form>
-                                <div class="form-choice">
-                                    <p class="text-center">hoặc đăng nhập với</p>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login btn-g">
-                                                <i class="icon-google"></i>
-                                                Đăng nhập với Google
-                                            </a>
-                                        </div><!-- End .col-6 -->
-                                        <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login  btn-f">
-                                                <i class="icon-facebook-f"></i>
-                                                Đăng nhập với Facebook
-                                            </a>
-                                        </div><!-- End .col-6 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .form-choice -->
                             </div><!-- .End .tab-pane -->
                         </div><!-- End .tab-content -->
                     </div><!-- End .form-tab -->

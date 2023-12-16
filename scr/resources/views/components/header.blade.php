@@ -1,3 +1,5 @@
+
+
 <header class="header header-intro-clearance header-3">
     <div class="header-top">
         <div class="container">
@@ -14,9 +16,9 @@
                         <ul>
                             <?php
                                 $customer_id = Session::get('customer_id');
-                                if ($customer_id != null) {
+                                if ($customer_id != NULL) {
                             ?>
-                            <li><a href="{{ URL::to('/login-checkout') }}">Đăng xuất</a></li>
+                            <li><a href="{{ URL::to('/logout-checkout') }}">Đăng xuất</a></li>
                             <?php
                                 }else {
                             ?>
@@ -88,23 +90,35 @@
 
                 <?php
                     $customer_id = Session::get('customer_id');
-                    if ($customer_id != null) {
+                    $shipping_id = Session::get('shipping_id');
+                    if ($customer_id != NULL && $shipping_id == NULL) {
                 ?>
                 <div class="wishlist">
                     <a href="{{ URL::to('/checkout') }}">
                         <div class="icon">
-                            <i class="icon-shopping-cart"></i>
+                            <i class="icon-usd"></i>
                         </div>
                         <p>Thanh toán</p>
                     </a>
                 </div><!-- End .compare-dropdown -->
                 <?php
-                    }else {
+                    }elseif($customer_id != NULL && $shipping_id != NULL) {
+                ?>
+                <div class="wishlist">
+                    <a href="{{ URL::to('/payment') }}">
+                        <div class="icon">
+                            <i class="icon-usd"></i>
+                        </div>
+                        <p>Thanh toán</p>
+                    </a>
+                </div><!-- End .compare-dropdown -->
+                <?php
+                }else{
                 ?>
                 <div class="wishlist">
                     <a href="{{ URL::to('/login-checkout') }}">
                         <div class="icon">
-                            <i class="icon-shopping-cart"></i>
+                            <i class="icon-usd"></i>
                         </div>
                         <p>Thanh toán</p>
                     </a>
