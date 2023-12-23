@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use App\Rules\Captcha;
+use Barryvdh\DomPDF\Facade as PDF;
+use Shipping;
 
 session_start();
 
@@ -55,18 +57,20 @@ class CheckoutController extends Controller
     public function save_checkout_customer(Request $request)
     {
         $data = array();
-        $data['shipping_name'] = $request->shipping_name;
-        $data['shipping_phone'] = $request->shipping_phone;
-        $data['shipping_email'] = $request->shipping_email;
-        $data['shipping_notes'] = $request->shipping_notes;
-        $data['shipping_address'] = $request->shipping_address;
+        $data['customer_id'] = Session::get('customer_id'); // Thêm dòng này
+        $data['shipping_name'] = $request->input('shipping_name');
+        $data['shipping_phone'] = $request->input('shipping_phone');
+        $data['shipping_email'] = $request->input('shipping_email');
+        $data['shipping_notes'] = $request->input('shipping_notes');
+        $data['shipping_address'] = $request->input('shipping_address');
 
         $shipping_id = DB::table('shipping')->insertGetId($data);
 
         Session::put('shipping_id', $shipping_id);
 
-        return Redirect::to('/payment');
+        return redirect('/payment');
     }
+
 
     public function payment()
     {
@@ -102,6 +106,13 @@ class CheckoutController extends Controller
             $order_d_data['tax'] = 0;
 
             DB::table('order_details')->insert($order_d_data);
+
+            //giảm số lượng sản phẩm trong giỏ hàng
+            DB::table('products')
+                ->where('id', $v_content->id)
+                ->decrement('quantity', $v_content->qty);
+
+            
         }
 
         if ($data['payment_method'] == 1) {
@@ -158,19 +169,192 @@ class CheckoutController extends Controller
             ->select('order.*', 'customers.*', 'shipping.*', 'order_details.*')
             ->where('order.order_id', $orderId)
             ->get();
-
         $manager_order_by_id = view('admin.order.view_order')->with('order_by_id', $order_by_id);
         return view('admin.order.view_order', compact('order_by_id', 'manager_order_by_id'));
     }
 
-    // public function delete_order($order_id)
-    // {
-    //     $this->order->find($order_id)->delete();
-    //     return view('admin.order.manage_order');
+    public function print_order($checkoutcode)
+    {
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($this->print_order_convert($checkoutcode));
+        return $pdf->stream();
+    }
 
-    // }
-        // public function print_order(){
+    public function print_order_convert($checkoutcode)
+    {
+        // Thực hiện truy vấn SQL để lấy dữ liệu đơn hàng
+        $order_by_id = DB::table('order')
+            ->join('customers', 'order.customer_id', '=', 'customers.customer_id')
+            ->join('shipping', 'order.shipping_id', '=', 'shipping.shipping_id')
+            ->join('order_details', 'order.order_id', '=', 'order_details.order_id')
+            ->select('order.*', 'customers.*', 'shipping.*', 'order_details.*')
+            ->where('order.order_id', $checkoutcode)
+            ->get();
 
-        // }
 
+        $output = '<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <style>
+                            @font-face {
+                                font-family: "DejaVu Sans";
+                                src: url("path/to/your/font.woff2") format("woff2");
+                            }
+
+                            table {
+                                font-family: "DejaVu Sans", sans-serif;
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
+                            }
+
+                            table, th, td {
+                                border: 1px solid #ddd;
+                            }
+
+                            th, td {
+                                padding: 8px;
+                                text-align: left;
+                            }
+
+                            h5 {
+                                font-weight: bold;
+                                padding: 8px;
+                                background-color: #d2e2ef;
+                                text-align: center;
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+
+                            .logo {
+                                max-width: 100px;
+                                margin-bottom: 10px;
+                                border-radius: 50%; 
+                                vertical-align: middle;
+                            }
+
+                            .logo + p {
+                                text-align: center;
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-left: -12px;
+                            }
+
+                            h2 {
+                                text-align: center;
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+                            .thongtin1,
+                            .thongtin2 {
+                                
+                                display: inline-block;
+                                vertical-align: top; 
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+
+                            .thongtin2 {
+                                font-size: 15px;
+                                margin-left: 60px; 
+                            }
+                            h3{
+                                text-align: center;
+                                font-family: "DejaVu Sans", sans-serif; 
+                            }
+                            span{
+                                color: #fcb941;
+                            }
+                            .thongtin1{
+                                color: #fcb941;
+                            }
+                            .tongthanhtoan{
+                                color: red;
+                            }
+                        </style>
+                        <title>In Đơn Hàng</title>
+                    </head>
+                    <body> 
+                    <div class="thongtin1" >
+                        <img class="logo" src="AdminLTE/dist/img/login_logo.png" alt="Logo">
+                        <p class="shop"><b>NGO TAN LOI <br> DIGITAL <br> TECHNOLOGIES</b></p>
+                    </div>
+                    <div class="thongtin2">
+                        <p><b>SĐT:</b> 033 712 0073</p>
+                        <p><b>Địa chỉ:</b> Nguyễn Thiện Thành, Phường 5, Trà Vinh</p>
+                        <p><b>Mã số thuế: </b>02GTT0/01</p>
+                    </div>
+                    <h2>HÓA ĐƠN BÁN HÀNG <br> -------oOo-------</h2>
+                    
+                    
+                        <h5><b>THÔNG TIN KHÁCH HÀNG</b></h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tên khách hàng</th>
+                                    <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>' . $order_by_id->first()->customer_name . '</td>
+                                    <td>' . $order_by_id->first()->customer_phone . '</td>
+                                    <td>' . $order_by_id->first()->customer_email . '</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5><b>THÔNG TIN VẬN CHUYỂN</b></h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tên người nhận hàng</th>
+                                    <th scope="col">Địa chỉ</th>
+                                    <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Ghi chú đơn hàng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>' . $order_by_id->first()->shipping_name . '</td>
+                                    <td>' . $order_by_id->first()->shipping_address . '</td>
+                                    <td>' . $order_by_id->first()->shipping_phone . '</td>
+                                    <td>' . $order_by_id->first()->shipping_notes . '</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5><b>CHI TIẾT ĐƠN HÀNG</b></h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Tổng tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
+        $totalAmount = 0;
+
+        foreach ($order_by_id as $order) {
+            $output .= '<tr>
+                                                    <td>' . $order->product_name . '</td>
+                                                    <td>' . $order->product_sales_quantity . '</td>
+                                                    <td>' . number_format(floatval($order->product_price)) . ' VNĐ</td>
+                                                    <td>' . number_format(floatval($order->product_price * $order->product_sales_quantity)) . ' VNĐ</td>
+                                                </tr>';
+            $totalAmount += $order->product_price * $order->product_sales_quantity;
+        }
+        $output .= '<tr>
+                                    <td colspan="3"></td>
+                                    <td class="tongthanhtoan"><b>Tổng thanh toán: ' . number_format($totalAmount) . ' VNĐ</b></td>
+                                   
+                                </tr>
+                        </tbody>
+                    </table>
+                    <h3><span>NGO TAN LOI DIGITAL TECHNOLOGIES </span> <br> CẢM ƠN QUÝ KHÁCH ĐÃ MUA SẮM TẠI CỬA HÀNG. </h3>
+                </body>
+            </html>';
+        return $output;
+    }
 }

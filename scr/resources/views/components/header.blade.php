@@ -69,7 +69,7 @@
             <div class="header-right">
 
                 <div class="wishlist">
-                    <a href="wishlist.html">
+                    <a href="{{ URL::to('/yeu_thich') }}">
                         <div class="icon">
                             <i class="icon-heart-o"></i>
                             {{-- <span class="wishlist-count badge">3</span> --}}

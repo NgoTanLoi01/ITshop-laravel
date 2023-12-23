@@ -44,6 +44,8 @@ Route::get('/category/{slug}/{id}', [
 Route::post('/tim_kiem', [HomeAdminController::class, 'search'])->name('tim_kiem.search');
 Route::get('/detail/{slug}', [HomeAdminController::class, 'detail'])->name('detail');
 Route::get('/product_all', [HomeAdminController::class, 'product_all']);
+Route::get('/yeu_thich', [HomeAdminController::class, 'yeu_thich']);
+Route::get('/lien_he', [HomeAdminController::class, 'lien_he']);
 
 //gio hang
 Route::post('/save-cart', [CartController::class, 'save_cart']);
@@ -65,7 +67,7 @@ Route::post('/save-checkout-customer', [CheckoutController::class, 'save_checkou
 Route::get('/manage-order', [CheckoutController::class, 'manage_order']);
 Route::get('/view-order/{orderId}', [CheckoutController::class, 'view_order']);
 Route::get('/delete-order/{orderId}', [CheckoutController::class, 'delete_order']);
-Route::get('/print-order', [CheckoutController::class, 'print_order']);
+Route::get('/print-order/{orderId}', [CheckoutController::class, 'print_order']);
 
 
 

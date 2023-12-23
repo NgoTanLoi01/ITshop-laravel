@@ -16,10 +16,7 @@
                 <a href="{{ URL::to('/product_all') }}" class="">Sản phẩm</a>
             </li>
             <li>
-                <a href="#" class="">Hỏi đáp</a>
-            </li>
-            <li>
-                <a href="#" class="">Liên hệ</a>
+                <a href="{{ URL::to('/lien_he') }}" class="">Liên hệ</a>
             </li>
         </ul><!-- End .menu -->
     </nav><!-- End .main-nav -->

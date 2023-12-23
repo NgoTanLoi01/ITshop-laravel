@@ -45,14 +45,14 @@
                                     <div class="col-3">
                                         <div class="product product-2">
                                             <figure class="product-media">
-                                                <a href="product.html">
+                                                <a href="{{ route('detail', $product->slug) }}">
                                                     <img src="{{ config('app.base_url') . $product->feature_image_path }}"
                                                         alt="Product image" class="product-image">
                                                 </a>
                                             </figure><!-- End .product-media -->
 
                                             <div class="product-body">
-                                                <h3 class="product-title"><a href="product.html">
+                                                <h3 class="product-title"><a href="{{ route('detail', $product->slug) }}">
                                                         {{ $product->name }}</a>
                                                 </h3>
                                                 <!-- End .product-title -->

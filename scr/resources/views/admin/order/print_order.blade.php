@@ -1,35 +1,34 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Trang chủ</title>
+    <title>In Đơn Hàng</title>
 @endsection
+
 <style>
     h5 {
         font-weight: bold;
         padding: 12px;
-        background-color: #d2e2ef;
+        background-color: #c5ecce;
         text-align: center;
     }
 
     th {
-        background-color: #d2e2ef;
+        color: gray;
+        background-color: #d6efdc;
     }
 
-    
+    td {
+        background-color: #ecf3ee;
+    }
+
+    body {
+        font-family: DejaVu Sans !important;
+    }
 </style>
 
 @section('content')
-    <div class="content-wrapper p-3">
-        @foreach ($order_by_id as $order)
-            <div class="col-md-12">
-                <a target="_blank" href="{{ url('/print-order/' . $order->order_id) }}" class="btn btn-sm btn-secondary float-right m-2">
-                    <i class="fas fa-print"></i> In đơn hàng
-                </a>
-            </div>
-        @endforeach
 
-        <br>
-        <br>
+    <body>
         <h5><b>THÔNG TIN KHÁCH HÀNG</b></h5>
         <table class="table table-sm">
             <thead>
@@ -106,5 +105,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </body>
 @endsection

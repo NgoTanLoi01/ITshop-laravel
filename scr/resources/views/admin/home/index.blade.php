@@ -16,7 +16,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ $orderCount }}</h3>
+                                {{-- <h3>{{ $orderCount }}</h3> --}}
                                 <p>Tổng số đơn hàng</p>
                             </div>
                             <div class="icon">
@@ -30,7 +30,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>{{ number_format($totalRevenue) }} VNĐ</h3>
+                                {{-- <h3>{{ number_format($totalRevenue) }} VNĐ</h3> --}}
                                 <p>Tổng số doanh thu</p>
                             </div>
                             <div class="icon">
@@ -43,7 +43,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>{{ $customerCount }}</h3>
+                                {{-- <h3>{{ $customerCount }}</h3> --}}
                                 <p>Tổng số khách hàng</p>
                             </div>
                             <div class="icon">
@@ -56,7 +56,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ $productCount }}</h3>
+                                {{-- <h3>{{ $productCount }}</h3> --}}
                                 <p>Tổng số mặt hàng</p>
                             </div>
                             <div class="icon">

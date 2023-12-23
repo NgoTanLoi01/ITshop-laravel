@@ -40,7 +40,17 @@ class HomeAdminController extends Controller
 
     public function product_all(Request $request)
     {
-        $products = Product::latest()->take(12)->get();;
+        $products = Product::latest()->get();
         return view('home.product_all', compact('products'));
+    }
+
+    public function yeu_thich()
+    {
+        return view('home.yeu_thich');
+    }
+
+    public function lien_he()
+    {
+        return view('home.lien_he');
     }
 }
