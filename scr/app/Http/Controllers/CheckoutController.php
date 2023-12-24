@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Slider;
 use App\Models\Order;
+use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Rules\Captcha;
 use Barryvdh\DomPDF\Facade as PDF;
 use Shipping;
@@ -51,7 +53,11 @@ class CheckoutController extends Controller
 
     public function checkout()
     {
-        return view('home.checkout');
+        $customer_id = Session::get('customer_id');
+        $shipping_info = DB::table('shipping')->where('customer_id', $customer_id)->first();
+        $customer_info = DB::table('customers')->where('customer_id', $customer_id)->first();
+
+        return view('home.checkout', compact('shipping_info', 'customer_info'));
     }
 
     public function save_checkout_customer(Request $request)
@@ -111,8 +117,6 @@ class CheckoutController extends Controller
             DB::table('products')
                 ->where('id', $v_content->id)
                 ->decrement('quantity', $v_content->qty);
-
-            
         }
 
         if ($data['payment_method'] == 1) {
@@ -190,87 +194,84 @@ class CheckoutController extends Controller
             ->select('order.*', 'customers.*', 'shipping.*', 'order_details.*')
             ->where('order.order_id', $checkoutcode)
             ->get();
-
-
+    
+    
         $output = '<!DOCTYPE html>
                     <html lang="en">
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <style>
-                            @font-face {
-                                font-family: "DejaVu Sans";
-                                src: url("path/to/your/font.woff2") format("woff2");
-                            }
+                        @font-face {
+                            font-family: "DejaVu Sans";
+                            src: url("path/to/your/font.woff2") format("woff2");
+                        }
 
-                            table {
-                                font-family: "DejaVu Sans", sans-serif;
-                                width: 100%;
-                                border-collapse: collapse;
-                                margin-bottom: 20px;
-                            }
+                        table {
+                            font-family: "DejaVu Sans", sans-serif;
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 20px;
+                        }
 
-                            table, th, td {
-                                border: 1px solid #ddd;
-                            }
+                        table, th, td {
+                            border: 1px solid #ddd;
+                        }
 
-                            th, td {
-                                padding: 8px;
-                                text-align: left;
-                            }
+                        th, td {
+                            padding: 8px;
+                            text-align: left;
+                        }
 
-                            h5 {
-                                font-weight: bold;
-                                padding: 8px;
-                                background-color: #d2e2ef;
-                                text-align: center;
-                                font-family: "DejaVu Sans", sans-serif;
-                            }
+                        h5 {
+                            font-weight: bold;
+                            padding: 8px;
+                            background-color: #d2e2ef;
+                            text-align: center;
+                            font-family: "DejaVu Sans", sans-serif;
+                        }
 
-                            .logo {
-                                max-width: 100px;
-                                margin-bottom: 10px;
-                                border-radius: 50%; 
-                                vertical-align: middle;
-                            }
+                        .logo {
+                            max-width: 100px;
+                            margin-bottom: 10px;
+                            border-radius: 50%; 
+                            vertical-align: middle;
+                        }
 
-                            .logo + p {
-                                text-align: center;
-                                display: inline-block;
-                                vertical-align: middle;
-                                margin-left: -12px;
-                            }
+                        .logo + p {
+                            text-align: center;
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-left: -12px;
+                        }
 
-                            h2 {
-                                text-align: center;
-                                font-family: "DejaVu Sans", sans-serif;
-                            }
-                            .thongtin1,
-                            .thongtin2 {
-                                
-                                display: inline-block;
-                                vertical-align: top; 
-                                font-family: "DejaVu Sans", sans-serif;
-                            }
+                        h2 {
+                            text-align: center;
+                            font-family: "DejaVu Sans", sans-serif;
+                        }
+                        .thongtin1,
+                        .thongtin2 {
+                            
+                            display: inline-block;
+                            vertical-align: top; 
+                            font-family: "DejaVu Sans", sans-serif;
+                        }
 
-                            .thongtin2 {
-                                font-size: 15px;
-                                margin-left: 60px; 
-                            }
-                            h3{
-                                text-align: center;
-                                font-family: "DejaVu Sans", sans-serif; 
-                            }
-                            span{
-                                color: #fcb941;
-                            }
-                            .thongtin1{
-                                color: #fcb941;
-                            }
-                            .tongthanhtoan{
-                                color: red;
-                            }
-                        </style>
+                        .thongtin2 {
+                            font-size: 15px;
+                            margin-left: 60px; 
+                        }
+                        h3{
+                            text-align: center;
+                            font-family: "DejaVu Sans", sans-serif; 
+                        }
+                        span{
+                            color: #fcb941;
+                        }
+                        .thongtin1{
+                            color: #fcb941;
+                        }
+                    </style>
                         <title>In Đơn Hàng</title>
                     </head>
                     <body> 
@@ -285,29 +286,11 @@ class CheckoutController extends Controller
                     </div>
                     <h2>HÓA ĐƠN BÁN HÀNG <br> -------oOo-------</h2>
                     
-                    
-                        <h5><b>THÔNG TIN KHÁCH HÀNG</b></h5>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Tên khách hàng</th>
-                                    <th scope="col">Số điện thoại</th>
-                                    <th scope="col">Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>' . $order_by_id->first()->customer_name . '</td>
-                                    <td>' . $order_by_id->first()->customer_phone . '</td>
-                                    <td>' . $order_by_id->first()->customer_email . '</td>
-                                </tr>
-                            </tbody>
-                        </table>
                         <h5><b>THÔNG TIN VẬN CHUYỂN</b></h5>
                         <table>
                             <thead>
                                 <tr>
-                                    <th scope="col">Tên người nhận hàng</th>
+                                    <th scope="col">Tên khách hàng</th>
                                     <th scope="col">Địa chỉ</th>
                                     <th scope="col">Số điện thoại</th>
                                     <th scope="col">Ghi chú đơn hàng</th>
@@ -333,22 +316,21 @@ class CheckoutController extends Controller
                                 </tr>
                             </thead>
                             <tbody>';
-
-        $totalAmount = 0;
-
-        foreach ($order_by_id as $order) {
-            $output .= '<tr>
+    
+                                $totalAmount = 0;
+    
+                                foreach ($order_by_id as $order) {
+                                    $output .= '<tr>
                                                     <td>' . $order->product_name . '</td>
                                                     <td>' . $order->product_sales_quantity . '</td>
                                                     <td>' . number_format(floatval($order->product_price)) . ' VNĐ</td>
                                                     <td>' . number_format(floatval($order->product_price * $order->product_sales_quantity)) . ' VNĐ</td>
                                                 </tr>';
-            $totalAmount += $order->product_price * $order->product_sales_quantity;
-        }
-        $output .= '<tr>
+                                    $totalAmount += $order->product_price * $order->product_sales_quantity;
+                                }
+                                $output .= '<tr>
                                     <td colspan="3"></td>
-                                    <td class="tongthanhtoan"><b>Tổng thanh toán: ' . number_format($totalAmount) . ' VNĐ</b></td>
-                                   
+                                    <td><b>Tổng thanh toán:</b> ' . number_format($totalAmount) . ' VNĐ <br>  <b>Bằng chữ: </b>' . convertNumberToWords($totalAmount) . ' VNĐ</td>
                                 </tr>
                         </tbody>
                     </table>
@@ -357,4 +339,39 @@ class CheckoutController extends Controller
             </html>';
         return $output;
     }
+    
+
+    public function send_mail($orderId)
+    {
+        // Lấy thông tin đơn hàng từ database (bạn có thể sử dụng mã checkoutcode để lấy đúng đơn hàng)
+        $order_by_id = DB::table('order')
+            ->join('customers', 'order.customer_id', '=', 'customers.customer_id')
+            ->join('shipping', 'order.shipping_id', '=', 'shipping.shipping_id')
+            ->join('order_details', 'order.order_id', '=', 'order_details.order_id')
+            ->select('order.*', 'customers.*', 'shipping.*', 'order_details.*')
+            ->where('order.order_id', $orderId)
+            ->get();
+    
+        $to_name = "NGO TAN LOI Digital Technologies";
+        $to_email = "ngotanloi2424@gmail.com";
+    
+        $data = array(
+            "name" => $to_name,
+            "body" => 'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý.',
+            "order" => $order_by_id, // Thêm thông tin đơn hàng vào mảng $data
+        );
+    
+        Mail::send("home.send_mail", $data, function ($message) use ($to_name, $to_email) {
+            $message->to($to_email)->subject('Thông tin đơn hàng');
+            $message->from($to_email, $to_name);
+    
+            $message->attach(public_path('AdminLTE/dist/img/login_logo.png'), [
+                'as' => 'logo',
+                'mime' => 'image/png',
+            ]);
+        });
+    
+        return redirect('/manage-order')->with('message', '');
+    }
+    
 }

@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Mail;
 
 class HomeAdminController extends Controller
 {
@@ -53,4 +53,28 @@ class HomeAdminController extends Controller
     {
         return view('home.lien_he');
     }
+
+    // public function send_mail()
+    // {
+    //     $to_name = "NGO TAN LOI Digital Technologies";
+    //     $to_email = "ngotanloi2424@gmail.com";
+
+    //     $data = array(
+    //         "name" => $to_name,
+    //         "body" => 'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý.'
+    //     );
+
+    //     Mail::send("home.send_mail", $data, function ($message) use ($to_name, $to_email) {
+    //         $message->to($to_email)->subject('Thông tin đơn hàng');
+    //         $message->from($to_email, $to_name);
+
+    //         // Sử dụng attach thay vì embed
+    //         $message->attach(public_path('AdminLTE/dist/img/login_logo.png'), [
+    //             'as' => 'logo',
+    //             'mime' => 'image/png', // Kiểu MIME của hình ảnh
+    //         ]);
+    //     });
+
+    //     return redirect('/manage-order')->with('message', '');
+    // }
 }

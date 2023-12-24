@@ -69,6 +69,10 @@ Route::get('/view-order/{orderId}', [CheckoutController::class, 'view_order']);
 Route::get('/delete-order/{orderId}', [CheckoutController::class, 'delete_order']);
 Route::get('/print-order/{orderId}', [CheckoutController::class, 'print_order']);
 
+//gui mail
+Route::get('send-mail/{orderId}', [CheckoutController::class, 'send_mail']);
+
+
 
 
 //xu ly admin

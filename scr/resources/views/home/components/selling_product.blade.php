@@ -61,7 +61,7 @@
     </div><!-- End .container -->
     <div class="heading heading-flex mb-3">
         <div class="heading-left">
-            <h2 class="title">Sản phẩm thịnh hành</h2><!-- End .title -->
+            <h2 class="title">Sản phẩm bán chạy</h2><!-- End .title -->
         </div><!-- End .heading-left -->
     </div><!-- End .heading -->
 

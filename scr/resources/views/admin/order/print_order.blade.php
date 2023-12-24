@@ -84,7 +84,7 @@
             </thead>
             <tbody>
                 @php
-                    $totalAmount = 0; // Tạo biến tổng
+                    $totalAmount = 0; // Khởi tạo biến tổng
                 @endphp
                 @foreach ($order_by_id as $order)
                     <tr>
@@ -98,11 +98,22 @@
                         $totalAmount += $order->product_price * $order->product_sales_quantity; // Cập nhật tổng
                     @endphp
                 @endforeach
-                <tr>
-                    <td colspan="3"></td>
-                    <td><b>Tổng thanh toán: {{ number_format($totalAmount) }} VNĐ</b></td>
-                    <td></td>
-                </tr>
+                @if ($order_by_id->count() > 0)
+                    <tr>
+                        <td colspan="3"></td>
+                        <td style="color: red"><b>Tổng thanh toán: {{ number_format($totalAmount) }} VNĐ</b></td>
+                        <td style="color: red">
+                            <b>
+                                Bằng chữ:
+                                @if (isset($totalAmount) && $totalAmount > 0)
+                                    {{ convertNumberToWords($totalAmount) }} VNĐ
+                                @else
+                                    0 VNĐ
+                                @endif
+                            </b>
+                        </td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </body>

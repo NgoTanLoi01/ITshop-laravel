@@ -3,6 +3,7 @@
 @section('title')
     <title>Trang chủ</title>
 @endsection
+
 <style>
     h5 {
         font-weight: bold;
@@ -14,19 +15,22 @@
     th {
         background-color: #d2e2ef;
     }
-
-    
 </style>
 
 @section('content')
     <div class="content-wrapper p-3">
-        @foreach ($order_by_id as $order)
-            <div class="col-md-12">
-                <a target="_blank" href="{{ url('/print-order/' . $order->order_id) }}" class="btn btn-sm btn-secondary float-right m-2">
-                    <i class="fas fa-print"></i> In đơn hàng
-                </a>
-            </div>
-        @endforeach
+        
+        <div class="col-md-12">
+            <a target="_blank" href="{{ url('/print-order/' . $order_by_id->first()->order_id) }}"
+                class="btn btn-sm btn-outline-secondary float-right m-2">
+                <i class="fas fa-print"></i> In đơn hàng
+            </a>
+        
+            <a href="{{ url('/send-mail/' . $order_by_id->first()->order_id) }}" class="btn btn-sm btn-outline-danger float-right m-2">
+                <i class="fas fa-regular fa-envelope"></i> Gửi mail thông báo
+            </a>
+        </div>
+        
 
         <br>
         <br>
@@ -40,11 +44,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ $order_by_id->first()->customer_name }}</td>
-                    <td>{{ $order_by_id->first()->customer_phone }}</td>
-                    <td>{{ $order_by_id->first()->customer_email }}</td>
-                </tr>
+                @if ($order_by_id->count() > 0)
+                    <tr>
+                        <td>{{ $order_by_id->first()->customer_name }}</td>
+                        <td>{{ $order_by_id->first()->customer_phone }}</td>
+                        <td>{{ $order_by_id->first()->customer_email }}</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 
@@ -61,12 +67,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ $order_by_id->first()->shipping_name }}</td>
-                    <td>{{ $order_by_id->first()->shipping_address }}</td>
-                    <td>{{ $order_by_id->first()->shipping_phone }}</td>
-                    <td>{{ $order_by_id->first()->shipping_notes }}</td>
-                </tr>
+                @if ($order_by_id->count() > 0)
+                    <tr>
+                        <td>{{ $order_by_id->first()->shipping_name }}</td>
+                        <td>{{ $order_by_id->first()->shipping_address }}</td>
+                        <td>{{ $order_by_id->first()->shipping_phone }}</td>
+                        <td>{{ $order_by_id->first()->shipping_notes }}</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 
@@ -85,7 +93,7 @@
             </thead>
             <tbody>
                 @php
-                    $totalAmount = 0; // Tạo biến tổng
+                    $totalAmount = 0; // Khởi tạo biến tổng
                 @endphp
                 @foreach ($order_by_id as $order)
                     <tr>
@@ -99,11 +107,22 @@
                         $totalAmount += $order->product_price * $order->product_sales_quantity; // Cập nhật tổng
                     @endphp
                 @endforeach
-                <tr>
-                    <td colspan="3"></td>
-                    <td><b>Tổng thanh toán: {{ number_format($totalAmount) }} VNĐ</b></td>
-                    <td></td>
-                </tr>
+                @if ($order_by_id->count() > 0)
+                    <tr>
+                        <td colspan="3"></td>
+                        <td style="color: red"><b>Tổng thanh toán: {{ number_format($totalAmount) }} VNĐ</b></td>
+                        <td style="color: red">
+                            <b>
+                                Bằng chữ:
+                                @if (isset($totalAmount) && $totalAmount > 0)
+                                    {{ convertNumberToWords($totalAmount) }} VNĐ
+                                @else
+                                    0 VNĐ
+                                @endif
+                            </b>
+                        </td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>

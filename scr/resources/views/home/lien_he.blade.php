@@ -60,7 +60,7 @@
 
                             <div class="col-sm-5">
                                 <div class="contact-info">
-                                    <h3>Văn phòng</h3>
+                                    <h3>Thời gian làm việc</h3>
 
                                     <ul class="contact-list">
                                         <li>

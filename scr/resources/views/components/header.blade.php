@@ -1,5 +1,3 @@
-
-
 <header class="header header-intro-clearance header-3">
     <div class="header-top">
         <div class="container">
@@ -15,16 +13,20 @@
                     <li>
                         <ul>
                             <?php
-                                $customer_id = Session::get('customer_id');
-                                if ($customer_id != NULL) {
+                            $customer_id = Session::get('customer_id');
+                            $customer_name = Session::get('customer_name');
+            
+                            if ($customer_id != NULL) {
                             ?>
+                            <li><a href="#">{{ $customer_name }}</a></li>
                             <li><a href="{{ URL::to('/logout-checkout') }}">Đăng xuất</a></li>
+                            
                             <?php
-                                }else {
+                            } else {
                             ?>
                             <li><a href="{{ URL::to('/login-checkout') }}">Đăng nhập / Đăng ký</a></li>
                             <?php
-                                } 
+                            }
                             ?>
                         </ul>
                     </li>
