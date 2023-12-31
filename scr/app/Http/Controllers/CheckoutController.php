@@ -22,8 +22,142 @@ session_start();
 
 class CheckoutController extends Controller
 {
-    private $order;
+    public function vnpay_payment(Request $request)
+    {
+        // Đường dẫn và thông tin cần thiết khác
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = "http://127.0.0.1:8000/checkout";
+        $vnp_TmnCode = "YOU17NPC"; // Mã website tại VNPAY
+        $vnp_HashSecret = "NMYCLNXMEPBVEJUNUGMDAZXZGHALDDHL"; // Chuỗi bí mật
 
+        // Tạo mã đơn hàng
+        $vnp_TxnRef = time() . '_' . rand(1000, 9999);
+
+        // Thông tin đơn hàng
+        $vnp_OrderInfo = 'Thanh toán đơn hàng';
+        $vnp_OrderType = 'billpayment';
+
+        // Lấy tổng tiền từ giỏ hàng
+        $totalAmount = 0;
+        $content = Cart::content();
+        foreach ($content as $v_content) {
+            $totalAmount += $v_content->price * $v_content->qty;
+        }
+
+        // Chuyển đổi tổng tiền thành đơn vị tiền tệ của VNPAY (VND)
+        $vnp_Amount = $totalAmount * 100;
+
+        // Thông tin thanh toán
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = 'NCB';
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+        // Các tham số thanh toán
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef,
+        );
+
+        // Kiểm tra và thêm tham số ngân hàng nếu có
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+
+        // Sắp xếp mảng tham số để tạo chuỗi hash
+        ksort($inputData);
+
+        // Tạo chuỗi hash
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        // Thêm chuỗi hash vào đường dẫn thanh toán
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+
+        // Lưu thông tin thanh toán vào bảng payment
+        $payment_data = array(
+            'vnp_txn_ref' => $vnp_TxnRef,
+            'vnp_amount' => $vnp_Amount,
+            'payment_method' => $vnp_OrderType,
+            'vnp_response_code' => '', // Giá trị này sẽ được cập nhật sau khi nhận được phản hồi từ VNPAY
+            'created_at' => now(),
+        );
+
+        $payment_id = DB::table('payment')->insertGetId($payment_data);
+
+        // Lưu thông tin đơn hàng vào bảng order
+        $order_data = array(
+            'customer_id' => Session::get('customer_id'),
+            'shipping_id' => Session::get('shipping_id'),
+            'payment_id' => $payment_id,
+            'order_total' => round(Cart::total(0, '.', '') / (1 + 0.21), 2),
+            'order_status' => '	Đơn hàng được thanh toán bằng VNPAY',
+        );
+
+        $order_id = DB::table('order')->insertGetId($order_data);
+
+        // Lưu chi tiết đơn hàng vào bảng order_details
+        foreach ($content as $v_content) {
+            $order_d_data = array(
+                'order_id' => $order_id,
+                'product_id' => $v_content->id,
+                'product_name' => $v_content->name,
+                'product_price' => $v_content->price,
+                'product_sales_quantity' => $v_content->qty,
+                'tax' => 0,
+            );
+
+            DB::table('order_details')->insert($order_d_data);
+        }
+
+        // Xử lý thanh toán theo phương thức đã chọn
+        if ($vnp_OrderType == 1) {
+            // Xử lý thanh toán thẻ ATM
+            echo 'Thanh toán thẻ ATM';
+        } elseif ($vnp_OrderType == 2) {
+            // Xử lý thanh toán tiền mặt
+            Cart::destroy();
+            return view('home.handcash');
+        } else {
+            // Xử lý thanh toán thẻ ghi nợ
+            echo 'Thanh toán thẻ ghi nợ';
+        }
+
+        // Nếu là chuyển hướng, chuyển trình duyệt đến đường dẫn thanh toán
+        if (isset($_POST['redirect'])) {
+            header('Location: ' . $vnp_Url);
+            die();
+        } else {
+            // Nếu là gọi API, trả về dữ liệu JSON
+            echo json_encode($returnData);
+        }
+    }
+
+
+    private $order;
     public function __construct(Order $order)
     {
         $this->order = $order;
@@ -85,38 +219,56 @@ class CheckoutController extends Controller
 
     public function order_place(Request $request)
     {
-        //insert payment_method
+        // Insert payment_method
         $data = array();
         $data['payment_method'] = $request->payment_option;
         $data['payment_status'] = 'Đang chờ xử lý';
+
+        // Kiểm tra nếu là thanh toán bằng tiền mặt, thêm giá trị mặc định cho vnp_response_code, vnp_amount, vnp_txn_ref
+        if ($data['payment_method'] == 2) {
+            $data['vnp_response_code'] = ''; // Giá trị mặc định cho thanh toán bằng tiền mặt
+            $data['vnp_amount'] = ''; // Giá trị mặc định cho thanh toán bằng tiền mặt
+            $data['vnp_txn_ref'] = ''; // Giá trị mặc định cho thanh toán bằng tiền mặt
+        }
+
         $payment_id = DB::table('payment')->insertGetId($data);
 
-        //insert order
+        // Insert order
         $order_data = array();
         $order_data['customer_id'] = Session::get('customer_id');
         $order_data['shipping_id'] = Session::get('shipping_id');
         $order_data['payment_id'] = $payment_id;
         $order_data['order_total'] = round(Cart::total(0, '.', '') / (1 + 0.21), 2);
-        $order_data['order_status'] = 'Đang chờ xử lý';
+        $order_data['order_status'] = 'Thanh toán khi nhận hàng';
         $order_id = DB::table('order')->insertGetId($order_data);
 
-        //insert order_details
+        // Trừ số lượng sản phẩm trong CSDL
         $content = Cart::content();
         foreach ($content as $v_content) {
-            $order_d_data = array();
-            $order_d_data['order_id'] = $order_id;
-            $order_d_data['product_id'] = $v_content->id;
-            $order_d_data['product_name'] = $v_content->name;
-            $order_d_data['product_price'] = $v_content->price;
-            $order_d_data['product_sales_quantity'] = $v_content->qty;
-            $order_d_data['tax'] = 0;
+            // Truy xuất thông tin sản phẩm từ CSDL
+            $product = DB::table('products')->where('id', $v_content->id)->first();
+
+            // Kiểm tra nếu sản phẩm tồn tại và có đủ số lượng để giảm
+            if ($product && $product->quantity >= $v_content->qty) {
+                // Giảm số lượng sản phẩm trong CSDL
+                DB::table('products')->where('id', $v_content->id)->decrement('quantity', $v_content->qty);
+            } else {
+                // Xử lý nếu không đủ số lượng sản phẩm (ví dụ: thông báo lỗi, không thực hiện thanh toán, ...)
+                // Trong thực tế, bạn có thể xử lý theo ý muốn của mình ở đây.
+                return response()->json(['error' => 'Sản phẩm không đủ số lượng.']);
+            }
+
+            // Insert order_details
+            $order_d_data = array(
+                'order_id' => $order_id,
+                'product_id' => $v_content->id,
+                'product_name' => $v_content->name,
+                'product_price' => $v_content->price,
+                'product_sales_quantity' => $v_content->qty,
+                'tax' => 0,
+            );
 
             DB::table('order_details')->insert($order_d_data);
-
-            //giảm số lượng sản phẩm trong giỏ hàng
-            DB::table('products')
-                ->where('id', $v_content->id)
-                ->decrement('quantity', $v_content->qty);
         }
 
         if ($data['payment_method'] == 1) {
@@ -130,6 +282,7 @@ class CheckoutController extends Controller
 
         // return Redirect::to('/payment');
     }
+
 
 
     public function logout_checkout()
@@ -194,8 +347,8 @@ class CheckoutController extends Controller
             ->select('order.*', 'customers.*', 'shipping.*', 'order_details.*')
             ->where('order.order_id', $checkoutcode)
             ->get();
-    
-    
+
+
         $output = '<!DOCTYPE html>
                     <html lang="en">
                     <head>
@@ -316,19 +469,19 @@ class CheckoutController extends Controller
                                 </tr>
                             </thead>
                             <tbody>';
-    
-                                $totalAmount = 0;
-    
-                                foreach ($order_by_id as $order) {
-                                    $output .= '<tr>
+
+        $totalAmount = 0;
+
+        foreach ($order_by_id as $order) {
+            $output .= '<tr>
                                                     <td>' . $order->product_name . '</td>
                                                     <td>' . $order->product_sales_quantity . '</td>
                                                     <td>' . number_format(floatval($order->product_price)) . ' VNĐ</td>
                                                     <td>' . number_format(floatval($order->product_price * $order->product_sales_quantity)) . ' VNĐ</td>
                                                 </tr>';
-                                    $totalAmount += $order->product_price * $order->product_sales_quantity;
-                                }
-                                $output .= '<tr>
+            $totalAmount += $order->product_price * $order->product_sales_quantity;
+        }
+        $output .= '<tr>
                                     <td colspan="3"></td>
                                     <td><b>Tổng thanh toán:</b> ' . number_format($totalAmount) . ' VNĐ <br>  <b>Bằng chữ: </b>' . convertNumberToWords($totalAmount) . ' VNĐ</td>
                                 </tr>
@@ -339,7 +492,7 @@ class CheckoutController extends Controller
             </html>';
         return $output;
     }
-    
+
 
     public function send_mail($orderId)
     {
@@ -351,27 +504,26 @@ class CheckoutController extends Controller
             ->select('order.*', 'customers.*', 'shipping.*', 'order_details.*')
             ->where('order.order_id', $orderId)
             ->get();
-    
+
         $to_name = "NGO TAN LOI Digital Technologies";
         $to_email = "ngotanloi2424@gmail.com";
-    
+
         $data = array(
             "name" => $to_name,
             "body" => 'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý.',
             "order" => $order_by_id, // Thêm thông tin đơn hàng vào mảng $data
         );
-    
+
         Mail::send("home.send_mail", $data, function ($message) use ($to_name, $to_email) {
             $message->to($to_email)->subject('Thông tin đơn hàng');
             $message->from($to_email, $to_name);
-    
+
             $message->attach(public_path('AdminLTE/dist/img/login_logo.png'), [
                 'as' => 'logo',
                 'mime' => 'image/png',
             ]);
         });
-    
+
         return redirect('/manage-order')->with('message', '');
     }
-    
 }

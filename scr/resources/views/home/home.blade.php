@@ -140,7 +140,7 @@
             <hr class="mt-5 mb-6">
         </div><!-- End .container -->
 
-
+        
         {{-- Selling products --}}
         @include('home.components.selling_product')
         {{-- Selling products --}}

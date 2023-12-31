@@ -72,7 +72,8 @@ Route::get('/print-order/{orderId}', [CheckoutController::class, 'print_order'])
 //gui mail
 Route::get('send-mail/{orderId}', [CheckoutController::class, 'send_mail']);
 
-
+//cong thanh toan
+Route::post('/vnpay_payment', [CheckoutController::class, 'vnpay_payment']);
 
 
 //xu ly admin
