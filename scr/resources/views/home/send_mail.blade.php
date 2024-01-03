@@ -69,6 +69,7 @@
         <ul>
             @php
                 $totalAmount = 0;
+                $orderStatus = $order->first()->order_status; // Lấy trạng thái đơn hàng từ bản ghi đầu tiên
             @endphp
             @foreach ($order as $index => $item)
                 <li>
@@ -78,8 +79,7 @@
                         <li>Số lượng: {{ $item->product_sales_quantity }}</li>
                         <li>Giá: {{ number_format($item->product_price) }} VNĐ</li>
                         <li>Tổng tiền sản phẩm:
-                            {{ number_format($item->product_price * $item->product_sales_quantity) }}
-                            VNĐ</li>
+                            {{ number_format($item->product_price * $item->product_sales_quantity) }} VNĐ</li>
                     </ul>
                     @php
                         $totalAmount += $item->product_price * $item->product_sales_quantity;
@@ -95,16 +95,23 @@
                         {{ convertNumberToWords($totalAmount) }} VNĐ
                     @else
                         0 VNĐ
-                    @endif</strong>
+                    @endif
+                </strong>
+            </li>
+            <li>
+                <strong>Phương thức thanh toán: {{ $orderStatus }}</strong>
             </li>
         </ul>
         ------------------------------------------------------------------------------------------------------------------------------
         <h3>Cảm ơn bạn đã mua hàng từ cửa hàng chúng tôi.</h3>
-        <p>Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ <a href="mailto:support@example.com"><strong>hỗ trợ của chúng tôi</strong></a>.</p>
+        <p>Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ <a href="mailto:ngotanloisupport@gmail.com"><strong>hỗ trợ
+                    của chúng tôi</strong></a>.</p>
         <h3>Trân trọng cảm ơn,</h3>
         <h3>NGO TAN LOI Digital Technologies</h3>
+        <p>Địa chỉ: Nguyễn Thiện Thành, Phường 5, Trà Vinh</p>
+        <p>SĐT: 033 712 0073</p>
     </div>
-
 </body>
+
 
 </html>

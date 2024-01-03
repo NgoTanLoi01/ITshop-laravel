@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Trang chủ</title>
+    <title>NGO TAN LOI Digital Technologies</title>
 @endsection
 
 @section('css')

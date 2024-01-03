@@ -17,10 +17,10 @@ class HomeAdminController extends Controller
         $categorys = Category::where('parent_id', 0)->get();
         $products = Product::latest()->take(10)->get();
         $productsSelling = Product::latest('views_count', 'desc')->take(12)->get();
-        //$productsFeatures = Product::latest('features', 'desc')->take(12)->get();
+        $productsFeatures = Product::oldest('views_count')->take(12)->get();
         $categorysLimit = Category::where('parent_id', 0)->take(6)->get();
 
-        return view("home.home", compact("sliders", "categorys", "products", "productsSelling", "categorysLimit"));
+        return view("home.home", compact("sliders", "categorys", "products", "productsSelling", "categorysLimit", "productsFeatures"));
     }
 
     public function detail($slug)
@@ -53,28 +53,4 @@ class HomeAdminController extends Controller
     {
         return view('home.lien_he');
     }
-
-    // public function send_mail()
-    // {
-    //     $to_name = "NGO TAN LOI Digital Technologies";
-    //     $to_email = "ngotanloi2424@gmail.com";
-
-    //     $data = array(
-    //         "name" => $to_name,
-    //         "body" => 'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý.'
-    //     );
-
-    //     Mail::send("home.send_mail", $data, function ($message) use ($to_name, $to_email) {
-    //         $message->to($to_email)->subject('Thông tin đơn hàng');
-    //         $message->from($to_email, $to_name);
-
-    //         // Sử dụng attach thay vì embed
-    //         $message->attach(public_path('AdminLTE/dist/img/login_logo.png'), [
-    //             'as' => 'logo',
-    //             'mime' => 'image/png', // Kiểu MIME của hình ảnh
-    //         ]);
-    //     });
-
-    //     return redirect('/manage-order')->with('message', '');
-    // }
 }

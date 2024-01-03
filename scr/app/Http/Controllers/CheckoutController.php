@@ -68,12 +68,10 @@ class CheckoutController extends Controller
             "vnp_TxnRef" => $vnp_TxnRef,
         );
 
-        // Kiểm tra và thêm tham số ngân hàng nếu có
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }
 
-        // Sắp xếp mảng tham số để tạo chuỗi hash
         ksort($inputData);
 
         // Tạo chuỗi hash
@@ -90,7 +88,6 @@ class CheckoutController extends Controller
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
 
-        // Thêm chuỗi hash vào đường dẫn thanh toán
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
             $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
@@ -102,7 +99,7 @@ class CheckoutController extends Controller
             'vnp_txn_ref' => $vnp_TxnRef,
             'vnp_amount' => $vnp_Amount,
             'payment_method' => $vnp_OrderType,
-            'vnp_response_code' => '', // Giá trị này sẽ được cập nhật sau khi nhận được phản hồi từ VNPAY
+            'vnp_response_code' => '',
             'created_at' => now(),
         );
 
@@ -114,7 +111,7 @@ class CheckoutController extends Controller
             'shipping_id' => Session::get('shipping_id'),
             'payment_id' => $payment_id,
             'order_total' => round(Cart::total(0, '.', '') / (1 + 0.21), 2),
-            'order_status' => '	Đơn hàng được thanh toán bằng VNPAY',
+            'order_status' => 'Đơn hàng đã được thanh toán bằng VNPAY',
         );
 
         $order_id = DB::table('order')->insertGetId($order_data);
@@ -131,6 +128,15 @@ class CheckoutController extends Controller
             );
 
             DB::table('order_details')->insert($order_d_data);
+
+            // Giảm số lượng sản phẩm trong CSDL
+            $product = DB::table('products')->where('id', $v_content->id)->first();
+
+            if ($product && $product->quantity >= $v_content->qty) {
+                DB::table('products')->where('id', $v_content->id)->decrement('quantity', $v_content->qty);
+            } else {
+                return response()->json(['error' => 'Sản phẩm không đủ số lượng.']);
+            }
         }
 
         // Xử lý thanh toán theo phương thức đã chọn
@@ -145,17 +151,14 @@ class CheckoutController extends Controller
             // Xử lý thanh toán thẻ ghi nợ
             echo 'Thanh toán thẻ ghi nợ';
         }
-
-        // Nếu là chuyển hướng, chuyển trình duyệt đến đường dẫn thanh toán
+        //$returnData = array();
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
         } else {
-            // Nếu là gọi API, trả về dữ liệu JSON
             echo json_encode($returnData);
         }
     }
-
 
     private $order;
     public function __construct(Order $order)
@@ -219,71 +222,74 @@ class CheckoutController extends Controller
 
     public function order_place(Request $request)
     {
-        // Insert payment_method
-        $data = array();
-        $data['payment_method'] = $request->payment_option;
-        $data['payment_status'] = 'Đang chờ xử lý';
+        // Thêm phương thức thanh toán vào bảng payment
+        $paymentData = [
+            'payment_method' => $request->payment_option,
+            'payment_status' => 'Đang chờ xử lý',
+        ];
 
-        // Kiểm tra nếu là thanh toán bằng tiền mặt, thêm giá trị mặc định cho vnp_response_code, vnp_amount, vnp_txn_ref
-        if ($data['payment_method'] == 2) {
-            $data['vnp_response_code'] = ''; // Giá trị mặc định cho thanh toán bằng tiền mặt
-            $data['vnp_amount'] = ''; // Giá trị mặc định cho thanh toán bằng tiền mặt
-            $data['vnp_txn_ref'] = ''; // Giá trị mặc định cho thanh toán bằng tiền mặt
+        // Kiểm tra nếu là thanh toán bằng tiền mặt, thêm giá trị mặc định cho các trường liên quan
+        if ($paymentData['payment_method'] == 2) {
+            $paymentData['vnp_response_code'] = '';
+            $paymentData['vnp_amount'] = '';
+            $paymentData['vnp_txn_ref'] = '';
         }
 
-        $payment_id = DB::table('payment')->insertGetId($data);
+        $paymentId = DB::table('payment')->insertGetId($paymentData);
 
-        // Insert order
-        $order_data = array();
-        $order_data['customer_id'] = Session::get('customer_id');
-        $order_data['shipping_id'] = Session::get('shipping_id');
-        $order_data['payment_id'] = $payment_id;
-        $order_data['order_total'] = round(Cart::total(0, '.', '') / (1 + 0.21), 2);
-        $order_data['order_status'] = 'Thanh toán khi nhận hàng';
-        $order_id = DB::table('order')->insertGetId($order_data);
+        // Thêm đơn hàng và lấy ID
+        $orderData = [
+            'customer_id' => Session::get('customer_id'),
+            'shipping_id' => Session::get('shipping_id'),
+            'payment_id' => $paymentId,
+            'order_total' => round(Cart::total(0, '.', '') / (1 + 0.21), 2),
+            'order_status' => 'Thanh toán khi nhận hàng',
+        ];
 
-        // Trừ số lượng sản phẩm trong CSDL
+        $orderId = DB::table('order')->insertGetId($orderData);
+
+        // Lấy thời gian hiện tại và cập nhật created_at của đơn hàng
+        $currentDateTime = now();
+        DB::table('order')->where('order_id', $orderId)->update(['created_at' => $currentDateTime]);
+
+        // Trừ số lượng sản phẩm trong CSDL và thêm vào bảng order_details
         $content = Cart::content();
-        foreach ($content as $v_content) {
+        foreach ($content as $product) {
             // Truy xuất thông tin sản phẩm từ CSDL
-            $product = DB::table('products')->where('id', $v_content->id)->first();
+            $productInfo = DB::table('products')->where('id', $product->id)->first();
 
             // Kiểm tra nếu sản phẩm tồn tại và có đủ số lượng để giảm
-            if ($product && $product->quantity >= $v_content->qty) {
+            if ($productInfo && $productInfo->quantity >= $product->qty) {
                 // Giảm số lượng sản phẩm trong CSDL
-                DB::table('products')->where('id', $v_content->id)->decrement('quantity', $v_content->qty);
+                DB::table('products')->where('id', $product->id)->decrement('quantity', $product->qty);
+
+                // Thêm vào bảng order_details
+                $orderDetailsData = [
+                    'order_id' => $orderId,
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'product_price' => $product->price,
+                    'product_sales_quantity' => $product->qty,
+                    'tax' => 0,
+                ];
+
+                DB::table('order_details')->insert($orderDetailsData);
             } else {
-                // Xử lý nếu không đủ số lượng sản phẩm (ví dụ: thông báo lỗi, không thực hiện thanh toán, ...)
-                // Trong thực tế, bạn có thể xử lý theo ý muốn của mình ở đây.
+                // Xử lý khi không đủ số lượng sản phẩm
                 return response()->json(['error' => 'Sản phẩm không đủ số lượng.']);
             }
-
-            // Insert order_details
-            $order_d_data = array(
-                'order_id' => $order_id,
-                'product_id' => $v_content->id,
-                'product_name' => $v_content->name,
-                'product_price' => $v_content->price,
-                'product_sales_quantity' => $v_content->qty,
-                'tax' => 0,
-            );
-
-            DB::table('order_details')->insert($order_d_data);
         }
 
-        if ($data['payment_method'] == 1) {
-            echo 'Thanh toán thẻ ATM';
-        } elseif ($data['payment_method'] == 2) {
+        // Xử lý dựa vào phương thức thanh toán
+        if ($paymentData['payment_method'] == 1) {
+            return 'Thanh toán thẻ ATM';
+        } elseif ($paymentData['payment_method'] == 2) {
             Cart::destroy();
             return view('home.handcash');
         } else {
-            echo 'Thanh toán thẻ ghi nợ';
+            return 'Thanh toán thẻ ghi nợ';
         }
-
-        // return Redirect::to('/payment');
     }
-
-
 
     public function logout_checkout()
     {
@@ -348,6 +354,7 @@ class CheckoutController extends Controller
             ->where('order.order_id', $checkoutcode)
             ->get();
 
+        $orderStatus = $order_by_id->first()->order_status; // Lấy trạng thái đơn hàng từ bản ghi đầu tiên
 
         $output = '<!DOCTYPE html>
                     <html lang="en">
@@ -355,90 +362,98 @@ class CheckoutController extends Controller
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <style>
-                        @font-face {
-                            font-family: "DejaVu Sans";
-                            src: url("path/to/your/font.woff2") format("woff2");
-                        }
-
-                        table {
-                            font-family: "DejaVu Sans", sans-serif;
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin-bottom: 20px;
-                        }
-
-                        table, th, td {
-                            border: 1px solid #ddd;
-                        }
-
-                        th, td {
-                            padding: 8px;
-                            text-align: left;
-                        }
-
-                        h5 {
-                            font-weight: bold;
-                            padding: 8px;
-                            background-color: #d2e2ef;
-                            text-align: center;
-                            font-family: "DejaVu Sans", sans-serif;
-                        }
-
-                        .logo {
-                            max-width: 100px;
-                            margin-bottom: 10px;
-                            border-radius: 50%; 
-                            vertical-align: middle;
-                        }
-
-                        .logo + p {
-                            text-align: center;
-                            display: inline-block;
-                            vertical-align: middle;
-                            margin-left: -12px;
-                        }
-
-                        h2 {
-                            text-align: center;
-                            font-family: "DejaVu Sans", sans-serif;
-                        }
-                        .thongtin1,
-                        .thongtin2 {
-                            
-                            display: inline-block;
-                            vertical-align: top; 
-                            font-family: "DejaVu Sans", sans-serif;
-                        }
-
-                        .thongtin2 {
-                            font-size: 15px;
-                            margin-left: 60px; 
-                        }
-                        h3{
-                            text-align: center;
-                            font-family: "DejaVu Sans", sans-serif; 
-                        }
-                        span{
-                            color: #fcb941;
-                        }
-                        .thongtin1{
-                            color: #fcb941;
-                        }
-                    </style>
+                            /* Thêm phần CSS vào đây */
+                            @font-face {
+                                font-family: "DejaVu Sans";
+                                src: url("path/to/your/font.woff2") format("woff2");
+                            }
+    
+                            table {
+                                font-family: "DejaVu Sans", sans-serif;
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
+                            }
+    
+                            table, th, td {
+                                border: 1px solid #ddd;
+                            }
+    
+                            th, td {
+                                padding: 8px;
+                                text-align: left;
+                            }
+    
+                            h5 {
+                                font-weight: bold;
+                                padding: 8px;
+                                background-color: #d2e2ef;
+                                text-align: center;
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+    
+                            .logo {
+                                max-width: 100px;
+                                margin-bottom: 10px;
+                                border-radius: 50%;
+                                vertical-align: middle;
+                            }
+    
+                            .logo + p {
+                                text-align: center;
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-left: -12px;
+                            }
+    
+                            h2 {
+                                text-align: center;
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+    
+                            .thongtin1,
+                            .thongtin2 {
+    
+                                display: inline-block;
+                                vertical-align: top;
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+    
+                            .thongtin2 {
+                                font-size: 15px;
+                                margin-left: 60px;
+                            }
+    
+                            h3{
+                                text-align: center;
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+    
+                            span{
+                                color: #fcb941;
+                            }
+    
+                            .thongtin1{
+                                color: #fcb941;
+                            }
+                            p{
+                                font-family: "DejaVu Sans", sans-serif;
+                            }
+                        </style>
                         <title>In Đơn Hàng</title>
                     </head>
-                    <body> 
-                    <div class="thongtin1" >
-                        <img class="logo" src="AdminLTE/dist/img/login_logo.png" alt="Logo">
-                        <p class="shop"><b>NGO TAN LOI <br> DIGITAL <br> TECHNOLOGIES</b></p>
-                    </div>
-                    <div class="thongtin2">
-                        <p><b>SĐT:</b> 033 712 0073</p>
-                        <p><b>Địa chỉ:</b> Nguyễn Thiện Thành, Phường 5, Trà Vinh</p>
-                        <p><b>Mã số thuế: </b>02GTT0/01</p>
-                    </div>
-                    <h2>HÓA ĐƠN BÁN HÀNG <br> -------oOo-------</h2>
-                    
+                    <body>
+                        <div class="thongtin1" >
+                            <img class="logo" src="AdminLTE/dist/img/login_logo.png" alt="Logo">
+                            <p class="shop"><b>NGO TAN LOI <br> DIGITAL <br> TECHNOLOGIES</b></p>
+                        </div>
+                        <div class="thongtin2">
+                            <p><b>SĐT:</b> 033 712 0073</p>
+                            <p><b>Địa chỉ:</b> Nguyễn Thiện Thành, Phường 5, Trà Vinh</p>
+                            <p><b>Mã số thuế: </b>02GTT0/01</p>
+                        </div>
+                        <h2>HÓA ĐƠN BÁN HÀNG <br> -------oOo-------</h2>
+    
                         <h5><b>THÔNG TIN VẬN CHUYỂN</b></h5>
                         <table>
                             <thead>
@@ -458,38 +473,40 @@ class CheckoutController extends Controller
                                 </tr>
                             </tbody>
                         </table>
+    
                         <h5><b>CHI TIẾT ĐƠN HÀNG</b></h5>
                         <table>
                             <thead>
                                 <tr>
-                                    <th scope="col">Tên sản phẩm</th>
-                                    <th scope="col">Số lượng</th>
+                                    <th style="width: 40%;" scope="col">Tên sản phẩm</th>
+                                    <th style="width: 5%;" scope="col">Số lượng</th>
                                     <th scope="col">Giá</th>
-                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Tổng tiền</th>                                    
                                 </tr>
                             </thead>
                             <tbody>';
-
         $totalAmount = 0;
-
         foreach ($order_by_id as $order) {
             $output .= '<tr>
-                                                    <td>' . $order->product_name . '</td>
-                                                    <td>' . $order->product_sales_quantity . '</td>
-                                                    <td>' . number_format(floatval($order->product_price)) . ' VNĐ</td>
-                                                    <td>' . number_format(floatval($order->product_price * $order->product_sales_quantity)) . ' VNĐ</td>
-                                                </tr>';
+                                                <td style="width: 40%;">' . $order->product_name . '</td>
+                                                <td style="width: 5%; text-align: center;">' . $order->product_sales_quantity . '</td>
+                                                <td style="text-align: center;">' . number_format(floatval($order->product_price)) . ' VNĐ</td>
+                                                <td style="text-align: center;">' . number_format(floatval($order->product_price * $order->product_sales_quantity)) . ' VNĐ</td>
+                                                
+                                            </tr>';
             $totalAmount += $order->product_price * $order->product_sales_quantity;
         }
-        $output .= '<tr>
-                                    <td colspan="3"></td>
-                                    <td><b>Tổng thanh toán:</b> ' . number_format($totalAmount) . ' VNĐ <br>  <b>Bằng chữ: </b>' . convertNumberToWords($totalAmount) . ' VNĐ</td>
-                                </tr>
-                        </tbody>
-                    </table>
-                    <h3><span>NGO TAN LOI DIGITAL TECHNOLOGIES </span> <br> CẢM ƠN QUÝ KHÁCH ĐÃ MUA SẮM TẠI CỬA HÀNG. </h3>
-                </body>
-            </html>';
+        $output .= '                                            
+                            </tbody>
+                        </table>
+                        <p><b>Tổng tiền phải thanh toán:</b> ' . number_format($totalAmount) . ' VNĐ.</p>
+                        <p><b>Bằng chữ: </b>' . convertNumberToWords($totalAmount) . ' VNĐ.</p>
+                        <p><b>Phương thức thanh toán:</b> ' . $orderStatus . '.</p>
+                        <br>
+                        <h3><span>NGO TAN LOI DIGITAL TECHNOLOGIES </span> <br> CẢM ƠN QUÝ KHÁCH ĐÃ MUA SẮM TẠI CỬA HÀNG. </h3>
+                    </body>
+                </html>';
+
         return $output;
     }
 

@@ -86,7 +86,6 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\AdminController@index',
         ]);
     });
-
     //categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [

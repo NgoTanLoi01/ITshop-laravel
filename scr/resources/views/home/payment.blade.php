@@ -115,44 +115,26 @@
                                     </table><!-- End .table table-wishlist -->
                                 </div>
                                 <br>
-                                <div class="page-title">
-                                    <h6 style="color: #c59d33">Chọn hình thức thanh toán</h6>
-                                </div>
+                                
                                 <form action="{{ URL::to('/order-place') }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="accordion-summary payment-options" id="accordion-payment">
                                         <div class="card">
-                                            <div class="card-header" id="heading-1">
-                                                <h2 class="card-title">
-                                                    <label><input name="payment_option" value="1" type="checkbox">
-                                                        Chuyển khoản ATM</label>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="card">
                                             <div class="card-header" id="heading-3">
                                                 <h2 class="card-title">
-                                                    <label><input name="payment_option" value="2" type="checkbox">
-                                                        Thanh toán tiền mặt</label>
+                                                    <label>
+                                                        <input name="payment_option" value="2" type="checkbox"
+                                                            style="display: none;">
+                                                       
+                                                    </label>
                                                 </h2>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="card">
-                                            <div class="card-header" id="heading-3">
-                                                <h2 class="card-title">
-                                                    <label><input name="payment_option" value="3" type="checkbox">
-                                                        Thanh toán bằng thẻ ghi nợ</label>
-                                                        <br><br>
-                                                        <img src="{{'UserLTE/assets/images/payments-summary.png'}}" alt="payments cards">
-                                                </h2>
+
                                             </div>
                                         </div>
                                         <br>
                                         <button type="submit" value="Đặt hàng" name="send_order_place"
                                             class="btn btn-outline-primary-2 btn-order btn-block">
-                                            <span class="">Đặt hàng</span>
+                                            <span class="">Thanh toán tiền mặt</span>
                                         </button>
                                     </div>
                                 </form>
@@ -175,3 +157,16 @@
         </div>
     </main>
 @endsection
+
+<script>
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        // Find the checkbox with the name "payment_option" and the value "2"
+        var paymentCheckbox = document.querySelector('input[name="payment_option"][value="2"]');
+
+        // If the checkbox is found, automatically click it
+        if (paymentCheckbox) {
+            paymentCheckbox.click();
+        }
+    });
+</script>

@@ -92,11 +92,11 @@
                     }
                 }'>
 
-                @foreach ($productsSelling as $keySelling => $productsSellingItem)
+                @foreach ($productsFeatures as $keyFeature => $productsFeatureItem)
                     <div class="product product-2">
                         <figure class="product-media">
-                            <a href="{{ route('detail', $productsSellingItem->slug) }}">
-                                <img src="{{ config('app.base_url') .  $productsSellingItem->feature_image_path}}"
+                            <a href="{{ route('detail', $productsFeatureItem->slug) }}">
+                                <img src="{{ config('app.base_url') .  $productsFeatureItem->feature_image_path}}"
                                     alt="Product image" class="product-image">
                             </a>
 
@@ -107,14 +107,14 @@
 
                         <div class="product-body">
                             <div class="product-cat">
-                                <a href="{{ route('detail', $productsSellingItem->slug) }}"></a>
+                                <a href="{{ route('detail', $productsFeatureItem->slug) }}"></a>
                             </div><!-- End .product-cat -->
                             <h3 class="product-title"><a
-                                    href="{{ asset('UserLTE/product') }}">{{ ($productsSellingItem->name) }}</a></h3>
+                                    href="{{ asset('UserLTE/product') }}">{{ ($productsFeatureItem->name) }}</a></h3>
                             <!-- End .product-title -->
                             <div class="product-price">
-                                <span class="old-price"> Gốc: <del>{{ number_format($productsSellingItem->price) }} VNĐ</del></span>
-                                <span class="new-price">{{ number_format($productsSellingItem->sale_price) }} VNĐ</span>
+                                <span class="old-price"> Gốc: <del>{{ number_format($productsFeatureItem->price) }} VNĐ</del></span>
+                                <span class="new-price">{{ number_format($productsFeatureItem->sale_price) }} VNĐ</span>
                             </div><!-- End .product-price -->
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->

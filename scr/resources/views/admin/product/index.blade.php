@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Add product</title>
+    <title>NGO TAN LOI Digital Technologies</title>
 @endsection
 
 @section('css')

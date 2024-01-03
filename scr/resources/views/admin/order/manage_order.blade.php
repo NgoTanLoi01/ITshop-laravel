@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Trang chủ</title>
+    <title>NGO TAN LOI Digital Technologies</title>
 @endsection
 
 @section('css')
@@ -26,7 +26,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Thứ tự</th>
+                                    
                                     <th scope="col">Tên người đặt</th>
                                     <th scope="col">Tổng giá tiền</th>
                                     <th scope="col">Tình trạng</th>
@@ -36,7 +36,7 @@
                             <tbody>
                                 @foreach ($all_order as $order)
                                     <tr>
-                                        <th scope="row">{{ $order->order_id }}</th>
+                                        
                                         <td>{{ $order->customer_name }}</td>
                                         <td style="color: red">{{ number_format(floatval($order->order_total)) }} VNĐ</td>
                                         <td>{{ $order->order_status }}</td>
