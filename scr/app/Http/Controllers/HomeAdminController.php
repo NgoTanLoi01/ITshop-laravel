@@ -26,7 +26,14 @@ class HomeAdminController extends Controller
     public function detail($slug)
     {
         $product = Product::where("slug", $slug)->first();
-        $related = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->get();
+
+        // Tăng lượt xem lên 1
+        $product->increment('views_count');
+
+        $related = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->get();
+
         return view('home.detail', compact('product', 'related'));
     }
 
@@ -38,11 +45,25 @@ class HomeAdminController extends Controller
         return view("home.search", compact("productsSelling"))->with('search_product', $search_product);
     }
 
+
     public function product_all(Request $request)
     {
-        $products = Product::latest()->get();
+        $query = Product::query();
+
+        // Xử lý lọc theo giá
+        if ($request->has('price_range')) {
+            $priceRange = explode('-', $request->price_range);
+            $minPrice = (float) $priceRange[0];
+            $maxPrice = (float) $priceRange[1];
+            $query->whereRaw('CAST(sale_price AS DECIMAL(10,2)) BETWEEN ? AND ?', [$minPrice, $maxPrice]);
+        }
+
+        $products = $query->latest()->get(); // Sử dụng get() thay vì paginate()
+
         return view('home.product_all', compact('products'));
     }
+
+
 
     public function yeu_thich()
     {

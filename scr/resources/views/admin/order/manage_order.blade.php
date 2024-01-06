@@ -26,7 +26,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    
                                     <th scope="col">Tên người đặt</th>
                                     <th scope="col">Tổng giá tiền</th>
                                     <th scope="col">Tình trạng</th>
@@ -36,25 +35,24 @@
                             <tbody>
                                 @foreach ($all_order as $order)
                                     <tr>
-                                        
                                         <td>{{ $order->customer_name }}</td>
-                                        <td style="color: red">{{ number_format(floatval($order->order_total)) }} VNĐ</td>
+                                        <td style="color: red">{{ number_format(floatval($order->order_total)) }} VNĐ
+                                        </td>
                                         <td>{{ $order->order_status }}</td>
                                         <td>
                                             <a href="{{ URL::to('/view-order/' . $order->order_id) }}"
                                                 class="btn btn-sm btn-success"><i class="far fa-eye"></i>Xem</a>
-{{-- 
-                                            <a href="{{ URL::to('/delete-order/' . $order->order_id) }}" class="btn btn-sm btn-danger"><i
-                                                    class="fas fa-trash"></i>Xóa</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    {{-- <div class="col-md-12">
-                        {{ $all_order->links('pagination::bootstrap-4') }}
-                    </div> --}}
+                    <div class="col-md-12">
+                        @if ($all_order instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                            {{ $all_order->links('pagination::bootstrap-4') }}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

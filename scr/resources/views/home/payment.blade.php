@@ -115,7 +115,7 @@
                                     </table><!-- End .table table-wishlist -->
                                 </div>
                                 <br>
-                                
+
                                 <form action="{{ URL::to('/order-place') }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="accordion-summary payment-options" id="accordion-payment">
@@ -125,7 +125,7 @@
                                                     <label>
                                                         <input name="payment_option" value="2" type="checkbox"
                                                             style="display: none;">
-                                                       
+
                                                     </label>
                                                 </h2>
 
@@ -146,6 +146,17 @@
                                         <button type="submit" name="redirect"
                                             class="btn btn-outline-primary-2 btn-order btn-block">
                                             Thanh toán VNPAY
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <form action="{{ url('/momo_payment') }}" method="POST">
+                                    <div class="momo-btn">
+                                        @csrf
+                                        <input type="hidden" name="total_momo" id="">
+                                        <button type="submit" name="payUrl"
+                                            class="btn btn-outline-primary-2 btn-order btn-block">
+                                            Thanh toán MOMO
                                         </button>
                                     </div>
                                 </form>

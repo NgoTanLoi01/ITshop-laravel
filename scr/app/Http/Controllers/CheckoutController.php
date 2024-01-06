@@ -22,6 +22,148 @@ session_start();
 
 class CheckoutController extends Controller
 {
+    public function manageOrder()
+    {
+    }
+    public function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            )
+        );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
+        return $result;
+    }
+    public function momo_payment(Request $request)
+    {
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+
+        $partnerCode = 'MOMOBKUN20180529';
+        $accessKey = 'klm05TvNBzhg7h7j';
+        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $orderInfo = "Thanh toán qua ATM MoMo";
+
+        // Lấy tổng tiền từ giỏ hàng
+        $totalAmount = 0;
+        $content = Cart::content();
+        foreach ($content as $v_content) {
+            $totalAmount += $v_content->price * $v_content->qty;
+        }
+
+        // Chuyển đổi tổng tiền thành đơn vị tiền tệ của Momo (VND)
+        $vnp_Amount = $totalAmount;
+        $vnp_Amount = "$vnp_Amount";
+        $orderId = time() . "";
+        $redirectUrl = "http://127.0.0.1:8000/checkout";
+        $ipnUrl = "http://127.0.0.1:8000/checkout";
+        $extraData = "";
+
+        $requestId = time() . "";
+        $requestType = "payWithATM";
+
+        // Tạo chữ ký (signature) cho request
+        $rawHash = "accessKey=" . $accessKey . "&amount=" . $vnp_Amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+        // Tạo data để gửi đi
+        $data = array(
+            'partnerCode' => $partnerCode,
+            'partnerName' => "Test",
+            "storeId" => "MomoTestStore",
+            'requestId' => $requestId,
+            'amount' => $vnp_Amount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            'redirectUrl' => $redirectUrl,
+            'ipnUrl' => $ipnUrl,
+            'lang' => 'vi',
+            'extraData' => $extraData,
+            'requestType' => $requestType,
+            'signature' => $signature
+        );
+
+        // Gửi request đến Momo API
+        $result = $this->execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true);
+
+        // Kiểm tra xem response có 'payUrl' không
+        if (isset($jsonResult['orderId'])) {
+            $vnp_TxnRef = $jsonResult['orderId'];
+        } else {
+            // Xử lý khi 'orderId' không tồn tại
+            return response()->json(['error' => 'Không tìm thấy orderId trong response từ Momo.']);
+        }
+
+        // Lưu thông tin thanh toán vào bảng payment
+        $payment_data = array(
+            'vnp_txn_ref' => $vnp_TxnRef,
+            'vnp_amount' => $vnp_Amount,
+            'payment_method' => 'Momo',
+            'vnp_response_code' => '',
+            'created_at' => now(),
+        );
+
+        $payment_id = DB::table('payment')->insertGetId($payment_data);
+
+
+
+        DB::table('payment')->where('payment_id', $payment_id)->update(['created_at' => now()]);
+
+
+        // Lưu thông tin đơn hàng vào bảng order
+        $order_data = array(
+            'customer_id' => Session::get('customer_id'),
+            'shipping_id' => Session::get('shipping_id'),
+            'payment_id' => $payment_id,
+            'order_total' => $totalAmount,
+            'order_status' => 'Đơn hàng đã được thanh toán bằng Momo',
+            'created_at' => now(),
+        );
+
+        $order_id = DB::table('order')->insertGetId($order_data);
+
+        // Lưu chi tiết đơn hàng vào bảng order_details
+        foreach ($content as $v_content) {
+            $order_d_data = array(
+                'order_id' => $order_id,
+                'product_id' => $v_content->id,
+                'product_name' => $v_content->name,
+                'product_price' => $v_content->price,
+                'product_sales_quantity' => $v_content->qty,
+                'tax' => 0,
+            );
+
+            DB::table('order_details')->insert($order_d_data);
+
+            // Giảm số lượng sản phẩm trong CSDL
+            $product = DB::table('products')->where('id', $v_content->id)->first();
+
+            if ($product && $product->quantity >= $v_content->qty) {
+                DB::table('products')->where('id', $v_content->id)->decrement('quantity', $v_content->qty);
+            } else {
+                return response()->json(['error' => 'Sản phẩm không đủ số lượng.']);
+            }
+        }
+
+        // Chuyển hướng đến trang thanh toán
+        return redirect()->to($jsonResult['payUrl']);
+    }
+
+
+
     public function vnpay_payment(Request $request)
     {
         // Đường dẫn và thông tin cần thiết khác
@@ -100,9 +242,9 @@ class CheckoutController extends Controller
             'vnp_amount' => $vnp_Amount,
             'payment_method' => $vnp_OrderType,
             'vnp_response_code' => '',
-            'created_at' => now(),
+            
         );
-
+        
         $payment_id = DB::table('payment')->insertGetId($payment_data);
 
         // Lưu thông tin đơn hàng vào bảng order
@@ -112,6 +254,7 @@ class CheckoutController extends Controller
             'payment_id' => $payment_id,
             'order_total' => round(Cart::total(0, '.', '') / (1 + 0.21), 2),
             'order_status' => 'Đơn hàng đã được thanh toán bằng VNPAY',
+            'created_at' => now(),
         );
 
         $order_id = DB::table('order')->insertGetId($order_data);
@@ -318,9 +461,10 @@ class CheckoutController extends Controller
         $all_order = DB::table('order')
             ->join('customers', 'order.customer_id', '=', 'customers.customer_id')
             ->select('order.*', 'customers.customer_name')
-            ->orderBy('order.order_id', 'desc')->get();
-        $manage_order = view('admin.order.manage_order')->with('all_order', $all_order);
-        return view('admin.order.manage_order', compact('all_order', 'manage_order'));
+            ->orderBy('order.order_id', 'desc')
+            ->paginate(8);
+
+        return view('admin.order.manage_order', compact('all_order'));
     }
 
     public function view_order($orderId)
@@ -459,7 +603,7 @@ class CheckoutController extends Controller
                             <thead>
                                 <tr>
                                     <th scope="col">Tên khách hàng</th>
-                                    <th scope="col">Địa chỉ</th>
+                                    <th scope="col">Địa chỉ giao hàng</th>
                                     <th scope="col">Số điện thoại</th>
                                     <th scope="col">Ghi chú đơn hàng</th>
                                 </tr>
@@ -502,6 +646,7 @@ class CheckoutController extends Controller
                         <p><b>Tổng tiền phải thanh toán:</b> ' . number_format($totalAmount) . ' VNĐ.</p>
                         <p><b>Bằng chữ: </b>' . convertNumberToWords($totalAmount) . ' VNĐ.</p>
                         <p><b>Phương thức thanh toán:</b> ' . $orderStatus . '.</p>
+                        <p style="font-size: 15px; color: red;"><b>*Lưu ý:</b> Quý khách vui lòng quay video khi mở hàng. NGO TAN LOI Digital Technologies chỉ giải quyết khi có video. Xin cảm ơn! </p>
                         <br>
                         <h3><span>NGO TAN LOI DIGITAL TECHNOLOGIES </span> <br> CẢM ƠN QUÝ KHÁCH ĐÃ MUA SẮM TẠI CỬA HÀNG. </h3>
                     </body>

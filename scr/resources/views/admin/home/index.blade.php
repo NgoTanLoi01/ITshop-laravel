@@ -124,7 +124,7 @@
                         @csrf
                         <div class="input-group date" id="datepicker" data-target-input="nearest">
                             <input type="date" name="selectedDate" class="form-control datetimepicker-input"
-                                data-target="#datepicker" value="{{ $selectedDate }}">&nbsp&nbsp
+                                data-target="#datepicker" value="{{ isset($selectedDate) }}">&nbsp&nbsp
                             <button type="submit" class="btn btn-primary" id="btnFilter">Thống kê</button>
                         </div>
                     </form>
@@ -139,9 +139,10 @@
                         <div style="max-width: 600px; margin: auto;">
                             <canvas id="dailyRevenueChart" style="width: 100%;"></canvas>
                         </div>
+                        
                     @endif
                 </div>
-
+                
             </div>
         </div>
     </div>
@@ -159,12 +160,20 @@
                 data: {
                     labels: ['{{ $selectedDate }}'],
                     datasets: [{
-                        label: 'Doanh thu (VNĐ)',
-                        data: [{{ $thongKeData->totalRevenue }}],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
+                            label: 'Doanh thu (VNĐ)',
+                            data: [{{ $thongKeData->totalRevenue }}],
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Số lượng đơn hàng',
+                            data: [{{ $thongKeData->orderCount }}],
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }
+                    ]
                 },
                 options: {
                     scales: {
@@ -177,16 +186,44 @@
                                 }
                             }
                         },
-                        y: {
-                            beginAtZero: true,
-                            stepSize: 1000000,
-                            ticks: {
-                                callback: function(value, index, values) {
-                                    // Sử dụng hàm toLocaleString để định dạng số
-                                    return value.toLocaleString('vi-VN', {
-                                        style: 'currency',
-                                        currency: 'VND'
-                                    });
+                        y: [{
+                                id: 'revenue-axis',
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                        // Sử dụng hàm toLocaleString để định dạng số
+                                        return value.toLocaleString('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        });
+                                    }
+                                }
+                            },
+                            {
+                                id: 'order-axis',
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        ]
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    var label = context.dataset.label || '';
+
+                                    if (label) {
+                                        label += ': ';
+                                    }
+
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('vi-VN').format(context.parsed
+                                            .y);
+                                    }
+
+                                    return label;
                                 }
                             }
                         }

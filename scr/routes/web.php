@@ -74,6 +74,7 @@ Route::get('send-mail/{orderId}', [CheckoutController::class, 'send_mail']);
 
 //cong thanh toan
 Route::post('/vnpay_payment', [CheckoutController::class, 'vnpay_payment']);
+Route::post('/momo_payment', [CheckoutController::class, 'momo_payment']);
 
 
 //xu ly admin
