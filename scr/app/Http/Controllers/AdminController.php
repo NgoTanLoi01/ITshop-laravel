@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -13,6 +14,20 @@ class AdminController extends Controller
     {
         return view('admin.home.index');
     }
+
+    public function getKhachHangThanThiet()
+    {
+        return DB::table('order')
+            ->select('order.customer_id', 'customers.customer_name', 'customers.customer_email', DB::raw('COUNT(order.order_id) as totalOrders'))
+            ->join('customers', 'order.customer_id', '=', 'customers.customer_id')
+            ->whereNull('order.deleted_at')
+            ->groupBy('order.customer_id', 'customers.customer_name', 'customers.customer_email')
+            ->having('totalOrders', '>', 1)
+            ->orderBy('totalOrders', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
     public function index(Request $request)
     {
         // Lấy ngày từ request
@@ -32,9 +47,14 @@ class AdminController extends Controller
         $totalRevenue = Order::sum('order_total');
         $customerCount = Customer::count();
 
-        // Truyền biến $selectedDate vào view
-        return view('admin.home.index', compact('productCount', 'orderCount', 'totalRevenue', 'customerCount', 'thongKeData', 'selectedDate'));
+        // Gọi hàm getKhachHangThanThiet để lấy thông tin khách hàng thân thiết
+        $khachHangThanThiet = $this->getKhachHangThanThiet();
+        //dd($khachHangThanThiet);
+
+        // Truyền biến $selectedDate và $khachHangThanThiet vào view
+        return view('admin.home.index', compact('productCount', 'orderCount', 'totalRevenue', 'customerCount', 'thongKeData', 'selectedDate', 'khachHangThanThiet'));
     }
+
 
     public function postloginAdmin(Request $request)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use Illuminate\Support\Facades\DB;
@@ -50,19 +51,30 @@ class HomeAdminController extends Controller
     {
         $query = Product::query();
 
-        // Xử lý lọc theo giá
-        if ($request->has('price_range')) {
-            $priceRange = explode('-', $request->price_range);
-            $minPrice = (float) $priceRange[0];
-            $maxPrice = (float) $priceRange[1];
-            $query->whereRaw('CAST(sale_price AS DECIMAL(10,2)) BETWEEN ? AND ?', [$minPrice, $maxPrice]);
+        // Xử lý lọc theo giá 
+        if ($request->has('price_range') && !in_array('0-100000000', $request->price_range)) {
+            $priceRange = $request->price_range;
+            $query->where(function ($query) use ($priceRange) {
+                foreach ($priceRange as $range) {
+                    [$minPrice, $maxPrice] = explode('-', $range);
+                    $query->orWhereRaw('CAST(sale_price AS DECIMAL(10,2)) BETWEEN ? AND ?', [$minPrice, $maxPrice]);
+                }
+            });
         }
 
-        $products = $query->latest()->get(); // Sử dụng get() thay vì paginate()
+        // Xử lý lọc theo tag sản phẩm 
+        if ($request->has('product_tags')) {
+            $tagIds = $request->product_tags;
+            $query->whereHas('tags', function ($query) use ($tagIds) {
+                $query->whereIn('tags.id', $tagIds);
+            });
+        }
 
-        return view('home.product_all', compact('products'));
+        $products = $query->latest()->get();
+        $tags = Tag::all();
+
+        return view('home.product_all', compact('products', 'tags'));
     }
-
 
 
     public function yeu_thich()

@@ -9,7 +9,7 @@
 @endsection
 
 @section('js')
-    <link rel="stylesheet" href="{{ asset('home/home.js') }}">
+    <script src="{{ asset('home/home.js') }}"></script>
 @endsection
 
 @section('content')
@@ -17,40 +17,66 @@
         <div class="intro-section pt-3 pb-3 mb-2">
             <div class="container">
                 <div class="row">
-                    <form action="{{ url('/product_all') }}" method="get">
+                    <form id="filterForm" action="{{ url('/product_all') }}" method="get">
+                        {{-- Lọc giá --}}
                         <div class="mb-3">
-                            <label>Mức giá:</label>
+                            <label><strong> Mức giá:</strong></label>
                             <div>
                                 <label>
-                                    <input type="radio" name="price_range" value="0-3000000"
-                                        {{ request('price_range') == '0-3000000' ? 'checked' : '' }}>
+                                    <input type="checkbox" name="price_range[]" value="0-100000000"
+                                        class="price-range-checkbox"
+                                        {{ in_array('0-100000000', request('price_range', [])) ? 'checked' : '' }}>
+                                    Tất cả
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="price_range[]" value="0-3000000"
+                                        class="price-range-checkbox"
+                                        {{ in_array('0-3000000', request('price_range', [])) ? 'checked' : '' }}>
                                     Dưới 3 triệu
                                 </label>
                             </div>
                             <div>
                                 <label>
-                                    <input type="radio" name="price_range" value="3000000-8000000"
-                                        {{ request('price_range') == '3000000-8000000' ? 'checked' : '' }}>
+                                    <input type="checkbox" name="price_range[]" value="3000000-8000000"
+                                        class="price-range-checkbox"
+                                        {{ in_array('3000000-8000000', request('price_range', [])) ? 'checked' : '' }}>
                                     Từ 3 đến 8 triệu
                                 </label>
                             </div>
                             <div>
                                 <label>
-                                    <input type="radio" name="price_range" value="8000000-15000000"
-                                        {{ request('price_range') == '8000000-15000000' ? 'checked' : '' }}>
+                                    <input type="checkbox" name="price_range[]" value="8000000-15000000"
+                                        class="price-range-checkbox"
+                                        {{ in_array('8000000-15000000', request('price_range', [])) ? 'checked' : '' }}>
                                     Từ 8 đến 15 triệu
                                 </label>
                             </div>
                             <div>
                                 <label>
-                                    <input type="radio" name="price_range" value="15000000-100000000"
-                                        {{ request('price_range') == '15000000-100000000' ? 'checked' : '' }}>
+                                    <input type="checkbox" name="price_range[]" value="15000000-100000000"
+                                        class="price-range-checkbox"
+                                        {{ in_array('15000000-100000000', request('price_range', [])) ? 'checked' : '' }}>
                                     Trên 15 triệu
                                 </label>
                             </div>
-                            <!-- Thêm các khoảng giá khác tương tự cần thiết -->
                         </div>
-                        <button type="submit" class="btn btn-primary">Lọc</button>
+
+                        {{-- Lọc Hãng sản xuất --}}
+                        <div class="mb-3">
+                            <label><strong>Hãng sản xuất:</strong></label>
+                            @foreach ($tags as $tag)
+                                <div>
+                                    <label>
+                                        <input type="checkbox" name="product_tags[]" value="{{ $tag->id }}"
+                                            class="product-tag-checkbox"
+                                            {{ in_array($tag->id, request('product_tags', [])) ? 'checked' : '' }}>
+                                        {{ $tag->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </form>
                     <div class="col-lg-9">
                         <div class="products">
@@ -80,17 +106,37 @@
                                         </div><!-- End .product -->
                                     </div><!-- End .col-sm-6 -->
                                 @endforeach
-                            </div><!-- End .row -->
-
-                            {{-- <div class="col-md-12">
-                                <div class="d-flex justify-content-center">
-                                    {{ $products->links('pagination::bootstrap-4') }}
-                                </div>
-                            </div> --}}
-                        </div><!-- End .products -->
-                    </div><!-- End .col-lg-9 -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    {{-- lọc theo giá --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.price-range-checkbox');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    // Gửi yêu cầu lọc khi checkbox thay đổi
+                    document.getElementById('filterForm').submit();
+                });
+            });
+        });
+    </script>
+    {{-- lọc theo tag --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tagCheckboxes = document.querySelectorAll('.product-tag-checkbox');
+
+            tagCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    // Gửi yêu cầu lọc khi checkbox tag sản phẩm thay đổi
+                    document.getElementById('filterForm').submit();
+                });
+            });
+        });
+    </script>
 @endsection
