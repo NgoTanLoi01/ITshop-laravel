@@ -16,7 +16,8 @@
 ![website_banthietbitinhoc](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/d5019207-967d-4203-a981-b62cab6083ca)
 
 #### Biểu đồ Use Case tổng quát:
-![Biểu đồ use case tổng quát CN drawio](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/84d6deb8-e636-48f7-ba2d-9769d1afb652)
+![Biểu đồ use case tổng quát drawio](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/a1da0bbc-7686-4609-8ef4-7369b791a2fa)
+
 
 #### Giao diện người dùng:
   
@@ -24,7 +25,8 @@
 
 #### Giao diện quản trị:
 
-![Giao diện quản trị](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/01a1ce32-832b-4895-aa75-fe4e798cd937)
+![giao diện trang quản trị](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/b9fc0f20-2c3f-4a3e-b329-1d8c555f1c01)
+
 
 
 
