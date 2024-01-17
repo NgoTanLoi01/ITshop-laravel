@@ -166,7 +166,6 @@ class CheckoutController extends Controller
 
     public function vnpay_payment(Request $request)
     {
-        // Đường dẫn và thông tin cần thiết khác
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://127.0.0.1:8000/checkout";
         $vnp_TmnCode = "YOU17NPC"; // Mã website tại VNPAY
@@ -343,7 +342,7 @@ class CheckoutController extends Controller
     public function save_checkout_customer(Request $request)
     {
         $data = array();
-        $data['customer_id'] = Session::get('customer_id'); // Thêm dòng này
+        $data['customer_id'] = Session::get('customer_id');
         $data['shipping_name'] = $request->input('shipping_name');
         $data['shipping_phone'] = $request->input('shipping_phone');
         $data['shipping_email'] = $request->input('shipping_email');
@@ -658,7 +657,7 @@ class CheckoutController extends Controller
 
     public function send_mail($orderId)
     {
-        // Lấy thông tin đơn hàng từ database (bạn có thể sử dụng mã checkoutcode để lấy đúng đơn hàng)
+        // Lấy thông tin đơn hàng từ 
         $order_by_id = DB::table('order')
             ->join('customers', 'order.customer_id', '=', 'customers.customer_id')
             ->join('shipping', 'order.shipping_id', '=', 'shipping.shipping_id')
@@ -673,7 +672,7 @@ class CheckoutController extends Controller
         $data = array(
             "name" => $to_name,
             "body" => 'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý.',
-            "order" => $order_by_id, // Thêm thông tin đơn hàng vào mảng $data
+            "order" => $order_by_id, 
         );
 
         Mail::send("home.send_mail", $data, function ($message) use ($to_name, $to_email) {

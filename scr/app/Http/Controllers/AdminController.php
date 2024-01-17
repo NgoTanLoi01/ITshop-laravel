@@ -30,31 +30,58 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        // Lấy ngày từ request
         $selectedDate = $request->input('selectedDate');
-
-        // Chuyển đổi định dạng ngày nếu cần thiết
         $selectedDate = date('Y-m-d', strtotime($selectedDate));
 
-        // Thực hiện truy vấn để lấy thông tin thống kê doanh thu theo ngày
-        $thongKeData = Order::where('created_at', 'LIKE', '%' . $selectedDate . '%')
+        $thongKeData = Order::whereDate('created_at', $selectedDate)
             ->selectRaw('SUM(order_total) as totalRevenue, COUNT(order_id) as orderCount')
             ->first();
 
-        // Lấy dữ liệu cần cho trang index
         $productCount = Product::count();
         $orderCount = Order::count();
         $totalRevenue = Order::sum('order_total');
         $customerCount = Customer::count();
 
-        // Gọi hàm getKhachHangThanThiet để lấy thông tin khách hàng thân thiết
         $khachHangThanThiet = $this->getKhachHangThanThiet();
-        //dd($khachHangThanThiet);
 
-        // Truyền biến $selectedDate và $khachHangThanThiet vào view
-        return view('admin.home.index', compact('productCount', 'orderCount', 'totalRevenue', 'customerCount', 'thongKeData', 'selectedDate', 'khachHangThanThiet'));
+        // Thống kê theo tháng
+        $thongKeTheoThang = Order::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', date('m'))
+            ->selectRaw('SUM(order_total) as totalRevenue, COUNT(order_id) as orderCount')
+            ->first();
+
+        // Thống kê các dữ liệu khác theo tháng
+        $productCountMonth = Product::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', date('m'))
+            ->count();
+
+        $orderCountMonth = Order::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', date('m'))
+            ->count();
+
+        $totalRevenueMonth = Order::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', date('m'))
+            ->sum('order_total');
+
+        $customerCountMonth = Customer::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', date('m'))
+            ->count();
+
+        return view('admin.home.index', compact(
+            'productCount',
+            'orderCount',
+            'totalRevenue',
+            'customerCount',
+            'thongKeData',
+            'selectedDate',
+            'khachHangThanThiet',
+            'thongKeTheoThang',
+            'productCountMonth',
+            'orderCountMonth',
+            'totalRevenueMonth',
+            'customerCountMonth'
+        ));
     }
-
 
     public function postloginAdmin(Request $request)
     {
