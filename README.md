@@ -20,12 +20,8 @@
 
 
 #### Giao diện người dùng:
-  
-![Giao diện trang chủ](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/9345588e-7731-4162-8404-4d5225b23fc7)
+![Poster_ChuyenNganh_NgoTanLoi_new](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/e5b867a5-2a01-4b09-ae74-41ee9adc35aa)
 
-#### Giao diện quản trị:
-
-![giao diện trang quản trị](https://github.com/NgoTanLoi01/cn-da20tta-ngotanloi-ITshop-laravel/assets/112923143/b9fc0f20-2c3f-4a3e-b329-1d8c555f1c01)
 
 
 
